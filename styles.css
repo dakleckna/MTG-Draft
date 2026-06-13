@@ -239,6 +239,59 @@ button:disabled {
 .group-land, .card.group-land,
 .group-unassigned, .card.group-unassigned { background: #ffffff; }
 
+.progress {
+  margin: 8px 0 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+#progressLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#progressPercent {
+  flex: 0 0 auto;
+  color: var(--text);
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: #151515;
+  transition: width 180ms ease;
+}
+
+.progress-eta {
+  min-height: 18px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 @media (max-width: 720px) {
   .app-header { padding-top: 22px; }
 
@@ -292,6 +345,14 @@ button:disabled {
   .review {
     font-size: 0.92rem;
     line-height: 1.45;
+  }
+
+  .progress-row {
+    font-size: 0.84rem;
+  }
+
+  .progress {
+    border-radius: 14px;
   }
 }
 
