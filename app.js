@@ -13,26 +13,53 @@ const DRAFTS = [
   { title: "Lost Caverns of Ixalan", url: "https://draftsim.com/mtg-lci-limited-set-review/", archetypeHint: "generic" }
 ];
 
-const COLOR_NAMES = { W: "Weiss", U: "Blau", B: "Schwarz", R: "Rot", G: "Gruen" };
+const COLOR_NAMES = {
+  W: "Weiss",
+  U: "Blau",
+  B: "Schwarz",
+  R: "Rot",
+  G: "Gruen"
+};
 
 const COLOR_ALIASES = {
-  white: "W", weiss: "W",
-  blue: "U", blau: "U",
-  black: "B", schwarz: "B",
-  red: "R", rot: "R",
-  green: "G", gruen: "G"
+  white: "W",
+  weiss: "W",
+  blue: "U",
+  blau: "U",
+  black: "B",
+  schwarz: "B",
+  red: "R",
+  rot: "R",
+  green: "G",
+  gruen: "G"
 };
 
 const COLOR_PAIR_ORDER = ["WB", "RW", "BG", "UR", "GU", "WU", "UB", "BR", "RG", "GW"];
 
 const COLOR_PAIR_LABELS = {
-  WB: "Weiss-Schwarz", RW: "Rot-Weiss", BG: "Schwarz-Gruen", UR: "Blau-Rot", GU: "Gruen-Blau",
-  WU: "Weiss-Blau", UB: "Blau-Schwarz", BR: "Schwarz-Rot", RG: "Rot-Gruen", GW: "Gruen-Weiss"
+  WB: "Weiss-Schwarz",
+  RW: "Rot-Weiss",
+  BG: "Schwarz-Gruen",
+  UR: "Blau-Rot",
+  GU: "Gruen-Blau",
+  WU: "Weiss-Blau",
+  UB: "Blau-Schwarz",
+  BR: "Schwarz-Rot",
+  RG: "Rot-Gruen",
+  GW: "Gruen-Weiss"
 };
 
 const GUILD_NAMES = {
-  WU: "Azorius", UB: "Dimir", BR: "Rakdos", RG: "Gruul", GW: "Selesnya",
-  WB: "Orzhov", UR: "Izzet", BG: "Golgari", RW: "Boros", GU: "Simic"
+  WU: "Azorius",
+  UB: "Dimir",
+  BR: "Rakdos",
+  RG: "Gruul",
+  GW: "Selesnya",
+  WB: "Orzhov",
+  UR: "Izzet",
+  BG: "Golgari",
+  RW: "Boros",
+  GU: "Simic"
 };
 
 const KNOWN_ARCHETYPES = {
@@ -62,6 +89,10 @@ const PROXIES = [
   url => `https://corsproxy.io/?${encodeURIComponent(url)}`
 ];
 
+const RETRYABLE_STATUS_CODES = new Set([408, 409, 413, 425, 429, 500, 502, 503, 504]);
+const MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE = 3;
+const MAX_SCRYFALL_ATTEMPTS = 3;
+
 const els = {
   draftSelect: document.getElementById("draftSelect"),
   loadBtn: document.getElementById("loadBtn"),
@@ -70,8 +101,7 @@ const els = {
   progressLabel: document.getElementById("progressLabel"),
   progressPercent: document.getElementById("progressPercent"),
   progressBar: document.getElementById("progressBar"),
-  progressEta: document.getElementById("progressEta"),
-  summary: document.getElementById("summary"),
+  progressTime: document.getElementById("progressTime"),
   results: document.getElementById("results"),
   template: document.getElementById("cardTemplate")
 };
@@ -80,7 +110,9 @@ const scryfallCache = new Map();
 
 let activeController = null;
 let isLoading = false;
-let loadStartedAt = 0;
+let currentSegmentLabel = "";
+let currentSegmentStartedAt = 0;
+let segmentTimer = null;
 
 function init() {
   els.draftSelect.innerHTML = DRAFTS
@@ -102,17 +134,16 @@ async function loadSelectedDraft() {
 
   activeController = new AbortController();
   isLoading = true;
-  loadStartedAt = Date.now();
 
   try {
     setBusy(true);
     clearOutput();
     showProgress(true);
-    updateProgress(1, "Starte Ladevorgang...");
-    setStatus(`Lade ${draft.title} von Draftsim...`);
+    updateProgress(1, "Starte Ladevorgang");
+    setStatus(`Lade ${draft.title}...`);
 
     const html = await fetchDraftsimHtml(draft.url, activeController.signal);
-    updateProgress(18, "Draftsim-Artikel geladen. Parse Karten...");
+    updateProgress(18, "Draftsim-Artikel geladen");
 
     const cards = parseDraftsimReview(html, draft.url);
 
@@ -120,32 +151,29 @@ async function loadSelectedDraft() {
       throw new Error("Keine Karten mit Draftsim-Rating gefunden.");
     }
 
-    updateProgress(28, `${cards.length} Karten gefunden. Erkenne Archetypen...`);
+    updateProgress(28, `${cards.length} Karten gefunden`);
     const archetypes = detectArchetypes(html, draft);
 
-    updateProgress(35, "Lade Karteninfos und Bilder von Scryfall...");
-
+    updateProgress(35, "Lade Scryfall-Bilder");
     await hydrateScryfallInBatches(cards, activeController.signal, percent => {
-      updateProgress(35 + percent * 0.45, "Lade Karteninfos und Bilder von Scryfall...");
+      updateProgress(35 + percent * 0.45, "Lade Scryfall-Bilder");
     });
 
-    updateProgress(82, "Ordne Karten den Archetypen zu...");
+    updateProgress(82, "Ordne Karten zu");
     assignGroups(cards, archetypes);
     sortCards(cards, archetypes);
 
-    updateProgress(90, "Bereite Ansicht vor...");
-    renderSummary(cards, archetypes, draft.title);
-
+    updateProgress(90, "Zeichne Ansicht");
     await renderCardsProgressively(cards, archetypes, percent => {
-      updateProgress(90 + percent * 0.09, "Zeichne Kartenansicht...");
+      updateProgress(90 + percent * 0.09, "Zeichne Ansicht");
     });
 
-    updateProgress(100, "Fertig.");
+    updateProgress(100, "Fertig");
     setStatus(`${draft.title} geladen.`);
   } catch (error) {
     if (error.name !== "AbortError") {
       console.error(error);
-      updateProgress(100, "Fehler beim Laden.");
+      updateProgress(100, "Fehler");
       setStatus(`Fehler: ${error.message || error}`, true);
     }
   } finally {
@@ -162,37 +190,65 @@ function getSelectedDraft() {
 async function fetchDraftsimHtml(url, signal) {
   let lastError;
 
-  for (const makeUrl of PROXIES) {
+  for (let sourceIndex = 0; sourceIndex < PROXIES.length; sourceIndex++) {
+    const makeUrl = PROXIES[sourceIndex];
     const requestUrl = makeUrl(url);
 
-    try {
-      const response = await fetch(requestUrl, {
-        signal,
-        cache: "no-store"
-      });
+    for (let attempt = 1; attempt <= MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE; attempt++) {
+      try {
+        const sourceLabel = sourceIndex === 0 ? "Draftsim direkt" : `Proxy ${sourceIndex}`;
+        const retryText = attempt > 1 ? `, Versuch ${attempt}` : "";
 
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
+        updateProgress(
+          4 + sourceIndex * 4 + attempt,
+          `${sourceLabel}${retryText}`
+        );
+
+        const response = await fetch(requestUrl, {
+          signal,
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          const error = new Error(`${response.status} ${response.statusText}`);
+          error.status = response.status;
+          throw error;
+        }
+
+        const text = await response.text();
+
+        if (!/Rating:\s*\d/i.test(text)) {
+          throw new Error("Antwort enthaelt keine Ratings.");
+        }
+
+        return text;
+      } catch (error) {
+        if (error.name === "AbortError") {
+          throw error;
+        }
+
+        lastError = error;
+
+        const canRetry =
+          attempt < MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE &&
+          (!error.status || RETRYABLE_STATUS_CODES.has(error.status));
+
+        if (!canRetry) {
+          break;
+        }
+
+        updateProgress(
+          6 + sourceIndex * 4 + attempt,
+          `Fehler ${error.status || ""} - versuche erneut`
+        );
+
+        await delay(retryDelay(attempt), signal);
       }
-
-      const text = await response.text();
-
-      if (!/Rating:\s*\d/i.test(text)) {
-        throw new Error("Antwort enthaelt keine Ratings");
-      }
-
-      return text;
-    } catch (error) {
-      if (error.name === "AbortError") {
-        throw error;
-      }
-
-      lastError = error;
     }
   }
 
   throw new Error(
-    `Draftsim konnte nicht geladen werden. Wahrscheinlich blockiert CORS oder ein Proxy. Details: ${lastError?.message || lastError}`
+    `Draftsim konnte nicht geladen werden. Details: ${lastError?.message || lastError}`
   );
 }
 
@@ -268,22 +324,7 @@ async function hydrateScryfallInBatches(cards, signal, onProgress) {
   for (let index = 0; index < chunks.length; index++) {
     const names = chunks[index];
 
-    const response = await fetch("https://api.scryfall.com/cards/collection", {
-      method: "POST",
-      signal,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        identifiers: names.map(name => ({ name }))
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Scryfall konnte nicht geladen werden: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await fetchScryfallCollectionWithRetry(names, signal);
 
     for (const item of data.data || []) {
       const namesForCache = [cleanCardName(item.name || "")];
@@ -313,6 +354,52 @@ async function hydrateScryfallInBatches(cards, signal, onProgress) {
   }
 
   applyScryfallData(cards);
+}
+
+async function fetchScryfallCollectionWithRetry(names, signal) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= MAX_SCRYFALL_ATTEMPTS; attempt++) {
+    try {
+      const response = await fetch("https://api.scryfall.com/cards/collection", {
+        method: "POST",
+        signal,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          identifiers: names.map(name => ({ name }))
+        })
+      });
+
+      if (!response.ok) {
+        const error = new Error(`${response.status} ${response.statusText}`);
+        error.status = response.status;
+        throw error;
+      }
+
+      return response.json();
+    } catch (error) {
+      if (error.name === "AbortError") {
+        throw error;
+      }
+
+      lastError = error;
+
+      const canRetry =
+        attempt < MAX_SCRYFALL_ATTEMPTS &&
+        (!error.status || RETRYABLE_STATUS_CODES.has(error.status));
+
+      if (!canRetry) {
+        break;
+      }
+
+      updateProgress(45, `Scryfall Fehler ${error.status || ""} - versuche erneut`);
+      await delay(retryDelay(attempt), signal);
+    }
+  }
+
+  throw new Error(`Scryfall konnte nicht geladen werden. Details: ${lastError?.message || lastError}`);
 }
 
 function applyScryfallData(cards) {
@@ -497,22 +584,6 @@ function sortCards(cards, archetypes) {
   });
 }
 
-function renderSummary(cards, archetypes, draftTitle) {
-  const average = cards.reduce((sum, card) => sum + card.rating, 0) / cards.length;
-  const top = [...cards].sort((a, b) => b.rating - a.rating)[0];
-  const groupCount = new Set(cards.map(card => card.groupLabel)).size;
-
-  els.summary.innerHTML = [
-    draftTitle,
-    `${cards.length} Karten`,
-    `${groupCount} Gruppen`,
-    `Durchschnitt ${average.toFixed(2)}/10`,
-    `Top: ${top.name} (${top.rating}/10)`
-  ]
-    .map(text => `<div class="pill">${escapeHtml(text)}</div>`)
-    .join("");
-}
-
 async function renderCardsProgressively(cards, archetypes, onProgress) {
   els.results.innerHTML = "";
 
@@ -525,7 +596,11 @@ async function renderCardsProgressively(cards, archetypes, onProgress) {
 
     const title = document.createElement("section");
     title.className = `group-title group-${cssKey(group.key)}`;
-    title.innerHTML = `<h2>${escapeHtml(group.label)} (${group.cards.length})</h2><p>Durchschnitt ${average.toFixed(2)}/10</p>`;
+    title.innerHTML = `
+      <h2>${escapeHtml(group.label)} (${group.cards.length})</h2>
+      <p>Durchschnitt ${average.toFixed(2)}/10</p>
+    `;
+
     els.results.appendChild(title);
 
     const fragment = document.createDocumentFragment();
@@ -776,14 +851,13 @@ function chunk(items, size) {
 }
 
 function clearOutput() {
-  els.summary.innerHTML = "";
   els.results.innerHTML = "";
 }
 
 function resetView() {
   clearOutput();
   showProgress(false);
-  setStatus("Draft auswählen und auf Laden klicken.");
+  setStatus("Draft auswaehlen und auf Laden klicken.");
 }
 
 function setStatus(message, isError = false) {
@@ -794,17 +868,20 @@ function setStatus(message, isError = false) {
 function setBusy(isBusy) {
   els.loadBtn.disabled = isBusy;
   els.draftSelect.disabled = isBusy;
-  els.loadBtn.textContent = isBusy ? "Lädt..." : "Laden";
+  els.loadBtn.textContent = isBusy ? "Laedt..." : "Laden";
 }
 
 function showProgress(show) {
   els.progress.hidden = !show;
 
   if (!show) {
+    stopSegmentTimer();
     els.progressBar.style.width = "0%";
     els.progressPercent.textContent = "0%";
     els.progressLabel.textContent = "";
-    els.progressEta.textContent = "";
+    els.progressTime.textContent = "";
+    currentSegmentLabel = "";
+    currentSegmentStartedAt = 0;
   }
 }
 
@@ -813,18 +890,45 @@ function updateProgress(value, label) {
 
   els.progressBar.style.width = `${percent}%`;
   els.progressPercent.textContent = `${percent}%`;
-  els.progressLabel.textContent = label || "Lade...";
 
-  if (!loadStartedAt || percent <= 5 || percent >= 100) {
-    els.progressEta.textContent = percent >= 100 ? "Fertig." : "";
+  if (label && label !== currentSegmentLabel) {
+    currentSegmentLabel = label;
+    currentSegmentStartedAt = Date.now();
+    els.progressLabel.textContent = label;
+    startSegmentTimer();
+  }
+
+  updateSegmentTime();
+
+  if (percent >= 100) {
+    stopSegmentTimer();
+    els.progressTime.textContent = `${currentSegmentLabel}: ${formatSeconds((Date.now() - currentSegmentStartedAt) / 1000)}`;
+  }
+}
+
+function startSegmentTimer() {
+  stopSegmentTimer();
+
+  segmentTimer = window.setInterval(() => {
+    updateSegmentTime();
+  }, 250);
+}
+
+function stopSegmentTimer() {
+  if (segmentTimer) {
+    window.clearInterval(segmentTimer);
+    segmentTimer = null;
+  }
+}
+
+function updateSegmentTime() {
+  if (!currentSegmentStartedAt || !currentSegmentLabel) {
+    els.progressTime.textContent = "";
     return;
   }
 
-  const elapsedSeconds = (Date.now() - loadStartedAt) / 1000;
-  const estimatedTotal = elapsedSeconds / (percent / 100);
-  const remainingSeconds = Math.max(0, estimatedTotal - elapsedSeconds);
-
-  els.progressEta.textContent = `Bisher ${formatSeconds(elapsedSeconds)} · grob noch ${formatSeconds(remainingSeconds)}`;
+  const elapsedSeconds = (Date.now() - currentSegmentStartedAt) / 1000;
+  els.progressTime.textContent = `${currentSegmentLabel}: ${formatSeconds(elapsedSeconds)}`;
 }
 
 function formatSeconds(seconds) {
@@ -833,13 +937,34 @@ function formatSeconds(seconds) {
   }
 
   if (seconds < 60) {
-    return `${Math.ceil(seconds)}s`;
+    return `${Math.floor(seconds)}s`;
   }
 
   const minutes = Math.floor(seconds / 60);
-  const rest = Math.ceil(seconds % 60);
+  const rest = Math.floor(seconds % 60);
 
   return `${minutes}m ${rest}s`;
+}
+
+function retryDelay(attempt) {
+  return 650 * attempt + Math.round(Math.random() * 250);
+}
+
+function delay(ms, signal) {
+  return new Promise((resolve, reject) => {
+    const timeout = window.setTimeout(resolve, ms);
+
+    if (signal) {
+      signal.addEventListener(
+        "abort",
+        () => {
+          window.clearTimeout(timeout);
+          reject(new DOMException("Aborted", "AbortError"));
+        },
+        { once: true }
+      );
+    }
+  });
 }
 
 function nextFrame() {
