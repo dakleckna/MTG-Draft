@@ -7,7 +7,9 @@
   --shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -115,21 +117,57 @@ button:disabled {
   color: #9a2b20;
 }
 
-.summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+.progress {
+  margin: 8px 0 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
 }
 
-.pill {
-  padding: 7px 11px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.75);
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
   color: var(--muted);
-  font-size: 0.88rem;
-  font-weight: 750;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+#progressLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#progressPercent {
+  flex: 0 0 auto;
+  color: var(--text);
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: #151515;
+  transition: width 180ms ease;
+}
+
+.progress-time {
+  min-height: 18px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 
 .group-title {
@@ -220,80 +258,94 @@ button:disabled {
   line-height: 1.55;
 }
 
-.group-WB, .card.group-WB { background: #fbfaf6; }
-.group-RW, .card.group-RW { background: #fff7ef; }
-.group-BG, .card.group-BG { background: #f5fbf1; }
-.group-UR, .card.group-UR { background: #f5f7ff; }
-.group-GU, .card.group-GU { background: #f1faf7; }
-.group-WU, .card.group-WU { background: #f4f8ff; }
-.group-UB, .card.group-UB { background: #f5f6fb; }
-.group-BR, .card.group-BR { background: #fff3f1; }
-.group-RG, .card.group-RG { background: #fff7ed; }
-.group-GW, .card.group-GW { background: #f8fbef; }
-.group-W, .card.group-W { background: #fffdf7; }
-.group-U, .card.group-U { background: #f4f8ff; }
-.group-B, .card.group-B { background: #f7f7f9; }
-.group-R, .card.group-R { background: #fff5f2; }
-.group-G, .card.group-G { background: #f5fbf1; }
-.group-artifact, .card.group-artifact,
-.group-land, .card.group-land,
-.group-unassigned, .card.group-unassigned { background: #ffffff; }
-
-.progress {
-  margin: 8px 0 16px;
-  padding: 12px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+.group-WB,
+.card.group-WB {
+  background: #fbfaf6;
 }
 
-.progress-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 800;
+.group-RW,
+.card.group-RW {
+  background: #fff7ef;
 }
 
-#progressLabel {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.group-BG,
+.card.group-BG {
+  background: #f5fbf1;
 }
 
-#progressPercent {
-  flex: 0 0 auto;
-  color: var(--text);
+.group-UR,
+.card.group-UR {
+  background: #f5f7ff;
 }
 
-.progress-track {
-  height: 10px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.08);
+.group-GU,
+.card.group-GU {
+  background: #f1faf7;
 }
 
-.progress-bar {
-  width: 0%;
-  height: 100%;
-  border-radius: inherit;
-  background: #151515;
-  transition: width 180ms ease;
+.group-WU,
+.card.group-WU {
+  background: #f4f8ff;
 }
 
-.progress-eta {
-  min-height: 18px;
-  margin-top: 7px;
-  color: var(--muted);
-  font-size: 0.82rem;
+.group-UB,
+.card.group-UB {
+  background: #f5f6fb;
+}
+
+.group-BR,
+.card.group-BR {
+  background: #fff3f1;
+}
+
+.group-RG,
+.card.group-RG {
+  background: #fff7ed;
+}
+
+.group-GW,
+.card.group-GW {
+  background: #f8fbef;
+}
+
+.group-W,
+.card.group-W {
+  background: #fffdf7;
+}
+
+.group-U,
+.card.group-U {
+  background: #f4f8ff;
+}
+
+.group-B,
+.card.group-B {
+  background: #f7f7f9;
+}
+
+.group-R,
+.card.group-R {
+  background: #fff5f2;
+}
+
+.group-G,
+.card.group-G {
+  background: #f5fbf1;
+}
+
+.group-artifact,
+.card.group-artifact,
+.group-land,
+.card.group-land,
+.group-unassigned,
+.card.group-unassigned {
+  background: #ffffff;
 }
 
 @media (max-width: 720px) {
-  .app-header { padding-top: 22px; }
+  .app-header {
+    padding-top: 22px;
+  }
 
   .header-inner,
   #app {
@@ -305,15 +357,9 @@ button:disabled {
     border-radius: 16px;
   }
 
-  button { width: 100%; }
-
-  .summary {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 4px;
+  button {
+    width: 100%;
   }
-
-  .pill { white-space: nowrap; }
 
   .card {
     grid-template-columns: 118px 1fr;
