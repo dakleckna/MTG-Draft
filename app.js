@@ -103,7 +103,10 @@ const els = {
   progressBar: document.getElementById("progressBar"),
   progressTime: document.getElementById("progressTime"),
   results: document.getElementById("results"),
-  template: document.getElementById("cardTemplate")
+  template: document.getElementById("cardTemplate"),
+  toc: document.getElementById("toc"),
+  tocToggle: document.getElementById("tocToggle"),
+  tocList: document.getElementById("tocList")
 };
 
 const scryfallCache = new Map();
@@ -122,6 +125,11 @@ function init() {
   els.loadBtn.addEventListener("click", loadSelectedDraft);
   els.draftSelect.addEventListener("change", resetView);
 
+  els.tocToggle.addEventListener("click", () => {
+    const collapsed = els.toc.classList.toggle("collapsed");
+    els.tocToggle.setAttribute("aria-expanded", String(!collapsed));
+  });
+
   resetView();
 }
 
@@ -139,6 +147,7 @@ async function loadSelectedDraft() {
     setBusy(true);
     clearOutput();
     showProgress(true);
+    hideToc();
     updateProgress(1, "Starte Ladevorgang");
     setStatus(`Lade ${draft.title}...`);
 
@@ -164,9 +173,13 @@ async function loadSelectedDraft() {
     sortCards(cards, archetypes);
 
     updateProgress(90, "Zeichne Ansicht");
-    await renderCardsProgressively(cards, archetypes, percent => {
+    const groups = groupCards(cards, archetypes);
+
+    await renderCardsProgressively(groups, cards.length, percent => {
       updateProgress(90 + percent * 0.09, "Zeichne Ansicht");
     });
+
+    buildToc(groups);
 
     updateProgress(100, "Fertig");
     setStatus(`${draft.title} geladen.`);
@@ -175,6 +188,7 @@ async function loadSelectedDraft() {
       console.error(error);
       updateProgress(100, "Fehler");
       setStatus(`Fehler: ${error.message || error}`, true);
+      hideToc();
     }
   } finally {
     isLoading = false;
@@ -584,17 +598,17 @@ function sortCards(cards, archetypes) {
   });
 }
 
-async function renderCardsProgressively(cards, archetypes, onProgress) {
+async function renderCardsProgressively(groups, totalCards, onProgress) {
   els.results.innerHTML = "";
 
-  const groups = groupCards(cards, archetypes);
-  const totalCards = cards.length || 1;
   let renderedCards = 0;
 
   for (const group of groups) {
     const average = group.cards.reduce((sum, card) => sum + card.rating, 0) / group.cards.length;
+    const groupId = `group-${cssKey(group.key)}`;
 
     const title = document.createElement("section");
+    title.id = groupId;
     title.className = `group-title group-${cssKey(group.key)}`;
     title.innerHTML = `
       <h2>${escapeHtml(group.label)} (${group.cards.length})</h2>
@@ -652,6 +666,52 @@ function createCardElement(card) {
   }
 
   return node;
+}
+
+function buildToc(groups) {
+  els.tocList.innerHTML = "";
+
+  for (const group of groups) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `toc-link group-${cssKey(group.key)}`;
+    button.innerHTML = `
+      <span>${escapeHtml(shortGroupLabel(group.label))}</span>
+      <span class="toc-count">${group.cards.length}</span>
+    `;
+
+    button.addEventListener("click", () => {
+      document.getElementById(`group-${cssKey(group.key)}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      if (window.matchMedia("(max-width: 720px)").matches) {
+        els.toc.classList.add("collapsed");
+        els.tocToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    els.tocList.appendChild(button);
+  }
+
+  els.toc.hidden = groups.length === 0;
+  els.toc.classList.remove("collapsed");
+  els.tocToggle.setAttribute("aria-expanded", "true");
+}
+
+function hideToc() {
+  els.toc.hidden = true;
+  els.tocList.innerHTML = "";
+  els.toc.classList.remove("collapsed");
+  els.tocToggle.setAttribute("aria-expanded", "true");
+}
+
+function shortGroupLabel(label) {
+  return String(label)
+    .replace(/\s+-\s+/g, " ")
+    .replace(/\s*:\s*.*/, "")
+    .trim();
 }
 
 function groupCards(cards, archetypes) {
@@ -856,6 +916,7 @@ function clearOutput() {
 
 function resetView() {
   clearOutput();
+  hideToc();
   showProgress(false);
   setStatus("Draft auswaehlen und auf Laden klicken.");
 }
