@@ -3,16 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Draft Reviewer</title>
+  <title>Draftsim Limited Viewer</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header class="app-header">
+    <div class="header-inner">
+      <p class="eyebrow">MTG Limited</p>
+      <h1>Draftsim Limited Viewer</h1>
+      <p class="lead">Draft auswaehlen. Ratings und Texte kommen von Draftsim, Bilder von Scryfall.</p>
+    </div>
+  </header>
+
   <main id="app">
     <section class="controls" aria-label="Draft Auswahl">
       <label class="draft-picker">
         Draft
         <select id="draftSelect"></select>
       </label>
+
       <button id="loadBtn" type="button">Laden</button>
     </section>
 
@@ -23,19 +32,23 @@
         <span id="progressLabel">Bereite Laden vor...</span>
         <span id="progressPercent">0%</span>
       </div>
+
       <div class="progress-track" aria-hidden="true">
         <div id="progressBar" class="progress-bar"></div>
       </div>
-      <div id="progressEta" class="progress-eta"></div>
+
+      <div id="progressTime" class="progress-time"></div>
     </section>
 
-    <section id="summary" class="summary"></section>
     <section id="results" class="results"></section>
   </main>
 
   <template id="cardTemplate">
     <article class="card">
-      <div class="image-wrap"><div class="missing-img">Bild lädt...</div></div>
+      <div class="image-wrap">
+        <div class="missing-img">Bild laedt...</div>
+      </div>
+
       <div class="card-body">
         <div class="card-topline"></div>
         <h3></h3>
