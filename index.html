@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Draftsim Limited Review Viewer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">MTG Draft Helper</p>
+      <h1>Draftsim Limited Review Viewer</h1>
+      <p class="lead">Reviews von Draftsim, Kartenbilder von Scryfall, sortiert nach Draft-Archetypen und Rating.</p>
+    </div>
+  </header>
+
+  <main id="app">
+    <section class="panel controls">
+      <div class="suggestion">
+        <div>
+          <div class="label">Vorgeschlagener Draft</div>
+          <button id="suggestedDraft" class="suggested" type="button"></button>
+        </div>
+      </div>
+
+      <label>
+        Draft auswaehlen
+        <select id="draftSelect"></select>
+      </label>
+
+      <details>
+        <summary>Eigene Draftsim-URL verwenden</summary>
+        <label>
+          Draftsim Review URL
+          <input id="urlInput" type="url" spellcheck="false" />
+        </label>
+      </details>
+
+      <div class="grid-2">
+        <label>
+          Set-Code fuer Scryfall, optional
+          <input id="setInput" type="text" maxlength="8" placeholder="z.B. sos, fin, eoe" />
+        </label>
+
+        <label>
+          Sortierung
+          <select id="sortMode">
+            <option value="group-rating">Archetyp/Farbcombo, dann Rating</option>
+            <option value="rating">Nur Rating absteigend</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </label>
+      </div>
+
+      <details open>
+        <summary>Archetypen / Farbkombos pro Draft</summary>
+        <p>Die App gruppiert nach dieser Liste. Standardmaessig versucht sie beim Laden, die Archetypen direkt aus dem Draftsim-Artikel zu erkennen. Falls das nicht klappt, nimmt sie das Set-Preset oder den generischen 2-Farb-Fallback.</p>
+        <div class="grid-2">
+          <label>
+            Gruppierung
+            <select id="groupMode">
+              <option value="keywords">Keywords aus Draftsim bevorzugen</option>
+              <option value="strict-color">Exakte Scryfall-Farbcombo bevorzugen</option>
+            </select>
+          </label>
+          <label class="checkbox-label">
+            <input id="autoArchetypes" type="checkbox" checked />
+            Archetypen aus Draftsim automatisch erkennen
+          </label>
+        </div>
+        <div class="preset-action">
+          <button id="presetBtn" type="button" class="secondary">Preset neu laden</button>
+        </div>
+        <label>
+          Archetyp-JSON
+          <textarea id="archetypeConfig" rows="9" spellcheck="false"></textarea>
+        </label>
+      </details>
+
+      <details>
+        <summary>Proxy / Fallback</summary>
+        <p>Falls Draftsim nicht direkt geladen werden kann, nutzt die App einen CORS-Proxy. Fuer dauerhafte Nutzung kannst du hier deinen eigenen Proxy eintragen.</p>
+        <label>
+          Proxy URL
+          <input id="proxyInput" type="url" spellcheck="false" />
+        </label>
+        <label>
+          Oder Draftsim HTML hier einfuegen
+          <textarea id="htmlInput" rows="5" placeholder="Optional: Seitenquelltext einfuegen, falls URL-Laden blockiert wird"></textarea>
+        </label>
+      </details>
+
+      <div class="actions">
+        <button id="loadBtn" type="button">Review laden</button>
+        <button id="demoBtn" type="button" class="secondary">Vorschlag einsetzen</button>
+        <button id="exportBtn" type="button" class="secondary" disabled>JSON exportieren</button>
+      </div>
+    </section>
+
+    <section id="status" class="status" aria-live="polite"></section>
+    <section id="summary" class="summary"></section>
+    <section id="results" class="results"></section>
+  </main>
+
+  <template id="cardTemplate">
+    <article class="card">
+      <div class="image-wrap"><div class="missing-img">Bild laedt...</div></div>
+      <div class="card-body">
+        <div class="card-topline"></div>
+        <h3></h3>
+        <div class="rating"></div>
+        <p class="review"></p>
+        <div class="meta-line"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
