@@ -11,6 +11,11 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -258,91 +263,191 @@ button:disabled {
   line-height: 1.55;
 }
 
+.toc {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 20;
+  width: min(280px, calc(100vw - 32px));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.toc-toggle {
+  width: 100%;
+  min-height: 44px;
+  border: 0;
+  border-radius: 0;
+  padding: 0 14px;
+  background: #151515;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toc-toggle::after {
+  content: "▾";
+  font-size: 0.9rem;
+  opacity: 0.85;
+  transition: transform 160ms ease;
+}
+
+.toc.collapsed .toc-toggle::after {
+  transform: rotate(180deg);
+}
+
+.toc-list {
+  display: grid;
+  gap: 6px;
+  max-height: min(52vh, 430px);
+  overflow: auto;
+  padding: 10px;
+}
+
+.toc.collapsed .toc-list {
+  display: none;
+}
+
+.toc-link {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  text-align: left;
+  font-size: 0.88rem;
+  font-weight: 800;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.toc-link:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.toc-count {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .group-WB,
-.card.group-WB {
+.card.group-WB,
+.toc-link.group-WB {
   background: #fbfaf6;
 }
 
 .group-RW,
-.card.group-RW {
+.card.group-RW,
+.toc-link.group-RW {
   background: #fff7ef;
 }
 
 .group-BG,
-.card.group-BG {
+.card.group-BG,
+.toc-link.group-BG {
   background: #f5fbf1;
 }
 
 .group-UR,
-.card.group-UR {
+.card.group-UR,
+.toc-link.group-UR {
   background: #f5f7ff;
 }
 
 .group-GU,
-.card.group-GU {
+.card.group-GU,
+.toc-link.group-GU {
   background: #f1faf7;
 }
 
 .group-WU,
-.card.group-WU {
+.card.group-WU,
+.toc-link.group-WU {
   background: #f4f8ff;
 }
 
 .group-UB,
-.card.group-UB {
+.card.group-UB,
+.toc-link.group-UB {
   background: #f5f6fb;
 }
 
 .group-BR,
-.card.group-BR {
+.card.group-BR,
+.toc-link.group-BR {
   background: #fff3f1;
 }
 
 .group-RG,
-.card.group-RG {
+.card.group-RG,
+.toc-link.group-RG {
   background: #fff7ed;
 }
 
 .group-GW,
-.card.group-GW {
+.card.group-GW,
+.toc-link.group-GW {
   background: #f8fbef;
 }
 
 .group-W,
-.card.group-W {
+.card.group-W,
+.toc-link.group-W {
   background: #fffdf7;
 }
 
 .group-U,
-.card.group-U {
+.card.group-U,
+.toc-link.group-U {
   background: #f4f8ff;
 }
 
 .group-B,
-.card.group-B {
+.card.group-B,
+.toc-link.group-B {
   background: #f7f7f9;
 }
 
 .group-R,
-.card.group-R {
+.card.group-R,
+.toc-link.group-R {
   background: #fff5f2;
 }
 
 .group-G,
-.card.group-G {
+.card.group-G,
+.toc-link.group-G {
   background: #f5fbf1;
 }
 
 .group-artifact,
 .card.group-artifact,
+.toc-link.group-artifact,
 .group-land,
 .card.group-land,
+.toc-link.group-land,
 .group-unassigned,
-.card.group-unassigned {
+.card.group-unassigned,
+.toc-link.group-unassigned {
   background: #ffffff;
 }
 
 @media (max-width: 720px) {
+  html {
+    scroll-padding-top: 118px;
+  }
+
   .app-header {
     padding-top: 22px;
   }
@@ -399,6 +504,22 @@ button:disabled {
 
   .progress {
     border-radius: 14px;
+  }
+
+  .toc {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    border-radius: 16px;
+  }
+
+  .toc-list {
+    max-height: 38vh;
+  }
+
+  .toc-link {
+    min-height: 42px;
   }
 }
 
