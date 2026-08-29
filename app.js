@@ -50,19 +50,19 @@ const COLOR_ALIASES = {
   gruen: "G"
 };
 
-const COLOR_PAIR_ORDER = ["WB", "RW", "BG", "UR", "GU", "WU", "UB", "BR", "RG", "GW"];
+const COLOR_PAIR_ORDER = ["WB", "WR", "BG", "UR", "UG", "WU", "UB", "BR", "RG", "WG"];
 
 const COLOR_PAIR_LABELS = {
   WB: "Weiss-Schwarz",
-  RW: "Rot-Weiss",
+  WR: "Weiss-Rot",
   BG: "Schwarz-Gruen",
   UR: "Blau-Rot",
-  GU: "Gruen-Blau",
+  UG: "Blau-Gruen",
   WU: "Weiss-Blau",
   UB: "Blau-Schwarz",
   BR: "Schwarz-Rot",
   RG: "Rot-Gruen",
-  GW: "Gruen-Weiss"
+  WG: "Weiss-Gruen"
 };
 
 const GUILD_NAMES = {
@@ -70,21 +70,21 @@ const GUILD_NAMES = {
   UB: "Dimir",
   BR: "Rakdos",
   RG: "Gruul",
-  GW: "Selesnya",
+  WG: "Selesnya",
   WB: "Orzhov",
   UR: "Izzet",
   BG: "Golgari",
-  RW: "Boros",
-  GU: "Simic"
+  WR: "Boros",
+  UG: "Simic"
 };
 
 const KNOWN_ARCHETYPES = {
   sos: [
     { key: "WB", label: "Silverquill - Weiss-Schwarz", colors: ["W", "B"], words: ["silverquill", "inkling", "magecraft"] },
-    { key: "RW", label: "Lorehold - Rot-Weiss", colors: ["R", "W"], words: ["lorehold", "spirit", "graveyard"] },
+    { key: "WR", label: "Lorehold - Weiss-Rot", colors: ["R", "W"], words: ["lorehold", "spirit", "graveyard"] },
     { key: "BG", label: "Witherbloom - Schwarz-Gruen", colors: ["B", "G"], words: ["witherbloom", "pest", "sacrifice", "life gain", "lifegain"] },
     { key: "UR", label: "Prismari - Blau-Rot", colors: ["U", "R"], words: ["prismari", "treasure", "big spell", "5-mana"] },
-    { key: "GU", label: "Quandrix - Gruen-Blau", colors: ["G", "U"], words: ["quandrix", "fractal", "counter", "ramp"] }
+    { key: "UG", label: "Quandrix - Blau-Gruen", colors: ["G", "U"], words: ["quandrix", "fractal", "counter", "ramp"] }
   ]
 };
 
@@ -124,11 +124,7 @@ const els = {
   progressBar: document.getElementById("progressBar"),
   progressTime: document.getElementById("progressTime"),
   untappedMeta: document.getElementById("untappedMeta"),
-  untappedMetaTitle: document.getElementById("untappedMetaTitle"),
-  untappedMetaDescription: document.getElementById("untappedMetaDescription"),
   untappedMetaList: document.getElementById("untappedMetaList"),
-  untappedMetaUpdated: document.getElementById("untappedMetaUpdated"),
-  untappedMetaLink: document.getElementById("untappedMetaLink"),
   results: document.getElementById("results"),
   template: document.getElementById("cardTemplate"),
   toc: document.getElementById("toc"),
@@ -191,7 +187,9 @@ async function loadSelectedDraft() {
     }
 
     updateProgress(28, `${cards.length} Karten gefunden`);
-    const archetypes = detectArchetypes(html, draft);
+    let archetypes = detectArchetypes(html, draft);
+    const untappedMeta = await fetchUntappedMeta(draft);
+    archetypes = prioritizeArchetypes(archetypes, untappedMeta);
 
     updateProgress(35, "Lade Scryfall-Bilder");
     await hydrateScryfallInBatches(cards, activeController.signal, percent => {
@@ -211,7 +209,7 @@ async function loadSelectedDraft() {
 
     buildToc(groups);
 
-    await renderUntappedMeta(draft);
+    renderUntappedMeta(untappedMeta);
 
     updateProgress(100, "Fertig");
     setStatus(`${draft.title} geladen.`);
@@ -335,74 +333,109 @@ async function fetchUntappedMetaManifest() {
   return untappedMetaManifestPromise;
 }
 
-async function renderUntappedMeta(draft) {
+async function fetchUntappedMeta(draft) {
   try {
     const manifest = await fetchUntappedMetaManifest();
     const meta = manifest.drafts?.[draft.url];
 
     if (!meta || !Array.isArray(meta.archetypes) || !meta.archetypes.length) {
-      hideUntappedMeta();
-      return;
+      return null;
     }
 
-    els.untappedMetaTitle.textContent = `Beliebteste Farbkombinationen – ${draft.title}`;
-    els.untappedMetaDescription.textContent = "Meta-Anteil in Premier Draft: Diese Kombinationen werden am haeufigsten gedraftet.";
-    els.untappedMetaLink.href = meta.sourceUrl || "https://mtga.untapped.gg/limited/draft";
-    els.untappedMetaList.replaceChildren(
-      ...meta.archetypes.slice(0, 5).map((archetype, index) => {
-        const item = document.createElement("li");
-        item.className = "untapped-meta-item";
-
-        const rank = document.createElement("span");
-        rank.className = "untapped-meta-rank";
-        rank.textContent = `#${index + 1} gedraftet`;
-
-        const name = document.createElement("strong");
-        name.className = "untapped-meta-name";
-        name.textContent = archetype.name;
-
-        const share = document.createElement("span");
-        share.className = "untapped-meta-share";
-        share.textContent = formatPercent(archetype.popularity);
-
-        item.append(rank, name, share);
-        return item;
-      })
-    );
-    els.untappedMetaUpdated.textContent = meta.updatedAt
-      ? `Untapped-Datenstand: ${formatDateTime(meta.updatedAt)}.`
-      : "Quelle: Untapped.gg.";
-    els.untappedMeta.hidden = false;
+    return meta;
   } catch (error) {
     console.warn("Untapped-Meta konnte nicht geladen werden.", error);
-    hideUntappedMeta();
+    return null;
   }
+}
+
+function renderUntappedMeta(meta) {
+  if (!meta) {
+    hideUntappedMeta();
+    return;
+  }
+
+  const items = meta.archetypes.slice(0, 5).map(archetype => {
+    const item = document.createElement("li");
+    item.className = "untapped-meta-item";
+
+    const archetypeElement = document.createElement("div");
+    archetypeElement.className = "untapped-meta-archetype";
+
+    const mana = document.createElement("div");
+    mana.className = "untapped-meta-mana";
+    const colors = colorsForName(archetype.name) || [];
+    mana.setAttribute("aria-label", colors.join("") || archetype.name);
+
+    for (const color of normalizeColors(colors)) {
+      const symbol = document.createElement("span");
+      symbol.className = `mana-symbol mana-${color}`;
+      symbol.textContent = color;
+      mana.appendChild(symbol);
+    }
+
+    const name = document.createElement("strong");
+    name.className = "untapped-meta-name";
+    name.textContent = archetype.name;
+
+    const share = document.createElement("span");
+    share.className = "untapped-meta-share";
+    share.textContent = formatPercent(archetype.popularity);
+
+    archetypeElement.append(mana, name);
+    item.append(archetypeElement, share);
+    return item;
+  });
+
+  if (!items.length) {
+    hideUntappedMeta();
+    return;
+  }
+
+  els.untappedMetaList.replaceChildren(...items);
+  els.untappedMeta.hidden = false;
+}
+
+function prioritizeArchetypes(archetypes, meta) {
+  if (!meta?.archetypes?.length) {
+    return archetypes;
+  }
+
+  const byKey = new Map(archetypes.map(archetype => [archetype.key, archetype]));
+  const prioritized = [];
+
+  for (const untappedArchetype of meta.archetypes) {
+    const colors = colorsForName(untappedArchetype.name);
+
+    if (!colors?.length) {
+      continue;
+    }
+
+    const key = canonicalColorKey(colors);
+    const existing = byKey.get(key);
+
+    prioritized.push(existing || {
+      key,
+      label: `${untappedArchetype.name} - ${colors.map(color => COLOR_NAMES[color]).join("-")}`,
+      colors,
+      words: [untappedArchetype.name.toLowerCase()]
+    });
+    byKey.delete(key);
+  }
+
+  return [...prioritized, ...archetypes.filter(archetype => byKey.has(archetype.key))];
 }
 
 function hideUntappedMeta() {
   els.untappedMeta.hidden = true;
   els.untappedMetaList.replaceChildren();
-  els.untappedMetaLink.removeAttribute("href");
 }
 
 function formatPercent(value) {
   const number = Number(value);
   return Number.isFinite(number)
-    ? `${number.toLocaleString("de-DE", { maximumFractionDigits: 1 })} % Meta-Anteil`
+    ? `${number.toLocaleString("de-DE", { maximumFractionDigits: 1 })} %`
     : "–";
-}
-
-function formatDateTime(value) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("de-DE", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(date);
 }
 
 function readDiscoveredDrafts() {
@@ -1054,6 +1087,11 @@ function fallbackGroup(card) {
 
 function colorsForName(name) {
   const map = {
+    "mono white": ["W"],
+    "mono blue": ["U"],
+    "mono black": ["B"],
+    "mono red": ["R"],
+    "mono green": ["G"],
     azorius: ["W", "U"],
     dimir: ["U", "B"],
     rakdos: ["B", "R"],
@@ -1068,7 +1106,17 @@ function colorsForName(name) {
     lorehold: ["R", "W"],
     witherbloom: ["B", "G"],
     prismari: ["U", "R"],
-    quandrix: ["G", "U"]
+    quandrix: ["G", "U"],
+    esper: ["W", "U", "B"],
+    jeskai: ["W", "U", "R"],
+    mardu: ["W", "B", "R"],
+    grixis: ["U", "B", "R"],
+    bant: ["W", "U", "G"],
+    abzan: ["W", "B", "G"],
+    sultai: ["U", "B", "G"],
+    jund: ["B", "R", "G"],
+    naya: ["W", "R", "G"],
+    temur: ["U", "R", "G"]
   };
 
   return map[String(name).toLowerCase()] || null;
