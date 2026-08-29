@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Draft ReViewer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mana-font@1.18.0/css/mana.min.css" />
-  <link rel="stylesheet" href="styles.css?v=meta-ui-2" />
+  <link rel="stylesheet" href="styles.css?v=brand-logo-1" />
 </head>
 <body>
 
   <main id="app">
     <section class="controls" aria-label="Draft Auswahl">
+      <div class="brand-logo">
+        <img src="assets/draft-reviewer-logo.svg" alt="Draft ReViewer" />
+      </div>
+
       <label class="draft-picker">
-        Draft
+        <span class="sr-only">Draft auswählen</span>
         <select id="draftSelect"></select>
       </label>
 
@@ -20,7 +24,7 @@
       <button id="checkLatestBtn" class="secondary" type="button">Neue Drafts suchen</button>
     </section>
 
-    <section id="status" class="status" aria-live="polite"></section>
+    <section id="status" class="status" aria-live="polite" hidden></section>
 
     <section id="progress" class="progress" aria-label="Ladefortschritt" hidden>
       <div class="progress-row">
@@ -67,6 +71,6 @@
     </article>
   </template>
 
-  <script src="app.js?v=meta-ui-2"></script>
+  <script src="app.js?v=brand-logo-1"></script>
 </body>
 </html>

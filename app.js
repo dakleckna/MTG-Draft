@@ -1241,7 +1241,7 @@ function resetView() {
   hideToc();
   hideUntappedMeta();
   showProgress(false);
-  setStatus("Draft auswaehlen und auf Laden klicken.");
+  setStatus("");
 }
 
 function setStatus(message, isError = false) {
