@@ -105,6 +105,9 @@ const PROXIES = [
   url => `https://corsproxy.io/?${encodeURIComponent(url)}`
 ];
 
+const DRAFT_MANIFEST_URL = "drafts.json";
+const DISCOVERED_DRAFTS_STORAGE_KEY = "draft-reviewer.discovered-drafts.v1";
+const DRAFTSIM_REQUEST_TIMEOUT_MS = 15000;
 const RETRYABLE_STATUS_CODES = new Set([408, 409, 413, 425, 429, 500, 502, 503, 504]);
 const MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE = 3;
 const MAX_SCRYFALL_ATTEMPTS = 3;
@@ -112,6 +115,7 @@ const MAX_SCRYFALL_ATTEMPTS = 3;
 const els = {
   draftSelect: document.getElementById("draftSelect"),
   loadBtn: document.getElementById("loadBtn"),
+  checkLatestBtn: document.getElementById("checkLatestBtn"),
   status: document.getElementById("status"),
   progress: document.getElementById("progress"),
   progressLabel: document.getElementById("progressLabel"),
@@ -129,16 +133,17 @@ const scryfallCache = new Map();
 
 let activeController = null;
 let isLoading = false;
+let isCheckingLatest = false;
 let currentSegmentLabel = "";
 let currentSegmentStartedAt = 0;
 let segmentTimer = null;
 
 function init() {
-  els.draftSelect.innerHTML = DRAFTS
-    .map((draft, index) => `<option value="${index}">${escapeHtml(draft.title)}</option>`)
-    .join("");
+  restoreDiscoveredDrafts();
+  renderDraftOptions();
 
   els.loadBtn.addEventListener("click", loadSelectedDraft);
+  els.checkLatestBtn.addEventListener("click", checkForLatestDrafts);
   els.draftSelect.addEventListener("change", resetView);
 
   els.tocToggle.addEventListener("click", () => {
@@ -217,25 +222,166 @@ function getSelectedDraft() {
   return DRAFTS[Number(els.draftSelect.value) || 0];
 }
 
+function renderDraftOptions(selectedUrl = getSelectedDraft()?.url || DRAFTS[0]?.url) {
+  els.draftSelect.innerHTML = DRAFTS
+    .map((draft, index) => `<option value="${index}">${escapeHtml(draft.title)}</option>`)
+    .join("");
+
+  const selectedIndex = Math.max(0, DRAFTS.findIndex(draft => draft.url === selectedUrl));
+  els.draftSelect.value = String(selectedIndex);
+}
+
+async function checkForLatestDrafts() {
+  if (isLoading || isCheckingLatest) {
+    return;
+  }
+
+  isCheckingLatest = true;
+  setBusy(true);
+  setStatus("Pruefe die neuesten Drafts...");
+
+  try {
+    const publishedDrafts = await fetchPublishedDrafts();
+    const knownUrls = new Set(DRAFTS.map(draft => draft.url));
+    const additions = publishedDrafts.filter(draft => !knownUrls.has(draft.url));
+
+    if (!additions.length) {
+      setStatus("Keine neuen Drafts gefunden. Deine Liste ist aktuell.");
+      return;
+    }
+
+    DRAFTS.unshift(...additions);
+    storeDiscoveredDrafts(additions);
+    renderDraftOptions(additions[0].url);
+    clearOutput();
+    hideToc();
+    showProgress(false);
+    setStatus(`${additions.length} neue${additions.length === 1 ? "r Draft" : " Drafts"} hinzugefuegt.`);
+  } catch (error) {
+    console.error(error);
+    setStatus(`Fehler bei der Suche: ${error.message || error}`, true);
+  } finally {
+    isCheckingLatest = false;
+    setBusy(false);
+  }
+}
+
+function isValidDiscoveredDraft(draft) {
+  return Boolean(
+    draft &&
+      typeof draft.title === "string" &&
+      draft.title.trim() &&
+      /^https:\/\/draftsim\.com\/mtg-[a-z0-9-]+-limited-set-review\/$/i.test(draft.url)
+  );
+}
+
+async function fetchPublishedDrafts() {
+  const response = await fetch(`${DRAFT_MANIFEST_URL}?updated=${Date.now()}`, {
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+
+  const drafts = await response.json();
+
+  if (!Array.isArray(drafts)) {
+    throw new Error("Die Draft-Liste hat ein ungueltiges Format.");
+  }
+
+  return drafts
+    .filter(isValidDiscoveredDraft)
+    .map(draft => ({
+      title: draft.title.trim(),
+      url: draft.url,
+      archetypeHint: draft.archetypeHint === "sos" ? "sos" : "generic"
+    }));
+}
+
+function readDiscoveredDrafts() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(DISCOVERED_DRAFTS_STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved.filter(isValidDiscoveredDraft) : [];
+  } catch {
+    return [];
+  }
+}
+
+function restoreDiscoveredDrafts() {
+  const knownUrls = new Set(DRAFTS.map(draft => draft.url));
+  const saved = readDiscoveredDrafts().filter(draft => !knownUrls.has(draft.url));
+
+  if (saved.length) {
+    DRAFTS.unshift(...saved);
+  }
+}
+
+function storeDiscoveredDrafts(additions) {
+  try {
+    const byUrl = new Map(readDiscoveredDrafts().map(draft => [draft.url, draft]));
+
+    for (const draft of additions) {
+      byUrl.set(draft.url, draft);
+    }
+
+    localStorage.setItem(DISCOVERED_DRAFTS_STORAGE_KEY, JSON.stringify([...byUrl.values()]));
+  } catch {
+    // Die neue Auswahl bleibt fuer den aktuellen Besuch aktiv, auch wenn der Speicher gesperrt ist.
+  }
+}
+
 async function fetchDraftsimHtml(url, signal) {
+  try {
+    return await fetchTextViaProxies(url, signal, {
+      isExpected: text => /Rating:\s*\d/i.test(text),
+      invalidResponseMessage: "Antwort enthaelt keine Ratings.",
+      onAttempt: (sourceIndex, attempt) => {
+        const sourceLabel = sourceIndex === 0 ? "Draftsim direkt" : `Proxy ${sourceIndex}`;
+        const retryText = attempt > 1 ? `, Versuch ${attempt}` : "";
+        updateProgress(4 + sourceIndex * 4 + attempt, `${sourceLabel}${retryText}`);
+      }
+    });
+  } catch (error) {
+    throw new Error(
+      `Draftsim konnte nicht geladen werden. Details: ${error?.message || error}`
+    );
+  }
+}
+
+async function fetchTextViaProxies(
+  url,
+  signal,
+  {
+    isExpected,
+    invalidResponseMessage,
+    onAttempt,
+    maxAttempts = MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE,
+    requestTimeoutMs = DRAFTSIM_REQUEST_TIMEOUT_MS
+  } = {}
+) {
   let lastError;
 
   for (let sourceIndex = 0; sourceIndex < PROXIES.length; sourceIndex++) {
     const makeUrl = PROXIES[sourceIndex];
     const requestUrl = makeUrl(url);
 
-    for (let attempt = 1; attempt <= MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE; attempt++) {
-      try {
-        const sourceLabel = sourceIndex === 0 ? "Draftsim direkt" : `Proxy ${sourceIndex}`;
-        const retryText = attempt > 1 ? `, Versuch ${attempt}` : "";
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const requestController = new AbortController();
+      let didTimeout = false;
+      const abortRequest = () => requestController.abort();
+      const timeoutId = setTimeout(() => {
+        didTimeout = true;
+        abortRequest();
+      }, requestTimeoutMs);
 
-        updateProgress(
-          4 + sourceIndex * 4 + attempt,
-          `${sourceLabel}${retryText}`
-        );
+      signal?.addEventListener("abort", abortRequest, { once: true });
+
+      try {
+        onAttempt?.(sourceIndex, attempt);
 
         const response = await fetch(requestUrl, {
-          signal,
+          signal: requestController.signal,
           cache: "no-store"
         });
 
@@ -247,39 +393,39 @@ async function fetchDraftsimHtml(url, signal) {
 
         const text = await response.text();
 
-        if (!/Rating:\s*\d/i.test(text)) {
-          throw new Error("Antwort enthaelt keine Ratings.");
+        if (isExpected && !isExpected(text)) {
+          throw new Error(invalidResponseMessage || "Antwort hat nicht das erwartete Format.");
         }
 
         return text;
       } catch (error) {
-        if (error.name === "AbortError") {
+        if (error.name === "AbortError" && signal?.aborted) {
           throw error;
         }
 
-        lastError = error;
+        lastError = didTimeout
+          ? new Error(`Zeitueberschreitung nach ${Math.round(requestTimeoutMs / 1000)} Sekunden.`)
+          : error;
 
         const canRetry =
-          attempt < MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE &&
-          (!error.status || RETRYABLE_STATUS_CODES.has(error.status));
+          attempt < maxAttempts &&
+          (!lastError.status || RETRYABLE_STATUS_CODES.has(lastError.status));
 
         if (!canRetry) {
           break;
         }
 
-        updateProgress(
-          6 + sourceIndex * 4 + attempt,
-          `Fehler ${error.status || ""} - versuche erneut`
-        );
+        onAttempt?.(sourceIndex, attempt + 1);
 
         await delay(retryDelay(attempt), signal);
+      } finally {
+        clearTimeout(timeoutId);
+        signal?.removeEventListener("abort", abortRequest);
       }
     }
   }
 
-  throw new Error(
-    `Draftsim konnte nicht geladen werden. Details: ${lastError?.message || lastError}`
-  );
+  throw lastError || new Error("Unbekannter Netzwerkfehler.");
 }
 
 function parseDraftsimReview(html, sourceUrl) {
@@ -943,9 +1089,13 @@ function setStatus(message, isError = false) {
 }
 
 function setBusy(isBusy) {
-  els.loadBtn.disabled = isBusy;
-  els.draftSelect.disabled = isBusy;
-  els.loadBtn.textContent = isBusy ? "Laedt..." : "Laden";
+  const busy = isBusy || isLoading || isCheckingLatest;
+
+  els.loadBtn.disabled = busy;
+  els.checkLatestBtn.disabled = busy;
+  els.draftSelect.disabled = busy;
+  els.loadBtn.textContent = isLoading ? "Laedt..." : "Laden";
+  els.checkLatestBtn.textContent = isCheckingLatest ? "Suche..." : "Neue Drafts suchen";
 }
 
 function showProgress(show) {
