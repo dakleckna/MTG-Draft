@@ -106,6 +106,7 @@ const PROXIES = [
 ];
 
 const DRAFT_MANIFEST_URL = "drafts.json";
+const UNTAPPED_META_MANIFEST_URL = "untapped-meta.json";
 const DISCOVERED_DRAFTS_STORAGE_KEY = "draft-reviewer.discovered-drafts.v1";
 const DRAFTSIM_REQUEST_TIMEOUT_MS = 15000;
 const RETRYABLE_STATUS_CODES = new Set([408, 409, 413, 425, 429, 500, 502, 503, 504]);
@@ -122,6 +123,12 @@ const els = {
   progressPercent: document.getElementById("progressPercent"),
   progressBar: document.getElementById("progressBar"),
   progressTime: document.getElementById("progressTime"),
+  untappedMeta: document.getElementById("untappedMeta"),
+  untappedMetaTitle: document.getElementById("untappedMetaTitle"),
+  untappedMetaDescription: document.getElementById("untappedMetaDescription"),
+  untappedMetaList: document.getElementById("untappedMetaList"),
+  untappedMetaUpdated: document.getElementById("untappedMetaUpdated"),
+  untappedMetaLink: document.getElementById("untappedMetaLink"),
   results: document.getElementById("results"),
   template: document.getElementById("cardTemplate"),
   toc: document.getElementById("toc"),
@@ -130,6 +137,7 @@ const els = {
 };
 
 const scryfallCache = new Map();
+let untappedMetaManifestPromise = null;
 
 let activeController = null;
 let isLoading = false;
@@ -167,6 +175,7 @@ async function loadSelectedDraft() {
   try {
     setBusy(true);
     clearOutput();
+    hideUntappedMeta();
     showProgress(true);
     hideToc();
     updateProgress(1, "Starte Ladevorgang");
@@ -201,6 +210,8 @@ async function loadSelectedDraft() {
     });
 
     buildToc(groups);
+
+    await renderUntappedMeta(draft);
 
     updateProgress(100, "Fertig");
     setStatus(`${draft.title} geladen.`);
@@ -255,6 +266,7 @@ async function checkForLatestDrafts() {
     renderDraftOptions(additions[0].url);
     clearOutput();
     hideToc();
+    hideUntappedMeta();
     showProgress(false);
     setStatus(`${additions.length} neue${additions.length === 1 ? "r Draft" : " Drafts"} hinzugefuegt.`);
   } catch (error) {
@@ -297,6 +309,100 @@ async function fetchPublishedDrafts() {
       url: draft.url,
       archetypeHint: draft.archetypeHint === "sos" ? "sos" : "generic"
     }));
+}
+
+async function fetchUntappedMetaManifest() {
+  if (!untappedMetaManifestPromise) {
+    untappedMetaManifestPromise = fetch(`${UNTAPPED_META_MANIFEST_URL}?updated=${Date.now()}`, {
+      cache: "no-store"
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+
+        return response.json();
+      })
+      .then(manifest => {
+        if (!manifest || typeof manifest !== "object" || !manifest.drafts) {
+          throw new Error("Die Untapped-Meta hat ein ungueltiges Format.");
+        }
+
+        return manifest;
+      });
+  }
+
+  return untappedMetaManifestPromise;
+}
+
+async function renderUntappedMeta(draft) {
+  try {
+    const manifest = await fetchUntappedMetaManifest();
+    const meta = manifest.drafts?.[draft.url];
+
+    if (!meta || !Array.isArray(meta.archetypes) || !meta.archetypes.length) {
+      hideUntappedMeta();
+      return;
+    }
+
+    els.untappedMetaTitle.textContent = `Beliebteste Farbkombinationen – ${draft.title}`;
+    els.untappedMetaDescription.textContent = "Meta-Anteil in Premier Draft: Diese Kombinationen werden am haeufigsten gedraftet.";
+    els.untappedMetaLink.href = meta.sourceUrl || "https://mtga.untapped.gg/limited/draft";
+    els.untappedMetaList.replaceChildren(
+      ...meta.archetypes.slice(0, 5).map((archetype, index) => {
+        const item = document.createElement("li");
+        item.className = "untapped-meta-item";
+
+        const rank = document.createElement("span");
+        rank.className = "untapped-meta-rank";
+        rank.textContent = `#${index + 1} gedraftet`;
+
+        const name = document.createElement("strong");
+        name.className = "untapped-meta-name";
+        name.textContent = archetype.name;
+
+        const share = document.createElement("span");
+        share.className = "untapped-meta-share";
+        share.textContent = formatPercent(archetype.popularity);
+
+        item.append(rank, name, share);
+        return item;
+      })
+    );
+    els.untappedMetaUpdated.textContent = meta.updatedAt
+      ? `Untapped-Datenstand: ${formatDateTime(meta.updatedAt)}.`
+      : "Quelle: Untapped.gg.";
+    els.untappedMeta.hidden = false;
+  } catch (error) {
+    console.warn("Untapped-Meta konnte nicht geladen werden.", error);
+    hideUntappedMeta();
+  }
+}
+
+function hideUntappedMeta() {
+  els.untappedMeta.hidden = true;
+  els.untappedMetaList.replaceChildren();
+  els.untappedMetaLink.removeAttribute("href");
+}
+
+function formatPercent(value) {
+  const number = Number(value);
+  return Number.isFinite(number)
+    ? `${number.toLocaleString("de-DE", { maximumFractionDigits: 1 })} % Meta-Anteil`
+    : "–";
+}
+
+function formatDateTime(value) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("de-DE", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  }).format(date);
 }
 
 function readDiscoveredDrafts() {
@@ -1079,6 +1185,7 @@ function clearOutput() {
 function resetView() {
   clearOutput();
   hideToc();
+  hideUntappedMeta();
   showProgress(false);
   setStatus("Draft auswaehlen und auf Laden klicken.");
 }

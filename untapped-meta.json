@@ -1,0 +1,707 @@
+{
+  "generatedAt": "2026-08-29T18:43:40.793Z",
+  "drafts": {
+    "https://draftsim.com/mtg-hob-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-hobbit/tier-list",
+      "updatedAt": "2026-08-29T17:40:06.000Z",
+      "archetypes": [
+        {
+          "name": "Rakdos",
+          "popularity": 25.4
+        },
+        {
+          "name": "Golgari",
+          "popularity": 18.8
+        },
+        {
+          "name": "Boros",
+          "popularity": 18.1
+        },
+        {
+          "name": "Azorius",
+          "popularity": 14.5
+        },
+        {
+          "name": "Simic",
+          "popularity": 8.8
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-msh-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/marvel-super-heroes/tier-list",
+      "updatedAt": "2026-08-29T17:23:33.000Z",
+      "archetypes": [
+        {
+          "name": "Azorius",
+          "popularity": 17.3
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 9.9
+        },
+        {
+          "name": "Dimir",
+          "popularity": 8.3
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 7.1
+        },
+        {
+          "name": "Simic",
+          "popularity": 6.9
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-sos-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/secrets-of-strixhaven/tier-list",
+      "updatedAt": "2026-08-29T17:15:38.000Z",
+      "archetypes": [
+        {
+          "name": "Boros",
+          "popularity": 17.4
+        },
+        {
+          "name": "Golgari",
+          "popularity": 16.6
+        },
+        {
+          "name": "Izzet",
+          "popularity": 16.3
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 15.4
+        },
+        {
+          "name": "Simic",
+          "popularity": 10.2
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-tmt-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/teenage-mutant-ninja-turtles/tier-list",
+      "updatedAt": "2026-08-29T17:29:56.000Z",
+      "archetypes": [
+        {
+          "name": "Orzhov",
+          "popularity": 24.1
+        },
+        {
+          "name": "Izzet",
+          "popularity": 18.6
+        },
+        {
+          "name": "Golgari",
+          "popularity": 13.8
+        },
+        {
+          "name": "Boros",
+          "popularity": 10.9
+        },
+        {
+          "name": "Simic",
+          "popularity": 9
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-ecl-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/lorwyn-eclipsed/tier-list",
+      "updatedAt": "2026-08-29T18:20:01.000Z",
+      "archetypes": [
+        {
+          "name": "Golgari",
+          "popularity": 19.1
+        },
+        {
+          "name": "Azorius",
+          "popularity": 15.5
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 14.2
+        },
+        {
+          "name": "Izzet",
+          "popularity": 13
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 12.3
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-tla-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/avatar-the-last-airbender/tier-list",
+      "updatedAt": "2026-08-29T17:00:05.000Z",
+      "archetypes": [
+        {
+          "name": "Azorius",
+          "popularity": 11.7
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 8.7
+        },
+        {
+          "name": "Dimir",
+          "popularity": 8.7
+        },
+        {
+          "name": "Izzet",
+          "popularity": 7.2
+        },
+        {
+          "name": "Boros",
+          "popularity": 6.9
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-eoe-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/edge-of-eternities/tier-list",
+      "updatedAt": "2026-08-29T17:34:58.000Z",
+      "archetypes": [
+        {
+          "name": "Orzhov",
+          "popularity": 11
+        },
+        {
+          "name": "Azorius",
+          "popularity": 10.2
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 10
+        },
+        {
+          "name": "Gruul",
+          "popularity": 9.8
+        },
+        {
+          "name": "Dimir",
+          "popularity": 9.5
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-fin-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/final-fantasy/tier-list",
+      "updatedAt": "2026-08-29T18:04:18.000Z",
+      "archetypes": [
+        {
+          "name": "Izzet",
+          "popularity": 13.6
+        },
+        {
+          "name": "Golgari",
+          "popularity": 11.4
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 9.4
+        },
+        {
+          "name": "Dimir",
+          "popularity": 8.3
+        },
+        {
+          "name": "Azorius",
+          "popularity": 7.7
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-tdm-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/tarkir-dragonstorm/tier-list",
+      "updatedAt": "2026-08-29T18:13:10.000Z",
+      "archetypes": [
+        {
+          "name": "Jund",
+          "popularity": 15.5
+        },
+        {
+          "name": "Jeskai",
+          "popularity": 12
+        },
+        {
+          "name": "Sultai",
+          "popularity": 11.7
+        },
+        {
+          "name": "Mardu",
+          "popularity": 11.4
+        },
+        {
+          "name": "Boros",
+          "popularity": 11.2
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-dft-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/aetherdrift/tier-list",
+      "updatedAt": "2026-08-29T17:49:51.000Z",
+      "archetypes": [
+        {
+          "name": "Golgari",
+          "popularity": 12.8
+        },
+        {
+          "name": "Simic",
+          "popularity": 11
+        },
+        {
+          "name": "Dimir",
+          "popularity": 9.3
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 8.1
+        },
+        {
+          "name": "Izzet",
+          "popularity": 8.1
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-fdn-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/foundations/tier-list",
+      "updatedAt": "2026-08-29T17:26:46.000Z",
+      "archetypes": [
+        {
+          "name": "Azorius",
+          "popularity": 11.9
+        },
+        {
+          "name": "Dimir",
+          "popularity": 10.6
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 10.6
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 9.3
+        },
+        {
+          "name": "Gruul",
+          "popularity": 8.5
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-dsk-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/duskmourn-house-of-horror/tier-list",
+      "updatedAt": "2026-08-29T17:18:45.000Z",
+      "archetypes": [
+        {
+          "name": "Azorius",
+          "popularity": 16.2
+        },
+        {
+          "name": "Boros",
+          "popularity": 12.9
+        },
+        {
+          "name": "Simic",
+          "popularity": 11.8
+        },
+        {
+          "name": "Gruul",
+          "popularity": 11.8
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 7.2
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-blb-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/bloomburrow/tier-list",
+      "updatedAt": "2026-08-29T18:02:29.000Z",
+      "archetypes": [
+        {
+          "name": "Simic",
+          "popularity": 13.9
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 12.5
+        },
+        {
+          "name": "Golgari",
+          "popularity": 11.1
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 10
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 9.9
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-mh3-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/modern-horizons-3/tier-list",
+      "updatedAt": "2026-08-29T18:02:02.000Z",
+      "archetypes": [
+        {
+          "name": "Boros",
+          "popularity": 11.1
+        },
+        {
+          "name": "Jund",
+          "popularity": 10.4
+        },
+        {
+          "name": "Simic",
+          "popularity": 9.7
+        },
+        {
+          "name": "Dimir",
+          "popularity": 8.7
+        },
+        {
+          "name": "Gruul",
+          "popularity": 7.7
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-otj-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/outlaws-of-thunder-junction/tier-list",
+      "updatedAt": "2026-08-29T17:51:55.000Z",
+      "archetypes": [
+        {
+          "name": "Selesnya",
+          "popularity": 16.4
+        },
+        {
+          "name": "Golgari",
+          "popularity": 9.9
+        },
+        {
+          "name": "Dimir",
+          "popularity": 8.8
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 7.9
+        },
+        {
+          "name": "Gruul",
+          "popularity": 5.9
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-mkm-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/murders-at-karlov-manor/tier-list",
+      "updatedAt": "2026-08-29T17:55:56.000Z",
+      "archetypes": [
+        {
+          "name": "Boros",
+          "popularity": 11.2
+        },
+        {
+          "name": "Simic",
+          "popularity": 8.7
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 8
+        },
+        {
+          "name": "Izzet",
+          "popularity": 7.9
+        },
+        {
+          "name": "Azorius",
+          "popularity": 6.8
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-lci-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-lost-caverns-of-ixalan/tier-list",
+      "updatedAt": "2026-08-29T18:18:05.000Z",
+      "archetypes": [
+        {
+          "name": "Izzet",
+          "popularity": 14
+        },
+        {
+          "name": "Gruul",
+          "popularity": 13.7
+        },
+        {
+          "name": "Azorius",
+          "popularity": 13.3
+        },
+        {
+          "name": "Boros",
+          "popularity": 10.8
+        },
+        {
+          "name": "Golgari",
+          "popularity": 8.6
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-woe-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/wilds-of-eldraine/tier-list",
+      "updatedAt": "2026-08-29T18:28:19.000Z",
+      "archetypes": [
+        {
+          "name": "Rakdos",
+          "popularity": 13.7
+        },
+        {
+          "name": "Boros",
+          "popularity": 12.6
+        },
+        {
+          "name": "Golgari",
+          "popularity": 11.6
+        },
+        {
+          "name": "Dimir",
+          "popularity": 11.4
+        },
+        {
+          "name": "Gruul",
+          "popularity": 8.1
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-ltr-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-lord-of-the-rings-tales-of-middle-earth/tier-list",
+      "updatedAt": "2026-08-29T17:32:10.000Z",
+      "archetypes": [
+        {
+          "name": "Rakdos",
+          "popularity": 18.4
+        },
+        {
+          "name": "Izzet",
+          "popularity": 14.8
+        },
+        {
+          "name": "Dimir",
+          "popularity": 12.1
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 9.7
+        },
+        {
+          "name": "Boros",
+          "popularity": 8.9
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-mom-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/march-of-the-machine/tier-list",
+      "updatedAt": "2026-08-29T18:03:51.000Z",
+      "archetypes": [
+        {
+          "name": "Dimir",
+          "popularity": 14.2
+        },
+        {
+          "name": "Azorius",
+          "popularity": 12.8
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 8.4
+        },
+        {
+          "name": "Izzet",
+          "popularity": 7.6
+        },
+        {
+          "name": "Golgari",
+          "popularity": 7.4
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-one-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/phyrexia-all-will-be-one/tier-list",
+      "updatedAt": "2026-08-29T18:00:06.000Z",
+      "archetypes": [
+        {
+          "name": "Gruul",
+          "popularity": 20.7
+        },
+        {
+          "name": "Boros",
+          "popularity": 12.2
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 9
+        },
+        {
+          "name": "Dimir",
+          "popularity": 8.4
+        },
+        {
+          "name": "Golgari",
+          "popularity": 8.3
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-bro-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-brothers-war/tier-list",
+      "updatedAt": "2026-08-29T17:27:31.000Z",
+      "archetypes": [
+        {
+          "name": "Azorius",
+          "popularity": 15.4
+        },
+        {
+          "name": "Golgari",
+          "popularity": 10.7
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 10.1
+        },
+        {
+          "name": "Boros",
+          "popularity": 9.3
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 7.6
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-dmu-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/dominaria-united/tier-list",
+      "updatedAt": "2026-08-29T18:16:18.000Z",
+      "archetypes": [
+        {
+          "name": "Izzet",
+          "popularity": 10.8
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 9.9
+        },
+        {
+          "name": "Boros",
+          "popularity": 8.1
+        },
+        {
+          "name": "Dimir",
+          "popularity": 6.8
+        },
+        {
+          "name": "Sultai",
+          "popularity": 6.2
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-snc-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/streets-of-new-capenna/tier-list",
+      "updatedAt": "2026-08-29T18:14:32.000Z",
+      "archetypes": [
+        {
+          "name": "Bant",
+          "popularity": 22.8
+        },
+        {
+          "name": "Esper",
+          "popularity": 15.1
+        },
+        {
+          "name": "Grixis",
+          "popularity": 14.9
+        },
+        {
+          "name": "Naya",
+          "popularity": 10.5
+        },
+        {
+          "name": "Temur",
+          "popularity": 7.3
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-neo-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/kamigawa-neon-dynasty/tier-list",
+      "updatedAt": "2026-08-29T17:19:07.000Z",
+      "archetypes": [
+        {
+          "name": "Dimir",
+          "popularity": 17.2
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 13.6
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 13.3
+        },
+        {
+          "name": "Izzet",
+          "popularity": 7.9
+        },
+        {
+          "name": "Boros",
+          "popularity": 6.1
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-vow-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/innistrad-crimson-vow/tier-list",
+      "updatedAt": "2026-08-29T17:55:51.000Z",
+      "archetypes": [
+        {
+          "name": "Rakdos",
+          "popularity": 17.6
+        },
+        {
+          "name": "Azorius",
+          "popularity": 11.2
+        },
+        {
+          "name": "Izzet",
+          "popularity": 10.5
+        },
+        {
+          "name": "Dimir",
+          "popularity": 10.2
+        },
+        {
+          "name": "Gruul",
+          "popularity": 10
+        }
+      ]
+    },
+    "https://draftsim.com/mtg-mid-limited-set-review/": {
+      "sourceUrl": "https://mtga.untapped.gg/limited/draft/innistrad-midnight-hunt/tier-list",
+      "updatedAt": "2026-08-29T17:24:35.000Z",
+      "archetypes": [
+        {
+          "name": "Dimir",
+          "popularity": 22.3
+        },
+        {
+          "name": "Azorius",
+          "popularity": 12.2
+        },
+        {
+          "name": "Orzhov",
+          "popularity": 11.7
+        },
+        {
+          "name": "Rakdos",
+          "popularity": 8.2
+        },
+        {
+          "name": "Selesnya",
+          "popularity": 7.8
+        }
+      ]
+    }
+  }
+}

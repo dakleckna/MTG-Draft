@@ -180,6 +180,99 @@ button:disabled {
   font-size: 0.82rem;
 }
 
+.untapped-meta {
+  margin: 8px 0 20px;
+  padding: 18px;
+  border: 1px solid #332b45;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #181321, #251c34);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(23, 17, 32, 0.16);
+}
+
+.untapped-meta-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: #d4c1ef;
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.untapped-meta h2 {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  letter-spacing: -0.03em;
+}
+
+.untapped-meta a {
+  flex: 0 0 auto;
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.untapped-meta-description {
+  margin: 8px 0 14px;
+  color: #ddd2eb;
+}
+
+.untapped-meta-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.untapped-meta-item {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.untapped-meta-rank {
+  display: block;
+  margin-bottom: 7px;
+  color: #cdb6ee;
+  font-size: 0.75rem;
+  font-weight: 850;
+}
+
+.untapped-meta-name {
+  display: block;
+  overflow: hidden;
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.untapped-meta-share {
+  display: block;
+  margin-top: 7px;
+  color: #cdb6ee;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.untapped-meta-updated {
+  margin: 13px 0 0;
+  color: #bbaece;
+  font-size: 0.78rem;
+}
+
 .group-title {
   margin: 28px 0 12px;
   padding: 14px 16px;
@@ -509,6 +602,14 @@ button:disabled {
 
   .progress {
     border-radius: 14px;
+  }
+
+  .untapped-meta-heading {
+    align-items: start;
+  }
+
+  .untapped-meta-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .toc {
