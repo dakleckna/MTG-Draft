@@ -211,9 +211,8 @@ async function loadSelectedDraft() {
     buildToc(groups);
 
     renderUntappedMeta(untappedMeta);
-
-    updateProgress(100, "Fertig");
-    setStatus(`${draft.title} geladen.`);
+    showProgress(false);
+    setStatus("");
   } catch (error) {
     if (error.name !== "AbortError") {
       console.error(error);
@@ -1247,6 +1246,7 @@ function resetView() {
 
 function setStatus(message, isError = false) {
   els.status.textContent = message || "";
+  els.status.hidden = !message;
   els.status.classList.toggle("error", Boolean(isError));
 }
 
