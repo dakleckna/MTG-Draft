@@ -125,6 +125,7 @@ const els = {
   progressTime: document.getElementById("progressTime"),
   untappedMeta: document.getElementById("untappedMeta"),
   untappedMetaList: document.getElementById("untappedMetaList"),
+  untappedMetaLink: document.getElementById("untappedMetaLink"),
   results: document.getElementById("results"),
   template: document.getElementById("cardTemplate"),
   toc: document.getElementById("toc"),
@@ -364,13 +365,14 @@ function renderUntappedMeta(meta) {
 
     const mana = document.createElement("div");
     mana.className = "untapped-meta-mana";
+    mana.setAttribute("role", "img");
     const colors = colorsForName(archetype.name) || [];
     mana.setAttribute("aria-label", colors.join("") || archetype.name);
 
     for (const color of normalizeColors(colors)) {
-      const symbol = document.createElement("span");
-      symbol.className = `mana-symbol mana-${color}`;
-      symbol.textContent = color;
+      const symbol = document.createElement("i");
+      symbol.className = `ms ms-cost ms-${color.toLowerCase()} ms-shadow`;
+      symbol.setAttribute("aria-hidden", "true");
       mana.appendChild(symbol);
     }
 
@@ -393,6 +395,9 @@ function renderUntappedMeta(meta) {
   }
 
   els.untappedMetaList.replaceChildren(...items);
+  const hasSourceLink = typeof meta.sourceUrl === "string" && meta.sourceUrl.startsWith("https://");
+  els.untappedMetaLink.hidden = !hasSourceLink;
+  els.untappedMetaLink.href = hasSourceLink ? meta.sourceUrl : "#";
   els.untappedMeta.hidden = false;
 }
 
@@ -429,6 +434,8 @@ function prioritizeArchetypes(archetypes, meta) {
 function hideUntappedMeta() {
   els.untappedMeta.hidden = true;
   els.untappedMetaList.replaceChildren();
+  els.untappedMetaLink.hidden = true;
+  els.untappedMetaLink.removeAttribute("href");
 }
 
 function formatPercent(value) {

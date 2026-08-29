@@ -181,13 +181,14 @@ button:disabled {
 }
 
 .untapped-meta {
+  position: relative;
   margin: 8px 0 20px;
-  border: 1px solid #332b45;
-  border-radius: 14px;
+  padding: 8px 12px 34px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
   overflow: hidden;
-  background: #1f1f1f;
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(23, 17, 32, 0.16);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
 }
 
 .untapped-meta-list {
@@ -202,8 +203,8 @@ button:disabled {
   justify-content: space-between;
   gap: 16px;
   min-width: 0;
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 11px 8px;
+  border-bottom: 1px solid var(--line);
 }
 
 .untapped-meta-item:last-child {
@@ -219,35 +220,19 @@ button:disabled {
 
 .untapped-meta-mana {
   display: flex;
+  align-items: center;
+  gap: 4px;
   flex: 0 0 auto;
-  margin-right: -4px;
 }
 
-.mana-symbol {
-  display: grid;
-  width: 21px;
-  height: 21px;
-  margin-right: -4px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  color: #fff;
-  font-size: 0.68rem;
-  font-weight: 850;
-  line-height: 1;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+.untapped-meta-mana .ms {
+  font-size: 1.15rem;
 }
-
-.mana-W { background: #f8f6ed; color: #605a4c; text-shadow: none; }
-.mana-U { background: #4d92ca; }
-.mana-B { background: #343035; }
-.mana-R { background: #d25846; }
-.mana-G { background: #4c9966; }
 
 .untapped-meta-name {
   overflow: hidden;
-  color: #fff;
-  font-size: 0.95rem;
+  color: var(--text);
+  font-size: 0.96rem;
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -255,9 +240,24 @@ button:disabled {
 
 .untapped-meta-share {
   flex: 0 0 auto;
-  color: #d8c4f2;
-  font-size: 0.95rem;
+  color: var(--muted);
+  font-size: 0.9rem;
   font-weight: 800;
+}
+
+.untapped-meta-link {
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-decoration-color: rgba(0, 0, 0, 0.28);
+  text-underline-offset: 3px;
+}
+
+.untapped-meta-link:hover {
+  color: var(--text);
 }
 
 .group-title {

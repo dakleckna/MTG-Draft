@@ -4,7 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Draft ReViewer</title>
-  <link rel="stylesheet" href="styles.css?v=compact-meta-6def713" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mana-font@1.18.0/css/mana.min.css" />
+  <link rel="stylesheet" href="styles.css?v=meta-ui-2" />
 </head>
 <body>
 
@@ -36,6 +37,9 @@
 
     <section id="untappedMeta" class="untapped-meta" aria-label="Untapped Meta" aria-live="polite" hidden>
       <ol id="untappedMetaList" class="untapped-meta-list"></ol>
+      <a id="untappedMetaLink" class="untapped-meta-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+        Tierlist öffnen <span aria-hidden="true">↗</span>
+      </a>
     </section>
 
     <section id="results" class="results"></section>
@@ -63,6 +67,6 @@
     </article>
   </template>
 
-  <script src="app.js?v=compact-meta-6def713"></script>
+  <script src="app.js?v=meta-ui-2"></script>
 </body>
 </html>
