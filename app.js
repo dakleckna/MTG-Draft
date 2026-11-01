@@ -135,6 +135,7 @@ const els = {
 
 const scryfallCache = new Map();
 let untappedMetaManifestPromise = null;
+let cardStatsPromise = null;
 
 let activeController = null;
 let isLoading = false;
@@ -144,6 +145,15 @@ let currentSegmentStartedAt = 0;
 let segmentTimer = null;
 
 function init() {
+  const dialog = document.getElementById("metaCardsDialog");
+  document.getElementById("metaCardsClose").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", event => {
+    if (event.target === dialog) {
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    }
+  });
+  dialog.addEventListener("close", () => document.body.classList.remove("dialog-open"));
   restoreDiscoveredDrafts();
   renderDraftOptions();
 
@@ -342,7 +352,22 @@ async function fetchUntappedMeta(draft) {
       return null;
     }
 
-    return meta;
+    if (!cardStatsPromise) {
+      cardStatsPromise = fetch(`card-stats.json?updated=${Date.now()}`, { cache: "no-store" })
+        .then(response => response.ok ? response.json() : null)
+        .catch(() => null);
+    }
+    const stats = (await cardStatsPromise)?.drafts?.[draft.url];
+    return {
+      ...meta,
+      cardsSourceUrl: "https://www.17lands.com/public_datasets",
+      cardsSource: stats?.source,
+      cardsUpdatedAt: stats?.sourceModifiedAt || stats?.updatedAt,
+      archetypes: meta.archetypes.map(archetype => {
+        const data = stats?.archetypes?.find(a => a.name === archetype.name);
+        return { ...archetype, topCards: data?.topCards || [], analyzedGames: data?.games || 0 };
+      })
+    };
   } catch (error) {
     console.warn("Untapped-Meta konnte nicht geladen werden.", error);
     return null;
@@ -358,6 +383,12 @@ function renderUntappedMeta(meta) {
   const items = meta.archetypes.slice(0, 5).map(archetype => {
     const item = document.createElement("li");
     item.className = "untapped-meta-item";
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "untapped-meta-trigger";
+    trigger.setAttribute("aria-label", `${archetype.name}: häufigste Karten anzeigen`);
+    trigger.setAttribute("aria-haspopup", "dialog");
+    trigger.addEventListener("click", () => showMetaCards(archetype, meta));
 
     const archetypeElement = document.createElement("div");
     archetypeElement.className = "untapped-meta-archetype";
@@ -382,9 +413,14 @@ function renderUntappedMeta(meta) {
     const share = document.createElement("span");
     share.className = "untapped-meta-share";
     share.textContent = formatPercent(archetype.popularity);
+    const arrow = document.createElement("span");
+    arrow.className = "meta-row-arrow";
+    arrow.textContent = "›";
+    arrow.setAttribute("aria-hidden", "true");
 
     archetypeElement.append(mana, name);
-    item.append(archetypeElement, share);
+    trigger.append(archetypeElement, share, arrow);
+    item.append(trigger);
     return item;
   });
 
@@ -431,10 +467,55 @@ function prioritizeArchetypes(archetypes, meta) {
 }
 
 function hideUntappedMeta() {
+  document.getElementById("metaCardsDialog").close();
   els.untappedMeta.hidden = true;
   els.untappedMetaList.replaceChildren();
   els.untappedMetaLink.hidden = true;
   els.untappedMetaLink.removeAttribute("href");
+}
+
+function showMetaCards(archetype, meta) {
+  const dialog = document.getElementById("metaCardsDialog");
+  const cards = (archetype.topCards || []).slice(0, 20);
+  document.getElementById("metaCardsTitle").textContent = archetype.name;
+  const description = document.getElementById("metaCardsDescription");
+  description.hidden = cards.length > 0;
+  description.textContent = cards.length ? "" : "Keine Kartendaten verfügbar.";
+  const grid = document.getElementById("metaCardsGrid");
+  grid.replaceChildren(...cards.map((card, index) => {
+    const item = document.createElement("li");
+    item.className = "meta-card";
+    const link = document.createElement("a");
+    link.href = card.url || `https://scryfall.com/search?q=${encodeURIComponent(card.name)}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    const image = document.createElement("img");
+    image.alt = card.name;
+    image.loading = index < 5 ? "eager" : "lazy";
+    image.width = 488;
+    image.height = 680;
+    if (card.image) image.src = card.image;
+    image.addEventListener("error", () => { image.hidden = true; });
+    const rank = document.createElement("span");
+    rank.className = "meta-card-rank";
+    rank.textContent = `#${index + 1}`;
+    const name = document.createElement("strong");
+    name.textContent = card.name;
+    const rate = document.createElement("span");
+    rate.className = "meta-card-count";
+    rate.textContent = `${formatPercent(card.winRate)} WR`;
+    rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte im Hauptdeck (${card.wins.toLocaleString("de-DE")} Siege). Quelle: 17Lands, passende Hauptfarben.`;
+    link.append(image, rank, name, rate);
+    item.append(link);
+    return item;
+  }));
+  const source = document.getElementById("metaCardsSource");
+  source.href = meta.cardsSourceUrl || meta.sourceUrl;
+  source.textContent = meta.cardsSource
+    ? `17Lands · ${(archetype.analyzedGames || 0).toLocaleString("de-DE")} Spiele · CC BY 4.0${meta.cardsUpdatedAt ? ` · ${new Date(meta.cardsUpdatedAt).toLocaleDateString("de-DE")}` : ""} ↗`
+    : "17Lands · Datensätze ↗";
+  document.body.classList.add("dialog-open");
+  dialog.showModal();
 }
 
 function formatPercent(value) {

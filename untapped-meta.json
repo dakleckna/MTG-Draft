@@ -1,731 +1,1151 @@
 {
-  "generatedAt": "2026-11-01T13:33:52.217Z",
+  "generatedAt": "2026-11-01T17:30:23.214Z",
   "drafts": {
     "https://draftsim.com/mtg-fra-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/reality-fracture/tier-list",
-      "updatedAt": "2026-11-01T12:50:08.000Z",
+      "updatedAt": "2026-11-01T16:38:19.000Z",
       "archetypes": [
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 11.8
+          "popularity": 11.8,
+          "games": 131423,
+          "wins": 70870
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 10.3
+          "popularity": 10.3,
+          "games": 113836,
+          "wins": 60955
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 10
+          "popularity": 10,
+          "games": 110470,
+          "wins": 57906
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 9.6
+          "popularity": 9.6,
+          "games": 105532,
+          "wins": 55776
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 7.2
+          "popularity": 7.2,
+          "games": 79503,
+          "wins": 41713
         }
       ]
     },
     "https://draftsim.com/mtg-hob-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-hobbit/tier-list",
-      "updatedAt": "2026-11-01T12:32:21.000Z",
+      "updatedAt": "2026-11-01T17:07:33.000Z",
       "archetypes": [
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 25.2
+          "popularity": 25.2,
+          "games": 224006,
+          "wins": 122381
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 18.7
+          "popularity": 18.7,
+          "games": 164831,
+          "wins": 88782
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 18.1
+          "popularity": 18.1,
+          "games": 156222,
+          "wins": 83192
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 14.8
+          "popularity": 14.8,
+          "games": 125713,
+          "wins": 65865
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 8.3
+          "popularity": 8.3,
+          "games": 68212,
+          "wins": 33763
         }
       ]
     },
     "https://draftsim.com/mtg-msh-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/marvel-super-heroes/tier-list",
-      "updatedAt": "2026-11-01T12:30:47.000Z",
+      "updatedAt": "2026-11-01T16:19:02.000Z",
       "archetypes": [
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 17.3
+          "popularity": 17.3,
+          "games": 200077,
+          "wins": 112463
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 9.9
+          "popularity": 9.9,
+          "games": 112274,
+          "wins": 61070
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 8.4
+          "popularity": 8.4,
+          "games": 91303,
+          "wins": 47537
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 7.1
+          "popularity": 7.1,
+          "games": 76472,
+          "wins": 38916
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 6.8
+          "popularity": 6.8,
+          "games": 77917,
+          "wins": 42513
         }
       ]
     },
     "https://draftsim.com/mtg-sos-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/secrets-of-strixhaven/tier-list",
-      "updatedAt": "2026-11-01T12:55:06.000Z",
+      "updatedAt": "2026-11-01T16:36:03.000Z",
       "archetypes": [
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 17.4
+          "popularity": 17.4,
+          "games": 282845,
+          "wins": 154250
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 16.6
+          "popularity": 16.6,
+          "games": 265380,
+          "wins": 140710
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 16.3
+          "popularity": 16.3,
+          "games": 252976,
+          "wins": 130175
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 15.4
+          "popularity": 15.4,
+          "games": 253534,
+          "wins": 139892
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 10.2
+          "popularity": 10.2,
+          "games": 162178,
+          "wins": 85318
         }
       ]
     },
     "https://draftsim.com/mtg-tmt-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/teenage-mutant-ninja-turtles/tier-list",
-      "updatedAt": "2026-11-01T12:20:35.000Z",
+      "updatedAt": "2026-11-01T15:27:50.000Z",
       "archetypes": [
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 24.1
+          "popularity": 24.1,
+          "games": 140070,
+          "wins": 77819
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 18.6
+          "popularity": 18.6,
+          "games": 107083,
+          "wins": 58646
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 13.8
+          "popularity": 13.8,
+          "games": 77153,
+          "wins": 40902
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 10.9
+          "popularity": 10.9,
+          "games": 61227,
+          "wins": 32494
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 9
+          "popularity": 9,
+          "games": 48931,
+          "wins": 25104
         }
       ]
     },
     "https://draftsim.com/mtg-ecl-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/lorwyn-eclipsed/tier-list",
-      "updatedAt": "2026-11-01T13:07:59.000Z",
+      "updatedAt": "2026-11-01T17:02:01.000Z",
       "archetypes": [
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 19.1
+          "popularity": 19.1,
+          "games": 266264,
+          "wins": 144126
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 15.5
+          "popularity": 15.5,
+          "games": 216458,
+          "wins": 116585
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 14.2
+          "popularity": 14.2,
+          "games": 199221,
+          "wins": 107564
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 13
+          "popularity": 13,
+          "games": 179554,
+          "wins": 96136
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 12.3
+          "popularity": 12.3,
+          "games": 164216,
+          "wins": 84152
         }
       ]
     },
     "https://draftsim.com/mtg-tla-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/avatar-the-last-airbender/tier-list",
-      "updatedAt": "2026-11-01T13:05:33.000Z",
+      "updatedAt": "2026-11-01T16:19:13.000Z",
       "archetypes": [
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 11.7
+          "popularity": 11.7,
+          "games": 2260,
+          "wins": 1230
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 8.7
+          "popularity": 8.7,
+          "games": 1780,
+          "wins": 1002
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 8.7
+          "popularity": 8.7,
+          "games": 1745,
+          "wins": 955
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 7.2
+          "popularity": 7.2,
+          "games": 1413,
+          "wins": 768
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 6.9
+          "popularity": 6.9,
+          "games": 1392,
+          "wins": 767
         }
       ]
     },
     "https://draftsim.com/mtg-eoe-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/edge-of-eternities/tier-list",
-      "updatedAt": "2026-11-01T12:22:31.000Z",
+      "updatedAt": "2026-11-01T15:43:22.000Z",
       "archetypes": [
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 11.1
+          "popularity": 11.1,
+          "games": 3068,
+          "wins": 1680
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 10.2
+          "popularity": 10.2,
+          "games": 2715,
+          "wins": 1404
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 10
+          "popularity": 10,
+          "games": 2730,
+          "wins": 1433
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 9.8
+          "popularity": 9.8,
+          "games": 2789,
+          "wins": 1514
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 9.5
+          "popularity": 9.5,
+          "games": 2635,
+          "wins": 1441
         }
       ]
     },
     "https://draftsim.com/mtg-fin-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/final-fantasy/tier-list",
-      "updatedAt": "2026-11-01T12:13:16.000Z",
+      "updatedAt": "2026-11-01T16:16:33.000Z",
       "archetypes": [
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 13.6
+          "popularity": 13.6,
+          "games": 5549,
+          "wins": 3121
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 11.4
+          "popularity": 11.4,
+          "games": 4635,
+          "wins": 2580
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 9.4
+          "popularity": 9.4,
+          "games": 3722,
+          "wins": 2028
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 8.3
+          "popularity": 8.3,
+          "games": 3346,
+          "wins": 1840
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 7.7
+          "popularity": 7.7,
+          "games": 3094,
+          "wins": 1671
         }
       ]
     },
     "https://draftsim.com/mtg-tdm-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/tarkir-dragonstorm/tier-list",
-      "updatedAt": "2026-11-01T13:10:58.000Z",
+      "updatedAt": "2026-11-01T16:24:34.000Z",
       "archetypes": [
         {
+          "id": 26,
           "name": "Jund",
-          "popularity": 15.5
+          "popularity": 15.5,
+          "games": 2839,
+          "wins": 1525
         },
         {
+          "id": 11,
           "name": "Jeskai",
-          "popularity": 12
+          "popularity": 12,
+          "games": 2120,
+          "wins": 1075
         },
         {
+          "id": 22,
           "name": "Sultai",
-          "popularity": 11.7
+          "popularity": 11.7,
+          "games": 2104,
+          "wins": 1098
         },
         {
+          "id": 13,
           "name": "Mardu",
-          "popularity": 11.4
+          "popularity": 11.4,
+          "games": 1998,
+          "wins": 979
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 11.2
+          "popularity": 11.2,
+          "games": 2240,
+          "wins": 1291
         }
       ]
     },
     "https://draftsim.com/mtg-dft-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/aetherdrift/tier-list",
-      "updatedAt": "2026-11-01T12:32:18.000Z",
+      "updatedAt": "2026-11-01T16:26:05.000Z",
       "archetypes": [
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 12.8
+          "popularity": 12.8,
+          "games": 2014,
+          "wins": 1096
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 11
+          "popularity": 11,
+          "games": 1764,
+          "wins": 964
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 9.3
+          "popularity": 9.3,
+          "games": 1462,
+          "wins": 784
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 8.1
+          "popularity": 8.1,
+          "games": 1267,
+          "wins": 696
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 8.1
+          "popularity": 8.1,
+          "games": 1273,
+          "wins": 683
         }
       ]
     },
     "https://draftsim.com/mtg-fdn-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/foundations/tier-list",
-      "updatedAt": "2026-11-01T12:16:09.000Z",
+      "updatedAt": "2026-11-01T17:02:50.000Z",
       "archetypes": [
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 11.9
+          "popularity": 11.9,
+          "games": 4580,
+          "wins": 2555
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 10.6
+          "popularity": 10.6,
+          "games": 4092,
+          "wins": 2275
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 10.6
+          "popularity": 10.6,
+          "games": 4247,
+          "wins": 2394
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 9.3
+          "popularity": 9.3,
+          "games": 3712,
+          "wins": 2067
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 8.5
+          "popularity": 8.5,
+          "games": 3517,
+          "wins": 2053
         }
       ]
     },
     "https://draftsim.com/mtg-dsk-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/duskmourn-house-of-horror/tier-list",
-      "updatedAt": "2026-11-01T13:09:04.000Z",
+      "updatedAt": "2026-11-01T16:21:52.000Z",
       "archetypes": [
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 16.2
+          "popularity": 16.2,
+          "games": 3930,
+          "wins": 2133
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 12.9
+          "popularity": 12.9,
+          "games": 3283,
+          "wins": 1804
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 11.8
+          "popularity": 11.8,
+          "games": 2834,
+          "wins": 1547
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 11.8
+          "popularity": 11.8,
+          "games": 2946,
+          "wins": 1613
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 7.2
+          "popularity": 7.2,
+          "games": 1783,
+          "wins": 977
         }
       ]
     },
     "https://draftsim.com/mtg-blb-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/bloomburrow/tier-list",
-      "updatedAt": "2026-11-01T12:56:56.000Z",
+      "updatedAt": "2026-11-01T15:26:25.000Z",
       "archetypes": [
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 13.9
+          "popularity": 13.9,
+          "games": 3817,
+          "wins": 2074
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 12.6
+          "popularity": 12.6,
+          "games": 3427,
+          "wins": 1883
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 11.1
+          "popularity": 11.1,
+          "games": 3073,
+          "wins": 1714
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 10
+          "popularity": 10,
+          "games": 2675,
+          "wins": 1448
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 10
+          "popularity": 10,
+          "games": 2744,
+          "wins": 1527
         }
       ]
     },
     "https://draftsim.com/mtg-mh3-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/modern-horizons-3/tier-list",
-      "updatedAt": "2026-11-01T13:12:30.000Z",
+      "updatedAt": "2026-11-01T16:54:26.000Z",
       "archetypes": [
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 11.6
+          "popularity": 11.6,
+          "games": 2765,
+          "wins": 1612
         },
         {
+          "id": 26,
           "name": "Jund",
-          "popularity": 10.7
+          "popularity": 10.7,
+          "games": 2385,
+          "wins": 1275
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 10.2
+          "popularity": 10.2,
+          "games": 2331,
+          "wins": 1230
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 8.6
+          "popularity": 8.6,
+          "games": 1997,
+          "wins": 1103
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 7.9
+          "popularity": 7.9,
+          "games": 1830,
+          "wins": 1043
         }
       ]
     },
     "https://draftsim.com/mtg-otj-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/outlaws-of-thunder-junction/tier-list",
-      "updatedAt": "2026-11-01T12:32:34.000Z",
+      "updatedAt": "2026-11-01T16:50:55.000Z",
       "archetypes": [
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 16.5
+          "popularity": 16.5,
+          "games": 4022,
+          "wins": 2305
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 10
+          "popularity": 10,
+          "games": 2339,
+          "wins": 1310
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 6.6
+          "popularity": 6.6,
+          "games": 1504,
+          "wins": 790
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 6.3
+          "popularity": 6.3,
+          "games": 1460,
+          "wins": 766
         },
         {
+          "id": 25,
           "name": "Naya",
-          "popularity": 5.1
+          "popularity": 5.1,
+          "games": 1133,
+          "wins": 580
         }
       ]
     },
     "https://draftsim.com/mtg-mkm-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/murders-at-karlov-manor/tier-list",
-      "updatedAt": "2026-11-01T13:11:08.000Z",
+      "updatedAt": "2026-11-01T16:09:41.000Z",
       "archetypes": [
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 11.2
+          "popularity": 11.2,
+          "games": 1482,
+          "wins": 879
         },
         {
+          "id": 18,
           "name": "Simic",
-          "popularity": 8.7
+          "popularity": 8.7,
+          "games": 1125,
+          "wins": 650
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 8
+          "popularity": 8,
+          "games": 1040,
+          "wins": 598
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 7.9
+          "popularity": 7.9,
+          "games": 962,
+          "wins": 523
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 6.8
+          "popularity": 6.8,
+          "games": 853,
+          "wins": 475
         }
       ]
     },
     "https://draftsim.com/mtg-lci-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-lost-caverns-of-ixalan/tier-list",
-      "updatedAt": "2026-11-01T12:00:02.000Z",
+      "updatedAt": "2026-11-01T16:37:34.000Z",
       "archetypes": [
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 14
+          "popularity": 14,
+          "games": 154440,
+          "wins": 84561
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 13.7
+          "popularity": 13.7,
+          "games": 153466,
+          "wins": 85504
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 13.3
+          "popularity": 13.3,
+          "games": 146440,
+          "wins": 80048
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 10.8
+          "popularity": 10.8,
+          "games": 118211,
+          "wins": 63867
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 8.6
+          "popularity": 8.6,
+          "games": 91705,
+          "wins": 48571
         }
       ]
     },
     "https://draftsim.com/mtg-woe-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/wilds-of-eldraine/tier-list",
-      "updatedAt": "2026-11-01T12:12:05.000Z",
+      "updatedAt": "2026-11-01T16:12:29.000Z",
       "archetypes": [
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 13.7
+          "popularity": 13.7,
+          "games": 2352,
+          "wins": 1362
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 12.6
+          "popularity": 12.6,
+          "games": 2094,
+          "wins": 1186
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 11.6
+          "popularity": 11.6,
+          "games": 1955,
+          "wins": 1103
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 11.4
+          "popularity": 11.4,
+          "games": 1832,
+          "wins": 990
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 8.1
+          "popularity": 8.1,
+          "games": 1337,
+          "wins": 759
         }
       ]
     },
     "https://draftsim.com/mtg-ltr-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-lord-of-the-rings-tales-of-middle-earth/tier-list",
-      "updatedAt": "2026-11-01T12:27:47.000Z",
+      "updatedAt": "2026-11-01T15:46:10.000Z",
       "archetypes": [
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 17.8
+          "popularity": 17.8,
+          "games": 15034,
+          "wins": 8452
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 15.2
+          "popularity": 15.2,
+          "games": 12434,
+          "wins": 6827
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 11.5
+          "popularity": 11.5,
+          "games": 9415,
+          "wins": 5243
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 8.8
+          "popularity": 8.8,
+          "games": 7266,
+          "wins": 3995
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 8.1
+          "popularity": 8.1,
+          "games": 6785,
+          "wins": 3768
         }
       ]
     },
     "https://draftsim.com/mtg-mom-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/march-of-the-machine/tier-list",
-      "updatedAt": "2026-11-01T12:09:25.000Z",
+      "updatedAt": "2026-11-01T16:54:08.000Z",
       "archetypes": [
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 14.2
+          "popularity": 14.2,
+          "games": 6841,
+          "wins": 3924
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 12.8
+          "popularity": 12.8,
+          "games": 6085,
+          "wins": 3471
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 8.4
+          "popularity": 8.4,
+          "games": 3868,
+          "wins": 2054
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 7.6
+          "popularity": 7.6,
+          "games": 3554,
+          "wins": 1955
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 7.4
+          "popularity": 7.4,
+          "games": 3573,
+          "wins": 1989
         }
       ]
     },
     "https://draftsim.com/mtg-one-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/phyrexia-all-will-be-one/tier-list",
-      "updatedAt": "2026-11-01T12:19:17.000Z",
+      "updatedAt": "2026-11-01T16:17:54.000Z",
       "archetypes": [
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 20.7
+          "popularity": 20.7,
+          "games": 2587,
+          "wins": 1570
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 12.2
+          "popularity": 12.2,
+          "games": 1475,
+          "wins": 872
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 9
+          "popularity": 9,
+          "games": 1022,
+          "wins": 543
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 8.4
+          "popularity": 8.4,
+          "games": 948,
+          "wins": 518
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 8.3
+          "popularity": 8.3,
+          "games": 936,
+          "wins": 506
         }
       ]
     },
     "https://draftsim.com/mtg-bro-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-brothers-war/tier-list",
-      "updatedAt": "2026-11-01T11:36:19.000Z",
+      "updatedAt": "2026-11-01T15:41:06.000Z",
       "archetypes": [
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 15.4
+          "popularity": 15.4,
+          "games": 1746,
+          "wins": 959
         },
         {
+          "id": 20,
           "name": "Golgari",
-          "popularity": 10.7
+          "popularity": 10.7,
+          "games": 1250,
+          "wins": 713
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 10.1
+          "popularity": 10.1,
+          "games": 1149,
+          "wins": 621
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 9.3
+          "popularity": 9.3,
+          "games": 1132,
+          "wins": 664
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 7.6
+          "popularity": 7.6,
+          "games": 887,
+          "wins": 497
         }
       ]
     },
     "https://draftsim.com/mtg-dmu-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/dominaria-united/tier-list",
-      "updatedAt": "2026-11-01T13:30:16.000Z",
+      "updatedAt": "2026-11-01T17:19:26.000Z",
       "archetypes": [
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 9.2
+          "popularity": 9.2,
+          "games": 1819,
+          "wins": 1005
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 9.1
+          "popularity": 9.1,
+          "games": 1837,
+          "wins": 1045
         },
         {
+          "id": 22,
           "name": "Sultai",
-          "popularity": 7.1
+          "popularity": 7.1,
+          "games": 1380,
+          "wins": 721
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 6.4
+          "popularity": 6.4,
+          "games": 1272,
+          "wins": 693
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 6.3
+          "popularity": 6.3,
+          "games": 1234,
+          "wins": 648
         }
       ]
     },
     "https://draftsim.com/mtg-snc-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/streets-of-new-capenna/tier-list",
-      "updatedAt": "2026-11-01T12:59:55.000Z",
+      "updatedAt": "2026-11-01T16:20:52.000Z",
       "archetypes": [
         {
+          "id": 19,
           "name": "Bant",
-          "popularity": 22.8
+          "popularity": 22.8,
+          "games": 2563,
+          "wins": 1536
         },
         {
+          "id": 7,
           "name": "Esper",
-          "popularity": 15.1
+          "popularity": 15.1,
+          "games": 1556,
+          "wins": 829
         },
         {
+          "id": 14,
           "name": "Grixis",
-          "popularity": 14.9
+          "popularity": 14.9,
+          "games": 1603,
+          "wins": 903
         },
         {
+          "id": 25,
           "name": "Naya",
-          "popularity": 10.5
+          "popularity": 10.5,
+          "games": 1061,
+          "wins": 559
         },
         {
+          "id": 28,
           "name": "Temur",
-          "popularity": 7.3
+          "popularity": 7.3,
+          "games": 711,
+          "wins": 362
         }
       ]
     },
     "https://draftsim.com/mtg-neo-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/kamigawa-neon-dynasty/tier-list",
-      "updatedAt": "2026-11-01T12:54:36.000Z",
+      "updatedAt": "2026-11-01T17:13:17.000Z",
       "archetypes": [
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 17.2
+          "popularity": 17.2,
+          "games": 3275,
+          "wins": 1833
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 13.6
+          "popularity": 13.6,
+          "games": 2555,
+          "wins": 1437
         },
         {
+          "id": 17,
           "name": "Selesnya",
-          "popularity": 13.3
+          "popularity": 13.3,
+          "games": 2505,
+          "wins": 1378
         },
         {
+          "id": 10,
           "name": "Izzet",
-          "popularity": 7.9
+          "popularity": 7.9,
+          "games": 1447,
+          "wins": 782
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 6.1
+          "popularity": 6.1,
+          "games": 1063,
+          "wins": 544
         }
       ]
     },
     "https://draftsim.com/mtg-vow-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/innistrad-crimson-vow/tier-list",
-      "updatedAt": "2026-11-01T12:15:12.000Z",
+      "updatedAt": "2026-11-01T15:52:17.000Z",
       "archetypes": [
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 14.8
+          "popularity": 14.8,
+          "games": 1292,
+          "wins": 728
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 12.6
+          "popularity": 12.6,
+          "games": 1080,
+          "wins": 591
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 11
+          "popularity": 11,
+          "games": 932,
+          "wins": 510
         },
         {
+          "id": 24,
           "name": "Gruul",
-          "popularity": 10.9
+          "popularity": 10.9,
+          "games": 973,
+          "wins": 530
         },
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 9.1
+          "popularity": 9.1,
+          "games": 811,
+          "wins": 454
         }
       ]
     },
     "https://draftsim.com/mtg-mid-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/innistrad-midnight-hunt/tier-list",
-      "updatedAt": "2026-11-01T13:01:37.000Z",
+      "updatedAt": "2026-11-01T16:57:26.000Z",
       "archetypes": [
         {
+          "id": 6,
           "name": "Dimir",
-          "popularity": 24
+          "popularity": 23.8,
+          "games": 1990,
+          "wins": 1134
         },
         {
+          "id": 3,
           "name": "Azorius",
-          "popularity": 14.1
+          "popularity": 14,
+          "games": 1122,
+          "wins": 637
         },
         {
+          "id": 5,
           "name": "Orzhov",
-          "popularity": 11.2
+          "popularity": 11.3,
+          "games": 932,
+          "wins": 516
         },
         {
+          "id": 9,
           "name": "Boros",
-          "popularity": 7.9
+          "popularity": 8.1,
+          "games": 617,
+          "wins": 329
         },
         {
+          "id": 12,
           "name": "Rakdos",
-          "popularity": 7.8
+          "popularity": 7.8,
+          "games": 632,
+          "wins": 342
         }
       ]
     }

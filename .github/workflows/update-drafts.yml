@@ -3,20 +3,37 @@ name: Update draft reviews
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 6 * * *"
+    # Mondays, 06:17 UTC (07:17 CET / 08:17 CEST).
+    - cron: "17 6 * * 1"
 
 permissions:
   contents: write
+  pages: write
+
+concurrency:
+  group: weekly-draft-data
+  cancel-in-progress: false
 
 jobs:
   update-drafts:
+    # Standard runners are free for PUBLIC repositories; never run privately.
+    if: github.event.repository.private == false
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Check existing database and analysis logic
+        run: |
+          node scripts/validate-data.mjs
+          node --test scripts/game-card-stats.test.mjs
 
       - name: Build current Draftsim review list
         run: node scripts/update-drafts.mjs
@@ -24,13 +41,30 @@ jobs:
       - name: Build Untapped draft meta
         run: node scripts/update-untapped-meta.mjs
 
+      - name: Analyze public 17Lands game datasets
+        run: node scripts/update-card-stats.mjs
+
+      - name: Validate prepared database
+        run: node scripts/validate-data.mjs
+
       - name: Commit changes
+        id: commit
         run: |
-          if git diff --quiet -- drafts.json untapped-meta.json; then
+          if git diff --quiet -- drafts.json untapped-meta.json card-stats.json; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add drafts.json untapped-meta.json
+          git add drafts.json untapped-meta.json card-stats.json
           git commit -m "Update draft reviews and meta"
+          git pull --rebase origin main
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # GITHUB_TOKEN commits do not trigger the usual branch-based Pages build.
+      - name: Publish updated data on GitHub Pages
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh api --method POST "repos/$GH_REPO/pages/builds"

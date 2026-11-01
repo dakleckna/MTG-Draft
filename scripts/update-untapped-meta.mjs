@@ -72,7 +72,11 @@ function extractMeta(html, draft, sourceUrl) {
       const combination = combinations[id];
       const popularity = sum(combination?.popularity_by_rank);
 
-      return { name, popularity };
+      return {
+        id, name, popularity,
+        games: sum(combination?.matches_all_by_rank),
+        wins: sum(combination?.matches_won_by_rank)
+      };
     })
     .filter(archetype => archetype.popularity > 0)
     .sort((left, right) => right.popularity - left.popularity)
@@ -110,7 +114,8 @@ async function fetchUntappedMeta(draft) {
     throw new Error(`${response.status} ${response.statusText}`);
   }
 
-  return extractMeta(await response.text(), draft, sourceUrl);
+  const html = await response.text();
+  return extractMeta(html, draft, sourceUrl);
 }
 
 async function mapWithConcurrency(items, limit, task) {
