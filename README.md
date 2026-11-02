@@ -66,7 +66,12 @@ zusätzlichen Speicher-Abos eingerichtet.
 
 GitHub Pages muss wie bisher aus `main` und `/` veröffentlicht werden.
 Bot-Commits starten nicht automatisch den normalen Pages-Build; deshalb fordert
-der Workflow ihn ausdrücklich über die GitHub-API an. Der wöchentliche Zeitplan
+der Workflow ihn ausdrücklich über die GitHub-API an.
+Die Veröffentlichung akzeptiert auch erfolgreiche Antworten ohne JSON-Inhalt,
+wiederholt vorübergehende API-Fehler und wartet auf den erfolgreichen Pages-Build
+des tatsächlich gespeicherten Commits. Sie wird auch ohne neue Datenänderung
+ausgeführt, damit ein erneuter Workflow-Lauf eine fehlgeschlagene Veröffentlichung repariert.
+Der wöchentliche Zeitplan
 läuft auf dem Standardbranch. GitHub kann geplante Läufe verzögern und bei längerer
 Repository-Inaktivität deaktivieren; unter Actions lässt sich der Workflow wieder aktivieren.
 
@@ -74,7 +79,7 @@ Lokale Prüfung ohne Netzwerk und ohne Datenänderung:
 
 ```sh
 node scripts/validate-data.mjs
-node --test scripts/game-card-stats.test.mjs
+node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs
 ```
 
 Eine neue Datenquelle kann als weiterer Importer unter `scripts/` ergänzt werden.

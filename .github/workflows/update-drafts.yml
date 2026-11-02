@@ -33,7 +33,7 @@ jobs:
       - name: Check existing database and analysis logic
         run: |
           node scripts/validate-data.mjs
-          node --test scripts/game-card-stats.test.mjs
+          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs
 
       - name: Build current Draftsim review list
         run: node scripts/update-drafts.mjs
@@ -63,8 +63,8 @@ jobs:
 
       # GITHUB_TOKEN commits do not trigger the usual branch-based Pages build.
       - name: Publish updated data on GitHub Pages
-        if: steps.commit.outputs.changed == 'true'
+        timeout-minutes: 10
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: gh api --method POST "repos/$GH_REPO/pages/builds"
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/publish-pages.mjs
