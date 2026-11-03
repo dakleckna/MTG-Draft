@@ -33,7 +33,7 @@ jobs:
       - name: Check existing database and analysis logic
         run: |
           node scripts/validate-data.mjs
-          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs
+          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs scripts/cubes.test.mjs
 
       - name: Build current Draftsim review list
         run: node scripts/update-drafts.mjs
@@ -44,18 +44,21 @@ jobs:
       - name: Analyze public 17Lands game datasets
         run: node scripts/update-card-stats.mjs
 
+      - name: Refresh public CubeCobra search index
+        run: node scripts/update-cubes.mjs
+
       - name: Validate prepared database
         run: node scripts/validate-data.mjs
 
       - name: Commit changes
         id: commit
         run: |
-          if git diff --quiet -- drafts.json untapped-meta.json card-stats.json; then
+          if git diff --quiet -- drafts.json untapped-meta.json card-stats.json cubes.json cubes.json.gz; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add drafts.json untapped-meta.json card-stats.json
+          git add drafts.json untapped-meta.json card-stats.json cubes.json cubes.json.gz
           git commit -m "Update draft reviews and meta"
           git pull --rebase origin main
           git push

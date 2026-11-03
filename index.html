@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Draft ReViewer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mana-font@1.18.0/css/mana.min.css" />
-  <link rel="stylesheet" href="styles.css?v=top-cards-1" />
+  <link rel="stylesheet" href="styles.css?v=cubes-1" />
 </head>
 <body>
 
@@ -15,10 +15,24 @@
         <img src="assets/draft-reviewer-logo.svg" alt="Draft ReViewer" />
       </div>
 
-      <label class="draft-picker">
-        <span class="sr-only">Draft auswählen</span>
-        <select id="draftSelect"></select>
-      </label>
+      <div class="source-picker">
+        <label class="mode-picker"><span class="sr-only">Format auswählen</span>
+          <select id="sourceMode"><option value="draft">Draft</option><option value="cube">Cube</option></select>
+        </label>
+        <label id="draftPicker" class="draft-picker">
+          <span class="sr-only">Draft auswählen</span>
+          <select id="draftSelect"></select>
+        </label>
+        <div id="cubePicker" class="cube-picker" hidden>
+          <label class="sr-only" for="cubeSearch">CubeCobra-Cube suchen oder Link/ID eingeben</label>
+          <input id="cubeSearch" type="search" role="combobox" placeholder="Cube suchen oder CubeCobra-Link …" autocomplete="off" spellcheck="false"
+            aria-autocomplete="list" aria-expanded="false" aria-controls="cubeSuggestions" aria-describedby="cubeSearchHint" />
+          <div id="cubeSuggestionPanel" class="cube-suggestion-panel" hidden>
+            <ul id="cubeSuggestions" role="listbox" aria-label="Cube-Vorschläge"></ul>
+            <p id="cubeSearchHint" class="cube-search-hint" role="status"></p>
+          </div>
+        </div>
+      </div>
 
       <button id="loadBtn" type="button">Laden</button>
       <button id="checkLatestBtn" class="secondary" type="button">Neue Drafts suchen</button>
@@ -79,6 +93,7 @@
     <ol id="metaCardsGrid" class="meta-cards-grid"></ol>
     <a id="metaCardsSource" class="meta-cards-source" target="_blank" rel="noopener noreferrer">Trophy Decks auf Untapped öffnen ↗</a>
   </dialog>
-  <script src="app.js?v=card-winrates-1"></script>
+  <script src="cube-data.js?v=cubes-1"></script>
+  <script src="app.js?v=cubes-1"></script>
 </body>
 </html>

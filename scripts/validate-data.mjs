@@ -1,9 +1,20 @@
 import { readFile, appendFile } from "node:fs/promises";
 import assert from "node:assert/strict";
+import { gunzipSync } from "node:zlib";
 
 const root = new URL("../", import.meta.url);
 const read = async name => JSON.parse(await readFile(new URL(name, root), "utf8"));
 const [drafts, meta, stats] = await Promise.all([read("drafts.json"), read("untapped-meta.json"), read("card-stats.json")]);
+const cubeIndex = await read("cubes.json");
+assert(cubeIndex.source === "CubeCobra" && cubeIndex.cubes?.length > 0, "Missing CubeCobra index");
+const cubeIds = new Set();
+for (const cube of cubeIndex.cubes) {
+  assert(/^[a-z\d_-]+$/i.test(cube.id) && typeof cube.name === "string" && cube.name.trim(), "Invalid cube index entry");
+  assert(!cubeIds.has(cube.id), "Duplicate cube ID"); cubeIds.add(cube.id);
+}
+const compressedIndex = JSON.parse(gunzipSync(await readFile(new URL("cubes.json.gz", root))).toString("utf8"));
+assert.deepEqual(compressedIndex, cubeIndex, "Compressed cube index does not match JSON index");
+console.log(`Validated ${cubeIds.size} public CubeCobra search entries.`);
 assert(Array.isArray(drafts) && drafts.length > 0, "Draft list is empty");
 const urls = new Set();
 for (const draft of drafts) {

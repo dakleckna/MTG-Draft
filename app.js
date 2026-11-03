@@ -114,6 +114,13 @@ const MAX_DRAFTSIM_ATTEMPTS_PER_SOURCE = 3;
 const MAX_SCRYFALL_ATTEMPTS = 3;
 
 const els = {
+  sourceMode: document.getElementById("sourceMode"),
+  draftPicker: document.getElementById("draftPicker"),
+  cubePicker: document.getElementById("cubePicker"),
+  cubeSearch: document.getElementById("cubeSearch"),
+  cubeSuggestions: document.getElementById("cubeSuggestions"),
+  cubeSuggestionPanel: document.getElementById("cubeSuggestionPanel"),
+  cubeSearchHint: document.getElementById("cubeSearchHint"),
   draftSelect: document.getElementById("draftSelect"),
   loadBtn: document.getElementById("loadBtn"),
   checkLatestBtn: document.getElementById("checkLatestBtn"),
@@ -143,6 +150,12 @@ let isCheckingLatest = false;
 let currentSegmentLabel = "";
 let currentSegmentStartedAt = 0;
 let segmentTimer = null;
+let cubeSearchWorker = null;
+let cubeRequestId = 0;
+const cubeRequests = new Map();
+let selectedCube = null;
+let cubeMatches = [];
+let activeCubeOption = -1;
 
 function init() {
   const dialog = document.getElementById("metaCardsDialog");
@@ -160,6 +173,20 @@ function init() {
   els.loadBtn.addEventListener("click", loadSelectedDraft);
   els.checkLatestBtn.addEventListener("click", checkForLatestDrafts);
   els.draftSelect.addEventListener("change", resetView);
+  els.sourceMode.addEventListener("change", () => {
+    const cube = els.sourceMode.value === "cube";
+    els.draftPicker.hidden = cube;
+    els.cubePicker.hidden = !cube;
+    els.checkLatestBtn.hidden = cube;
+    els.tocToggle.firstChild.textContent = cube ? "Farben" : "Archetypen";
+    resetView();
+    closeCubeSuggestions();
+    if (cube) { els.cubeSearch.focus(); suggestCubes(); }
+  });
+  els.cubeSearch.addEventListener("input", () => { selectedCube = null; suggestCubes(); });
+  els.cubeSearch.addEventListener("focus", suggestCubes);
+  els.cubeSearch.addEventListener("keydown", cubeSearchKeydown);
+  els.cubeSearch.addEventListener("blur", () => setTimeout(closeCubeSuggestions, 150));
 
   els.tocToggle.addEventListener("click", () => {
     const collapsed = els.toc.classList.toggle("collapsed");
@@ -170,6 +197,7 @@ function init() {
 }
 
 async function loadSelectedDraft() {
+  if (els.sourceMode.value === "cube") return loadSelectedCube();
   const draft = getSelectedDraft();
 
   if (isLoading && activeController) {
@@ -235,6 +263,137 @@ async function loadSelectedDraft() {
     activeController = null;
     setBusy(false);
   }
+}
+
+function closeCubeSuggestions() {
+  els.cubeSuggestionPanel.hidden = true;
+  els.cubeSearch.setAttribute("aria-expanded", "false");
+  els.cubeSearch.removeAttribute("aria-activedescendant");
+  activeCubeOption = -1;
+}
+
+async function suggestCubes() {
+  const query = els.cubeSearch.value;
+  cubeMatches = [];
+  activeCubeOption = -1;
+  els.cubeSuggestions.replaceChildren();
+  els.cubeSearch.removeAttribute("aria-activedescendant");
+  els.cubeSearch.setAttribute("aria-expanded", "false");
+  els.cubeSuggestionPanel.hidden = false;
+  els.cubeSearchHint.textContent = "Cube-Katalog wird geladen …";
+  try {
+    if (!cubeSearchWorker) {
+      cubeSearchWorker = new Worker("cube-search-worker.js?v=cubes-1");
+      cubeSearchWorker.onmessage = ({ data }) => {
+        const request = cubeRequests.get(data.id);
+        cubeRequests.delete(data.id);
+        if (data.error) request?.reject(new Error("Katalog nicht verfügbar"));
+        else request?.resolve(data);
+      };
+      cubeSearchWorker.onerror = () => {
+        for (const request of cubeRequests.values()) request.reject(new Error("Katalog nicht verfügbar"));
+        cubeRequests.clear(); cubeSearchWorker.terminate(); cubeSearchWorker = null;
+      };
+    }
+    const id = ++cubeRequestId;
+    const index = await new Promise((resolve, reject) => {
+      cubeRequests.set(id, { resolve, reject });
+      cubeSearchWorker.postMessage({ id, query });
+    });
+    if (els.sourceMode.value !== "cube" || els.cubeSearch.value !== query || document.activeElement !== els.cubeSearch) return;
+    cubeMatches = index.matches;
+    activeCubeOption = -1;
+    els.cubeSearch.removeAttribute("aria-activedescendant");
+    els.cubeSuggestions.replaceChildren(...cubeMatches.map((cube, i) => {
+      const option = document.createElement("li");
+      option.id = `cube-option-${i}`;
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", "false");
+      const title = document.createElement("strong"); title.textContent = cube.name;
+      const detail = document.createElement("span"); detail.textContent = `${cube.owner} · ${cube.cards} Karten`;
+      option.append(title, detail);
+      option.addEventListener("pointerdown", event => event.preventDefault());
+      option.addEventListener("click", () => selectCube(cube));
+      return option;
+    }));
+    els.cubeSearch.setAttribute("aria-expanded", String(cubeMatches.length > 0));
+    els.cubeSearchHint.textContent = cubeMatches.length
+      ? `CubeCobra · ${index.total.toLocaleString("de-DE")} Cubes${index.snapshot ? ` · Katalog vom ${new Date(index.snapshot).toLocaleDateString("de-DE")}` : ""}`
+      : "Kein Treffer im Katalog. CubeCobra-Link oder Cube-ID direkt eingeben.";
+  } catch {
+    if (els.sourceMode.value !== "cube" || els.cubeSearch.value !== query) return;
+    cubeMatches = [];
+    els.cubeSuggestions.replaceChildren();
+    els.cubeSearch.setAttribute("aria-expanded", "false");
+    els.cubeSearchHint.textContent = "Katalog gerade nicht erreichbar. CubeCobra-Link oder Cube-ID direkt eingeben.";
+  }
+}
+
+function selectCube(cube) {
+  selectedCube = cube;
+  els.cubeSearch.value = cube.name;
+  closeCubeSuggestions();
+  resetView();
+}
+
+function cubeSearchKeydown(event) {
+  if (event.key === "Escape") { closeCubeSuggestions(); return; }
+  if (["ArrowDown", "ArrowUp"].includes(event.key) && cubeMatches.length && !els.cubeSuggestionPanel.hidden) {
+    event.preventDefault();
+    activeCubeOption = activeCubeOption < 0 ? (event.key === "ArrowDown" ? 0 : cubeMatches.length - 1)
+      : (activeCubeOption + (event.key === "ArrowDown" ? 1 : -1) + cubeMatches.length) % cubeMatches.length;
+    [...els.cubeSuggestions.children].forEach((option, i) => option.setAttribute("aria-selected", String(i === activeCubeOption)));
+    const option = els.cubeSuggestions.children[activeCubeOption];
+    els.cubeSearch.setAttribute("aria-activedescendant", option.id);
+    option.scrollIntoView({ block: "nearest" });
+  } else if (event.key === "Enter") {
+    event.preventDefault();
+    if (activeCubeOption >= 0 && !els.cubeSuggestionPanel.hidden) selectCube(cubeMatches[activeCubeOption]);
+    else loadSelectedCube();
+  }
+}
+
+async function loadSelectedCube() {
+  if (isLoading || isCheckingLatest) return;
+  const id = selectedCube?.id || CubeData.cubeId(els.cubeSearch.value);
+  if (!id) { setStatus("Bitte einen Vorschlag auswählen oder einen CubeCobra-Link bzw. eine Cube-ID eingeben.", true); els.cubeSearch.focus(); return; }
+  closeCubeSuggestions();
+  isLoading = true;
+  activeController = new AbortController();
+  try {
+    setBusy(true); clearOutput(); hideUntappedMeta(); hideToc(); showProgress(true);
+    updateProgress(10, "Lade CubeCobra-Cube"); setStatus("Cube wird geladen …");
+    const response = await fetch(`https://cubecobra.com/cube/api/cubeJSON/${encodeURIComponent(id)}`, {
+      signal: AbortSignal.any([activeController.signal, AbortSignal.timeout(30000)]), credentials: "omit"
+    });
+    if (!response.ok) throw new Error(response.status === 404 ? "Cube nicht gefunden oder nicht öffentlich zugänglich." : `CubeCobra antwortet mit HTTP ${response.status}.`);
+    const cube = await response.json();
+    const cards = CubeData.cards(cube);
+    if (!cards.length) throw new Error("Der Cube enthält keine darstellbaren Hauptdeckkarten.");
+    updateProgress(65, `${cards.length} Karten gefunden`);
+    for (const card of cards) card.groupLabel = COLOR_NAMES[card.group] || GUILD_NAMES[card.group] ||
+      FALLBACK_GROUPS.find(g => g.key === card.group)?.label || `Mehrfarbig (${card.group})`;
+    const order = new Map(["W", "U", "B", "R", "G", ...COLOR_PAIR_ORDER, "multicolor", "artifact", "land", "unassigned"].map((key, i) => [key, i]));
+    cards.sort((a, b) => (order.get(a.group) ?? 15) - (order.get(b.group) ?? 15) ||
+      (b.rating ?? -Infinity) - (a.rating ?? -Infinity) || a.name.localeCompare(b.name));
+    const grouped = new Map();
+    for (const card of cards) {
+      if (!grouped.has(card.group)) grouped.set(card.group, { key: card.group, label: card.groupLabel, cards: [] });
+      grouped.get(card.group).cards.push(card);
+    }
+    const groups = [...grouped.values()];
+    await renderCardsProgressively(groups, cards.length, p => updateProgress(65 + p * .34, "Zeichne Cube"));
+    const info = document.createElement("section"); info.className = "cube-info";
+    const heading = document.createElement("h2"); heading.textContent = cube.name || selectedCube?.name || id;
+    const detail = document.createElement("p"); detail.textContent = `${cube.owner?.username || selectedCube?.owner || "CubeCobra"} · ${cards.length} Karten · nach Farben und CubeCobra-Elo sortiert`;
+    const link = document.createElement("a"); link.href = `https://cubecobra.com/cube/list/${encodeURIComponent(id)}`;
+    link.target = "_blank"; link.rel = "noopener noreferrer"; link.textContent = "Cube auf CubeCobra öffnen ↗";
+    info.append(heading, detail, link); els.results.prepend(info);
+    buildToc(groups); showProgress(false); setStatus("");
+  } catch (error) {
+    clearOutput(); hideToc(); showProgress(false);
+    setStatus(error.name === "TimeoutError" ? "CubeCobra antwortet gerade nicht. Bitte erneut versuchen." : `Cube konnte nicht geladen werden: ${error.message}`, true);
+  } finally { isLoading = false; activeController = null; setBusy(false); }
 }
 
 function getSelectedDraft() {
@@ -992,7 +1151,9 @@ async function renderCardsProgressively(groups, totalCards, onProgress) {
   let renderedCards = 0;
 
   for (const group of groups) {
-    const average = group.cards.reduce((sum, card) => sum + card.rating, 0) / group.cards.length;
+    const rated = group.cards.filter(card => Number.isFinite(card.rating));
+    const average = rated.reduce((sum, card) => sum + card.rating, 0) / rated.length;
+    const cube = group.cards[0]?.source === "cubecobra";
     const groupId = `group-${cssKey(group.key)}`;
 
     const title = document.createElement("section");
@@ -1000,7 +1161,7 @@ async function renderCardsProgressively(groups, totalCards, onProgress) {
     title.className = `group-title group-${cssKey(group.key)}`;
     title.innerHTML = `
       <h2>${escapeHtml(group.label)} (${group.cards.length})</h2>
-      <p>Durchschnitt ${average.toFixed(2)}/10</p>
+      <p>${cube ? (rated.length ? `CubeCobra-Elo · Durchschnitt ${Math.round(average)}` : "Keine CubeCobra-Elo-Werte verfügbar") : `Durchschnitt ${average.toFixed(2)}/10`}</p>
     `;
 
     els.results.appendChild(title);
@@ -1030,7 +1191,9 @@ function createCardElement(card) {
   node.classList.add(`group-${cssKey(card.group)}`);
   node.querySelector(".card-topline").textContent = card.section || card.groupLabel;
   node.querySelector("h3").textContent = card.name;
-  node.querySelector(".rating").textContent = `${card.rating}/10`;
+  node.querySelector(".rating").textContent = card.source === "cubecobra"
+    ? (Number.isFinite(card.rating) ? `CubeCobra-Elo ${Math.round(card.rating)}` : "Kein Elo-Wert") : `${card.rating}/10`;
+  if (card.source === "cubecobra") node.querySelector(".rating").title = "CubeCobra-weite Elo-Bewertung, keine Winrate dieses Cubes.";
   node.querySelector(".review").textContent = card.review;
 
   const imageWrap = node.querySelector(".image-wrap");
@@ -1337,6 +1500,8 @@ function setBusy(isBusy) {
   els.loadBtn.disabled = busy;
   els.checkLatestBtn.disabled = busy;
   els.draftSelect.disabled = busy;
+  els.sourceMode.disabled = busy;
+  els.cubeSearch.disabled = busy;
   els.loadBtn.textContent = isLoading ? "Laedt..." : "Laden";
   els.checkLatestBtn.textContent = isCheckingLatest ? "Suche..." : "Neue Drafts suchen";
 }
