@@ -153,11 +153,23 @@ let segmentTimer = null;
 let cubeSearchWorker = null;
 let cubeRequestId = 0;
 const cubeRequests = new Map();
+const cubeRecordCache = new Map();
+let cubeRecordManifestPromise = null;
+let cubeCatalogPromise = null;
+let cubeStatsController = null;
 let selectedCube = null;
 let cubeMatches = [];
 let activeCubeOption = -1;
 
 function init() {
+  const backToTop = document.getElementById("backToTop");
+  const updateBackToTop = () => { backToTop.hidden = window.scrollY < 500; };
+  window.addEventListener("scroll", updateBackToTop, { passive: true });
+  backToTop.addEventListener("click", () => {
+    document.getElementById("app").focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  });
+  updateBackToTop();
   const dialog = document.getElementById("metaCardsDialog");
   document.getElementById("metaCardsClose").addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", event => {
@@ -283,7 +295,7 @@ async function suggestCubes() {
   els.cubeSearchHint.textContent = "Cube-Katalog wird geladen …";
   try {
     if (!cubeSearchWorker) {
-      cubeSearchWorker = new Worker("cube-search-worker.js?v=cubes-1");
+      cubeSearchWorker = new Worker("cube-search-worker.js?v=top50-1");
       cubeSearchWorker.onmessage = ({ data }) => {
         const request = cubeRequests.get(data.id);
         cubeRequests.delete(data.id);
@@ -318,14 +330,14 @@ async function suggestCubes() {
     }));
     els.cubeSearch.setAttribute("aria-expanded", String(cubeMatches.length > 0));
     els.cubeSearchHint.textContent = cubeMatches.length
-      ? `CubeCobra · ${index.total.toLocaleString("de-DE")} Cubes${index.snapshot ? ` · Katalog vom ${new Date(index.snapshot).toLocaleDateString("de-DE")}` : ""}`
-      : "Kein Treffer im Katalog. CubeCobra-Link oder Cube-ID direkt eingeben.";
+      ? `CubeCobra · Top ${index.total} nach Followern${index.snapshot ? ` · Katalog vom ${new Date(index.snapshot).toLocaleDateString("de-DE")}` : ""}`
+      : "Kein Treffer unter den Top 50. Bitte einen anderen Namen versuchen.";
   } catch {
     if (els.sourceMode.value !== "cube" || els.cubeSearch.value !== query) return;
     cubeMatches = [];
     els.cubeSuggestions.replaceChildren();
     els.cubeSearch.setAttribute("aria-expanded", "false");
-    els.cubeSearchHint.textContent = "Katalog gerade nicht erreichbar. CubeCobra-Link oder Cube-ID direkt eingeben.";
+    els.cubeSearchHint.textContent = "Katalog gerade nicht erreichbar. Bitte später erneut versuchen.";
   }
 }
 
@@ -355,13 +367,22 @@ function cubeSearchKeydown(event) {
 
 async function loadSelectedCube() {
   if (isLoading || isCheckingLatest) return;
-  const id = selectedCube?.id || CubeData.cubeId(els.cubeSearch.value);
-  if (!id) { setStatus("Bitte einen Vorschlag auswählen oder einen CubeCobra-Link bzw. eine Cube-ID eingeben.", true); els.cubeSearch.focus(); return; }
+  const input = selectedCube?.id || els.cubeSearch.value.trim();
+  if (!input) { setStatus("Bitte einen Cube aus den Top 50 auswählen.", true); els.cubeSearch.focus(); return; }
   closeCubeSuggestions();
+  cubeStatsController?.abort();
   isLoading = true;
   activeController = new AbortController();
+  cubeStatsController = activeController;
   try {
     setBusy(true); clearOutput(); hideUntappedMeta(); hideToc(); showProgress(true);
+    if (!cubeCatalogPromise) cubeCatalogPromise = fetch("cubes.json", { cache: "no-cache" })
+      .then(response => { if (!response.ok) throw new Error("Cube-Katalog nicht verfügbar."); return response.json(); })
+      .then(index => CubeData.topCubes(index.cubes))
+      .catch(error => { cubeCatalogPromise = null; throw error; });
+    const entry = CubeData.findCube(await cubeCatalogPromise, input);
+    if (!entry) throw new Error("Aktuell stehen nur die Top 50 Cubes zur Auswahl. Bitte einen Suchvorschlag auswählen.");
+    const id = entry.id;
     updateProgress(10, "Lade CubeCobra-Cube"); setStatus("Cube wird geladen …");
     const response = await fetch(`https://cubecobra.com/cube/api/cubeJSON/${encodeURIComponent(id)}`, {
       signal: AbortSignal.any([activeController.signal, AbortSignal.timeout(30000)]), credentials: "omit"
@@ -370,6 +391,8 @@ async function loadSelectedCube() {
     const cube = await response.json();
     const cards = CubeData.cards(cube);
     if (!cards.length) throw new Error("Der Cube enthält keine darstellbaren Hauptdeckkarten.");
+    const guide = CubeGuide.guide(cube, cards);
+    for (const card of cards) card.review = guide.reviews.get(card.name) || card.review;
     updateProgress(65, `${cards.length} Karten gefunden`);
     for (const card of cards) card.groupLabel = COLOR_NAMES[card.group] || GUILD_NAMES[card.group] ||
       FALLBACK_GROUPS.find(g => g.key === card.group)?.label || `Mehrfarbig (${card.group})`;
@@ -383,13 +406,11 @@ async function loadSelectedCube() {
     }
     const groups = [...grouped.values()];
     await renderCardsProgressively(groups, cards.length, p => updateProgress(65 + p * .34, "Zeichne Cube"));
-    const info = document.createElement("section"); info.className = "cube-info";
-    const heading = document.createElement("h2"); heading.textContent = cube.name || selectedCube?.name || id;
-    const detail = document.createElement("p"); detail.textContent = `${cube.owner?.username || selectedCube?.owner || "CubeCobra"} · ${cards.length} Karten · nach Farben und CubeCobra-Elo sortiert`;
-    const link = document.createElement("a"); link.href = `https://cubecobra.com/cube/list/${encodeURIComponent(id)}`;
-    link.target = "_blank"; link.rel = "noopener noreferrer"; link.textContent = "Cube auf CubeCobra öffnen ↗";
-    info.append(heading, detail, link); els.results.prepend(info);
-    buildToc(groups); showProgress(false); setStatus("");
+    buildToc(groups);
+    // The guide is available immediately; unavailable record services must not
+    // block the card list. A new load/mode change aborts this background lookup.
+    void renderCubeHighlights(cards, cube.id || id, guide, activeController.signal);
+    showProgress(false); setStatus("");
   } catch (error) {
     clearOutput(); hideToc(); showProgress(false);
     setStatus(error.name === "TimeoutError" ? "CubeCobra antwortet gerade nicht. Bitte erneut versuchen." : `Cube konnte nicht geladen werden: ${error.message}`, true);
@@ -416,7 +437,7 @@ async function checkForLatestDrafts() {
 
   isCheckingLatest = true;
   setBusy(true);
-  setStatus("Pruefe die neuesten Drafts...");
+  setStatus("Prüfe die neuesten Sets …");
 
   try {
     const publishedDrafts = await fetchPublishedDrafts();
@@ -424,7 +445,7 @@ async function checkForLatestDrafts() {
     const additions = publishedDrafts.filter(draft => !knownUrls.has(draft.url));
 
     if (!additions.length) {
-      setStatus("Keine neuen Drafts gefunden. Deine Liste ist aktuell.");
+      setStatus("Keine neuen Sets gefunden. Deine Liste ist aktuell.");
       return;
     }
 
@@ -435,7 +456,7 @@ async function checkForLatestDrafts() {
     hideToc();
     hideUntappedMeta();
     showProgress(false);
-    setStatus(`${additions.length} neue${additions.length === 1 ? "r Draft" : " Drafts"} hinzugefuegt.`);
+    setStatus(`${additions.length} ${additions.length === 1 ? "neues MTG Set" : "neue MTG Sets"} hinzugefügt.`);
   } catch (error) {
     console.error(error);
     setStatus(`Fehler bei der Suche: ${error.message || error}`, true);
@@ -466,7 +487,7 @@ async function fetchPublishedDrafts() {
   const drafts = await response.json();
 
   if (!Array.isArray(drafts)) {
-    throw new Error("Die Draft-Liste hat ein ungueltiges Format.");
+    throw new Error("Die Set-Liste hat ein ungültiges Format.");
   }
 
   return drafts
@@ -539,13 +560,18 @@ function renderUntappedMeta(meta) {
     return;
   }
 
-  const items = meta.archetypes.slice(0, 5).map(archetype => {
+  const isGuide = meta.kind === "cube-guide";
+  const isCube = isGuide || meta.kind === "cube-records";
+  const items = (isCube ? meta.archetypes : meta.archetypes.slice(0, 5)).map(archetype => {
     const item = document.createElement("li");
     item.className = "untapped-meta-item";
     const trigger = document.createElement("button");
     trigger.type = "button";
     trigger.className = "untapped-meta-trigger";
     trigger.setAttribute("aria-label", `${archetype.name}: häufigste Karten anzeigen`);
+    if (isCube) trigger.title = isGuide ? `Deckidee: ${archetype.plan}. Empfehlung aus Primer und Kartenliste; keine gemessene Spielhäufigkeit oder Winrate.`
+      : `${archetype.decks} aufgezeichnete Decks · ${archetype.games} Spieler-Spiele · nach Deckhäufigkeit eingeordnet`;
+    if (isGuide) trigger.setAttribute("aria-label", `${archetype.name}: empfohlene Karten anzeigen`);
     trigger.setAttribute("aria-haspopup", "dialog");
     trigger.addEventListener("click", () => showMetaCards(archetype, meta));
 
@@ -555,7 +581,7 @@ function renderUntappedMeta(meta) {
     const mana = document.createElement("div");
     mana.className = "untapped-meta-mana";
     mana.setAttribute("role", "img");
-    const colors = colorsForName(archetype.name) || [];
+    const colors = archetype.colors || colorsForName(archetype.name) || [];
     mana.setAttribute("aria-label", colors.join("") || archetype.name);
 
     for (const color of normalizeColors(colors)) {
@@ -571,13 +597,15 @@ function renderUntappedMeta(meta) {
 
     const share = document.createElement("span");
     share.className = "untapped-meta-share";
-    share.textContent = formatPercent(archetype.popularity);
+    share.textContent = isGuide ? "Empfehlung" : isCube ? `${formatPercent(archetype.winRate)} WR` : formatPercent(archetype.popularity);
+    share.title = trigger.title;
     const arrow = document.createElement("span");
     arrow.className = "meta-row-arrow";
     arrow.textContent = "›";
     arrow.setAttribute("aria-hidden", "true");
 
-    archetypeElement.append(mana, name);
+    if (colors.length) archetypeElement.append(mana);
+    archetypeElement.append(name);
     trigger.append(archetypeElement, share, arrow);
     item.append(trigger);
     return item;
@@ -589,10 +617,43 @@ function renderUntappedMeta(meta) {
   }
 
   els.untappedMetaList.replaceChildren(...items);
+  els.untappedMeta.setAttribute("aria-label", isCube ? "Cube-Kartenübersicht" : "Untapped Meta");
   const hasSourceLink = typeof meta.sourceUrl === "string" && meta.sourceUrl.startsWith("https://");
   els.untappedMetaLink.hidden = !hasSourceLink;
   els.untappedMetaLink.href = hasSourceLink ? meta.sourceUrl : "#";
+  els.untappedMetaLink.innerHTML = isCube ? 'CubeCobra öffnen <span aria-hidden="true">↗</span>' : 'Tierlist öffnen <span aria-hidden="true">↗</span>';
   els.untappedMeta.hidden = false;
+}
+
+async function fetchCubeRecords(id) {
+  if (cubeRecordCache.has(id)) return cubeRecordCache.get(id);
+  if (!cubeRecordManifestPromise) cubeRecordManifestPromise = fetch("cube-record-stats.json", { cache: "no-cache" })
+    .then(r => r.ok ? r.json() : null).catch(() => null);
+  const prepared = (await cubeRecordManifestPromise)?.cubes?.[id];
+  if (prepared) { cubeRecordCache.set(id, prepared); return prepared; }
+  return null;
+}
+
+function cubeArchetypeName(key, colors) {
+  return GUILD_NAMES[key] || (colors.length === 1 ? COLOR_NAMES[key] : key === "C" ? "Farblos" : key);
+}
+
+async function renderCubeHighlights(cards, id, guide, signal) {
+  const sourceUrl = `https://cubecobra.com/cube/records/${encodeURIComponent(id)}`;
+  const guideUrl = `https://cubecobra.com/cube/overview/${encodeURIComponent(id)}`;
+  renderUntappedMeta({ kind: "cube-guide", sourceUrl: guideUrl,
+    archetypes: guide.archetypes.map(a => ({ ...a, name: cubeArchetypeName(a.key, a.colors) })) });
+  try {
+    const stats = await fetchCubeRecords(id);
+    if (signal.aborted || !stats?.archetypes.length) return;
+    const imageByName = new Map(cards.map(c => [c.name, c.image]));
+    renderUntappedMeta({ ...stats, kind: "cube-records", sourceUrl, cardsSourceUrl: sourceUrl,
+      archetypes: stats.archetypes.map(a => ({ ...a,
+        name: cubeArchetypeName(a.key, a.colors),
+        topCards: a.topCards.map(c => ({ ...c, image: c.image || imageByName.get(c.name), url: sourceUrl }))
+      }))
+    });
+  } catch { /* Keep the clearly labelled guide when public records are unavailable. */ }
 }
 
 function prioritizeArchetypes(archetypes, meta) {
@@ -636,10 +697,12 @@ function hideUntappedMeta() {
 function showMetaCards(archetype, meta) {
   const dialog = document.getElementById("metaCardsDialog");
   const cards = (archetype.topCards || []).slice(0, 20);
-  document.getElementById("metaCardsTitle").textContent = archetype.name;
+  const isGuide = meta.kind === "cube-guide";
+  const isCube = isGuide || meta.kind === "cube-records";
+  document.getElementById("metaCardsTitle").textContent = archetype.dialogTitle || archetype.name;
   const description = document.getElementById("metaCardsDescription");
   description.hidden = cards.length > 0;
-  description.textContent = cards.length ? "" : "Keine Kartendaten verfügbar.";
+  description.textContent = cards.length ? "" : isCube ? "Keine Karten mit mindestens 50 aufgezeichneten Spielen vorhanden." : "Keine Kartendaten verfügbar.";
   const grid = document.getElementById("metaCardsGrid");
   grid.replaceChildren(...cards.map((card, index) => {
     const item = document.createElement("li");
@@ -662,15 +725,19 @@ function showMetaCards(archetype, meta) {
     name.textContent = card.name;
     const rate = document.createElement("span");
     rate.className = "meta-card-count";
-    rate.textContent = `${formatPercent(card.winRate)} WR`;
-    rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte im Hauptdeck (${card.wins.toLocaleString("de-DE")} Siege). Quelle: 17Lands, passende Hauptfarben.`;
-    link.append(image, rank, name, rate);
+    if (!isGuide) {
+      rate.textContent = `${formatPercent(card.winRate)} WR`;
+      rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte im Hauptdeck (${card.wins.toLocaleString("de-DE")} Siege). Quelle: ${isCube ? "CubeCobra-Records" : "17Lands"}, passende Deckfarben.`;
+    }
+    link.append(image, rank, name);
+    if (!isGuide) link.append(rate);
     item.append(link);
     return item;
   }));
   const source = document.getElementById("metaCardsSource");
   source.href = meta.cardsSourceUrl || meta.sourceUrl;
-  source.textContent = meta.cardsSource
+  source.textContent = isGuide ? "CubeCobra · Empfehlungen aus Primer und Kartenliste ↗"
+    : isCube ? `CubeCobra-Records · ${archetype.games.toLocaleString("de-DE")} Spieler-Spiele · ${meta.records} Events ↗` : meta.cardsSource
     ? `17Lands · ${(archetype.analyzedGames || 0).toLocaleString("de-DE")} Spiele · CC BY 4.0${meta.cardsUpdatedAt ? ` · ${new Date(meta.cardsUpdatedAt).toLocaleDateString("de-DE")}` : ""} ↗`
     : "17Lands · Datensätze ↗";
   document.body.classList.add("dialog-open");
@@ -1481,6 +1548,7 @@ function clearOutput() {
 }
 
 function resetView() {
+  cubeStatsController?.abort();
   clearOutput();
   hideToc();
   hideUntappedMeta();
@@ -1503,7 +1571,7 @@ function setBusy(isBusy) {
   els.sourceMode.disabled = busy;
   els.cubeSearch.disabled = busy;
   els.loadBtn.textContent = isLoading ? "Laedt..." : "Laden";
-  els.checkLatestBtn.textContent = isCheckingLatest ? "Suche..." : "Neue Drafts suchen";
+  els.checkLatestBtn.textContent = isCheckingLatest ? "Suche..." : "Neue Sets suchen";
 }
 
 function showProgress(show) {

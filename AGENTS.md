@@ -2,7 +2,9 @@
 
 This is a static GitHub Pages site. Keep hosting and automated data updates free.
 Do not introduce paid services, a backend requirement, secrets, or a SQL server.
-Keep README.md concise. Technical documentation belongs in docs/MAINTENANCE.md.
+Do not edit README.md unless the user explicitly requests a README change.
+Technical documentation belongs in docs/MAINTENANCE.md.
+Keep changes local; do not push unless the user explicitly approves the push.
 
 ## Prepared data
 
@@ -11,9 +13,19 @@ Keep README.md concise. Technical documentation belongs in docs/MAINTENANCE.md.
 - `card-stats.json`: precomputed 17Lands mainboard-included winrates and popularity.
 - `cubes.json` and `cubes.json.gz`: public CubeCobra discovery index. Build via
   `scripts/update-cubes.mjs`; never commit the large raw export or follower lists.
+  Limit the catalog to the top 50 by public follower count (ties: name, ID).
+  Only these cubes may be selected/loaded, including direct URL/ID input.
   Cube suggestions are snapshot-based and searched in `cube-search-worker.js`.
   A selected cube may be loaded live from CubeCobra's CORS-enabled cubeJSON API.
   Cube cards use only CubeCobra data and Elo, never fabricated draft winrates.
+  Cube meta statistics must use recorded match/game outcomes, never Elo.
+  Aggregate public Records offline with cube-records.js; the prepared cache is
+  cube-record-stats.json and includes only catalog IDs. Never persist raw player
+  data. Browser record reads use this file only; no Records API/proxy fallback.
+  Cloudflare Workers are a future idea only, not part of the current architecture.
+  Without records, cube-guide.js may suggest decks from the primer/card list;
+  label them Empfehlungen, never measured popularity or winrates. Use the same
+  table/dialog as MTG Set. Explanations belong only in the lower card reviews.
 - Importers are under `scripts/`. The browser consumes JSON; never move bulk
   dataset downloads or statistical aggregation into browser code.
 - Preserve source URLs, snapshot dates, metric definitions, licenses, and minimum

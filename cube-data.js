@@ -1,5 +1,13 @@
 (function (root) {
   const normalize = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  function topCubes(cubes) {
+    return [...new Map(cubes.map(c => [c.id, c])).values()].sort((a, b) =>
+      b.followers - a.followers || a.name.localeCompare(b.name, "en") || a.id.localeCompare(b.id, "en")).slice(0, 50);
+  }
+  function findCube(cubes, value) {
+    const id = cubeId(value);
+    return cubes.find(cube => cube.id.toLowerCase() === String(id).toLowerCase() || normalize(cube.name) === normalize(value)) || null;
+  }
   function cubeId(value) {
     const text = String(value || "").trim();
     if (/^[a-z\d_-]{1,100}$/i.test(text)) return text;
@@ -36,10 +44,13 @@
       const elo = typeof d.elo === "number" && Number.isFinite(d.elo) ? d.elo : null;
       const image = card.imgUrl || d.image_normal || d.image_small;
       return [{ name, source: "cubecobra", rating: elo, colorIdentity: colors, group, typeLine: type,
+        manaValue: Number(card.cmc ?? d.cmc), oracleText: d.oracle_text || "", oracleTags: d.oracle_tags || [],
+        deckColors: ["W", "U", "B", "R", "G"].filter(c => (d.color_identity || colors).includes(c)),
+        notes: typeof card.notes === "string" ? card.notes : "", tags: card.tags || [],
         section: type, review: d.oracle_text || "", image: /^https:\/\//.test(image || "") ? image : null }];
     });
   }
-  const api = { normalize, cubeId, search, cards };
+  const api = { normalize, cubeId, search, cards, topCubes, findCube };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.CubeData = api;
 })(globalThis);

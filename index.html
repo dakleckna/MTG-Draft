@@ -5,27 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Draft ReViewer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mana-font@1.18.0/css/mana.min.css" />
-  <link rel="stylesheet" href="styles.css?v=cubes-1" />
+  <link rel="stylesheet" href="styles.css?v=top50-backtop-1" />
 </head>
 <body>
 
-  <main id="app">
-    <section class="controls" aria-label="Draft Auswahl">
+  <main id="app" tabindex="-1">
+    <section class="controls" aria-label="MTG-Set- oder Cube-Auswahl">
       <div class="brand-logo">
         <img src="assets/draft-reviewer-logo.svg" alt="Draft ReViewer" />
       </div>
 
       <div class="source-picker">
         <label class="mode-picker"><span class="sr-only">Format auswählen</span>
-          <select id="sourceMode"><option value="draft">Draft</option><option value="cube">Cube</option></select>
+          <select id="sourceMode"><option value="draft">MTG Set</option><option value="cube">Cube</option></select>
         </label>
         <label id="draftPicker" class="draft-picker">
-          <span class="sr-only">Draft auswählen</span>
+          <span class="sr-only">MTG Set auswählen</span>
           <select id="draftSelect"></select>
         </label>
         <div id="cubePicker" class="cube-picker" hidden>
-          <label class="sr-only" for="cubeSearch">CubeCobra-Cube suchen oder Link/ID eingeben</label>
-          <input id="cubeSearch" type="search" role="combobox" placeholder="Cube suchen oder CubeCobra-Link …" autocomplete="off" spellcheck="false"
+          <label class="sr-only" for="cubeSearch">Unter den Top 50 CubeCobra-Cubes suchen</label>
+          <input id="cubeSearch" type="search" role="combobox" placeholder="Top-50-Cube suchen …" autocomplete="off" spellcheck="false"
             aria-autocomplete="list" aria-expanded="false" aria-controls="cubeSuggestions" aria-describedby="cubeSearchHint" />
           <div id="cubeSuggestionPanel" class="cube-suggestion-panel" hidden>
             <ul id="cubeSuggestions" role="listbox" aria-label="Cube-Vorschläge"></ul>
@@ -35,7 +35,7 @@
       </div>
 
       <button id="loadBtn" type="button">Laden</button>
-      <button id="checkLatestBtn" class="secondary" type="button">Neue Drafts suchen</button>
+      <button id="checkLatestBtn" class="secondary" type="button">Neue Sets suchen</button>
     </section>
 
     <section id="status" class="status" aria-live="polite" hidden></section>
@@ -69,6 +69,9 @@
     </button>
     <nav id="tocList" class="toc-list" aria-label="Archetypen Navigation"></nav>
   </aside>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Nach oben" title="Nach oben" hidden>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 12 6-6 6 6M12 6v13" /></svg>
+  </button>
 
   <template id="cardTemplate">
     <article class="card">
@@ -93,7 +96,8 @@
     <ol id="metaCardsGrid" class="meta-cards-grid"></ol>
     <a id="metaCardsSource" class="meta-cards-source" target="_blank" rel="noopener noreferrer">Trophy Decks auf Untapped öffnen ↗</a>
   </dialog>
-  <script src="cube-data.js?v=cubes-1"></script>
-  <script src="app.js?v=cubes-1"></script>
+  <script src="cube-data.js?v=top50-1"></script>
+  <script src="cube-guide.js?v=cube-guide-1"></script>
+  <script src="app.js?v=top50-backtop-1"></script>
 </body>
 </html>

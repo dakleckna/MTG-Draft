@@ -2,16 +2,17 @@
 
 ## Cubes von CubeCobra
 
-Oben neben dem Logo zwischen **Draft** und **Cube** wechseln. Im Cube-Modus
+Oben neben dem Logo zwischen **MTG Set** und **Cube** wechseln. Im Cube-Modus
 erscheint statt der Setliste ein Suchfeld mit Vorschlägen bei jedem Buchstaben.
 Gesucht wird nach Name, Besitzer und Cube-ID; Pfeiltasten/Enter oder ein Klick
-wählen den Cube aus. Anschließend auf **Laden** klicken. Ein CubeCobra-Link oder
-eine Cube-ID kann auch ohne Katalogtreffer direkt geladen werden.
+wählen den Cube aus. Anschließend auf **Laden** klicken. Es stehen nur die
+50 beliebtesten Cubes nach öffentlicher Followerzahl zur Auswahl (Gleichstand:
+Name, dann ID). Ein Name, Link oder eine ID lädt ebenfalls nur einen Katalog-Cube.
 
 Der Suchkatalog stammt aus dem offiziellen öffentlichen CubeCobra-Gesamtexport
 und wird im kostenlosen Wochenlauf aktualisiert (`node scripts/update-cubes.mjs`).
 Es ist der Stand des CubeCobra-Exports, keine Live-Suche auf deren Website.
-`cubes.json` enthält nur öffentliche Suchmetadaten; `cubes.json.gz` ist die
+`cubes.json` enthält nur Suchmetadaten der Top 50; `cubes.json.gz` ist die
 komprimierte Browserfassung. Ein Web Worker durchsucht den Katalog im Hintergrund.
 Die große Exportdatei und Benutzer-Followerlisten werden nicht gespeichert.
 
@@ -21,6 +22,55 @@ nach Farben und anschließend CubeCobra-Elo sortiert. Elo ist eine übergreifend
 CubeCobra-Bewertung, keine Winrate des gewählten Cubes. Für Cubes werden keine
 Draftsim-, Untapped- oder 17Lands-Daten herangezogen. Private Cubes benötigen
 weiterhin eine Berechtigung auf CubeCobra und können hier nicht geladen werden.
+
+Die Statistikübersicht verwendet ausschließlich echte CubeCobra-Records:
+Die fünf häufigsten Deckfarbkombinationen (Anzahl eingetragener Decks mit
+Spielergebnissen) zeigen ihre Spiel-Winrate. Per Klick erscheinen die bis zu
+20 meistgespielten Karten dieser Kombination mit ihrer Spiel-Winrate.
+Standardländer sind ausgeschlossen, mindestens 50 Spieler-Spiele pro Karte sind
+erforderlich. Es zählen auch Niederlagen und Unentschieden, keine Freilose.
+Eine Karte zählt höchstens einmal je Spieler-Spiel. Die eingereichte Deckliste
+gilt für die dokumentierten Match-Ergebnisse; Sideboardänderungen je Spiel sind
+nicht bekannt. Farben werden wie bei CubeCobra anhand von mehr als 10 % der
+Nichtland-Karten bestimmt. Frühere Cube-Versionen können enthalten sein.
+
+`cube-record-stats.json` enthält nur Aggregate, keine Spielernamen. Der Wochenlauf
+aktualisiert ausschließlich die 50 Katalog-Cubes über
+`node scripts/update-cube-records.mjs`; entfernte IDs werden aus dem Cache genommen.
+Der Browser liest ausschließlich diese vorbereitete JSON-Datei, ohne Live-Records,
+Records-Proxys oder Cloudflare Worker. Die aktuelle Hauptkartenliste samt Primer
+wird weiterhin über die öffentliche CubeCobra-CORS-API geladen.
+Auch große Cubes können null Ergebnis-Records haben. Bei fehlenden Ergebnissen
+oder einer nicht erreichbaren Cache-Datei zeigt dieselbe Tabelle bis zu fünf
+Farbkombinationen mit dem Label „Empfehlung“, ohne Winrate. Die Empfehlungen aus
+`cube-guide.js` sind regelbasierte Deckideen aus Primer und tatsächlicher Kartenliste,
+keine gemessene Beliebtheit. Mono- und Zweifarbdecks werden aus vorhandenen Rollen
+abgeleitet, breitere Kombinationen brauchen einen Primer-Hinweis und ausreichend
+Fixing. Verschiedene unterstützte Spielpläne werden bevorzugt. Im Karten-Dialog
+erscheinen bis zu 20 farblich passende Einzelkarten: Rollenpassung zuerst, dann
+Primer-Nennung, mit allgemeiner CubeCobra-Elo als nachrangigem Faktor. Standardländer
+und doppelte Kartennamen werden ausgeschlossen. Bei verfügbaren Ergebnissen ersetzt
+die echte Records-Auswertung diese Vorschläge. Hintergrundantworten dürfen nach
+einem neuen Ladevorgang oder Formatwechsel keine alte Übersicht wiederherstellen.
+
+Das Layout bleibt identisch zum MTG-Set-Modus, ohne zusätzliche Cube-Infobox.
+Nur die untere vollständige Kartenliste enthält erklärende Texte: vorhandene
+Kartennotizen, gekürzte Primer-Stellen mit Kartennennung sowie regelbasierte
+Hinweise zu erkannten Rollen und passenden Karten im selben Cube. Quellen werden
+als Text ausgegeben, niemals als unbereinigtes HTML. Diese Heuristik ersetzt keine
+vollständige Regelauswertung oder redaktionelle Cube-Analyse und verwendet keinen
+kostenpflichtigen KI-Dienst. Tests: `node --test scripts/cube-guide.test.mjs`.
+
+### Für später vorgemerkt
+
+Entscheidung vom 03.11.2026: vorerst Top 50 und vollständig vorbereitete
+Spielstatistiken auf GitHub. Ein eigener kostenloser Cloudflare Worker für
+beliebige weitere Cubes und verlässliche Live-Records bleibt eine mögliche
+spätere Erweiterung. Aktuell keinen Worker einrichten oder Account voraussetzen.
+
+Der schwebende Pfeil links unten erscheint ab 500 px Scrolltiefe und führt zum
+Seitenanfang zurück. Er respektiert reduzierte Bewegung und bleibt vom
+Farben-/Archetypen-Menü rechts getrennt.
 
 [Website öffnen](https://dakleckna.github.io/MTG-Draft/)
 

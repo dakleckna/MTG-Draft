@@ -13,7 +13,7 @@
 
 [hidden] { display: none !important; }
 
-.source-picker { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; min-width: 0; }
+.source-picker { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 8px; min-width: 0; }
 .cube-picker { position: relative; min-width: 0; }
 #cubeSearch { width: 100%; min-height: 46px; padding: 0 14px; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: var(--text); font: inherit; font-size: 16px; }
 #cubeSearch:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
@@ -24,10 +24,6 @@
 #cubeSuggestions strong { font-size: .92rem; overflow-wrap: anywhere; }
 #cubeSuggestions span, .cube-search-hint { color: var(--muted); font-size: .78rem; }
 .cube-search-hint { margin: 6px 10px; line-height: 1.45; }
-.cube-info { margin: 16px 0 20px; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
-.cube-info h2 { margin: 0; font-size: 1.5rem; letter-spacing: -.035em; }
-.cube-info p { margin: 8px 0; color: var(--muted); font-size: .9rem; }
-.cube-info a { color: var(--muted); font-size: .82rem; text-underline-offset: 3px; }
 
 
 html {
@@ -284,6 +280,27 @@ button:disabled {
 
 body.dialog-open { overflow: hidden; }
 
+.back-to-top {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.back-to-top:hover { background: var(--bg); }
+.back-to-top:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+body.dialog-open .back-to-top { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 .meta-cards-dialog {
   width: min(1080px, calc(100% - 28px));
   max-height: 90dvh;
@@ -476,6 +493,7 @@ body.dialog-open { overflow: hidden; }
   bottom: 16px;
   z-index: 20;
   width: min(280px, calc(100vw - 32px));
+  max-width: calc(100vw - 92px);
   border: 1px solid var(--line);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.92);

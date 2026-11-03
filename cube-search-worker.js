@@ -1,4 +1,4 @@
-importScripts("cube-data.js?v=cubes-1");
+importScripts("cube-data.js?v=top50-1");
 let indexPromise;
 let latest = 0;
 async function readIndex() {
@@ -13,6 +13,7 @@ async function readIndex() {
     index = await response.json();
   }
   if (!Array.isArray(index.cubes)) throw new Error("Ungültiger Katalog");
+  index.cubes = CubeData.topCubes(index.cubes);
   for (const cube of index.cubes) {
     cube._name = CubeData.normalize(cube.name);
     cube._search = CubeData.normalize(`${cube.name} ${cube.owner} ${cube.id}`);
