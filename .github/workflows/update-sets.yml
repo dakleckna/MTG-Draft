@@ -27,23 +27,25 @@ jobs:
         with:
           node-version: 22
       - name: Test set discovery
-        run: node --test scripts/set-catalog.test.mjs
+        run: node --test scripts/set-catalog.test.mjs scripts/untapped-card-stats.test.mjs
       - name: Find published reviews, including prerelease sets
         run: node scripts/update-drafts.mjs
       - name: Refresh Untapped meta for published sets
         run: node scripts/update-untapped-meta.mjs
+      - name: Fill missing card statistics from public Untapped data
+        run: node scripts/update-untapped-cards.mjs
       - name: Validate prepared database
         run: node scripts/validate-data.mjs
       - name: Commit updated catalog
         id: commit
         run: |
-          if git diff --quiet -- drafts.json untapped-meta.json; then
+          if git diff --quiet -- drafts.json untapped-meta.json card-stats.json; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add drafts.json untapped-meta.json
-          git commit -m "Update MTG set catalog and Untapped meta"
+          git add drafts.json untapped-meta.json card-stats.json
+          git commit -m "Update MTG sets, meta and missing card statistics"
           git pull --rebase origin main
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"

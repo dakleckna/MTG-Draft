@@ -18,6 +18,12 @@ Keep changes local; do not push unless the user explicitly approves the push.
   Preserve existing entries on sitemap omissions/errors.
 - `untapped-meta.json`: archetype popularity, not winrate.
 - `card-stats.json`: precomputed 17Lands mainboard-included winrates and popularity.
+  For sets without 17Lands data, update-untapped-cards.mjs uses Untapped's public
+  /free card endpoint (never premium/authenticated routes), with actual color
+  splits and Included WR (main deck OR sideboard). Never substitute ALL for a
+  color combination. Keep sources/metrics explicit in footer and card tooltip.
+  Refresh these fallback entries every six hours alongside the meta. Preserve
+  existing 17Lands entries; the weekly 17Lands importer can replace fallbacks.
 - `cubes.json` and `cubes.json.gz`: public CubeCobra discovery index. Build via
   `scripts/update-cubes.mjs`; never commit the large raw export or follower lists.
   Limit the catalog to the top 50 by public follower count (ties: name, ID).

@@ -78,6 +78,21 @@ aus dem Datensatz; Splashes können enthalten sein. Datenumfang und Datenstand
 stehen unten im Dialog. Es werden keine Trophy-Deck-Winrates hochgerechnet
 und keine Spiele verschiedener Anbieter addiert.
 
+Für Sets ohne 17Lands-Kartendatensatz ergänzt `scripts/update-untapped-cards.mjs`
+echte Kartenzähler pro Farbkombination aus Untappeds öffentlichem `/free`-Abruf.
+Beispiel: `node scripts/update-untapped-cards.mjs trk`. Verwendet wird der Abruf,
+den auch die öffentliche Kartenansicht nutzt, unter `/api/v1/analytics/query/`.
+Die SSR-Seitendaten enthalten absichtlich keine vollständigen Farbaufteilungen
+und Siegzähler und dürfen dafür nicht verwendet werden. Der Importer löst
+Karten über die mitgelieferten englischen Title-IDs auf und ergänzt Scryfall-Bilder.
+Es gelten dieselben 50 Spiele, maximal 20 Karten, ohne Standardländer, nach
+Spielhäufigkeit sortiert. Globale `ALL`-Statistiken ersetzen keine Farbkombination.
+Untappeds Included WR zählt Hauptdeck **oder Sideboard**, während der bestehende
+17Lands-Wert Hauptdeck-Einsätze zählt. Deshalb sind Quelle und Definition im
+Dialogfuß und im Winrate-Tooltip getrennt gekennzeichnet. Vorhandene 17Lands-Sets
+bleiben erhalten; verfügbare öffentliche 17Lands-Daten können den Fallback beim
+Wochenlauf ersetzen. Abruffehler behalten den letzten gültigen Stand.
+
 Die Analyse lässt sich lokal mit `node scripts/update-card-stats.mjs` erneuern.
 Optional können Setcodes folgen, z. B. `node scripts/update-card-stats.mjs fra hob`.
 Unveränderte Datensätze werden wiederverwendet. Die Rohdaten werden gestreamt,
@@ -103,7 +118,9 @@ der Katalog nicht überschrieben. Derselbe Lauf aktualisiert auch
 `untapped-meta.json` für alle veröffentlichten Sets. Setliste und Meta werden
 gemeinsam geprüft, committet und per Pages veröffentlicht; fehlende Untapped-Daten
 werden beim nächsten Lauf erneut versucht. Vorhandene gültige Meta bleibt bei
-Abruffehlern erhalten. Testfälle: `node --test scripts/set-catalog.test.mjs`.
+Abruffehlern erhalten. Zusätzlich werden fehlende bzw. Untapped-basierte
+Kartenstatistiken über `update-untapped-cards.mjs` nachgezogen und in
+`card-stats.json` veröffentlicht. Testfälle: `node --test scripts/set-catalog.test.mjs scripts/untapped-card-stats.test.mjs`.
 
 Der Wochenlauf **Update draft reviews** läuft weiterhin montags um 06:17 UTC.
 Er aktualisiert außerdem

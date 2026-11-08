@@ -551,8 +551,9 @@ async function fetchUntappedMeta(draft) {
     const stats = (await cardStatsPromise)?.drafts?.[draft.url];
     return {
       ...meta,
-      cardsSourceUrl: "https://www.17lands.com/public_datasets",
+      cardsSourceUrl: stats?.source === "17Lands" ? "https://www.17lands.com/public_datasets" : stats?.sourceUrl || meta.sourceUrl.replace(/\/tier-list$/, "/card-data"),
       cardsSource: stats?.source,
+      cardsMetric: stats?.metric,
       cardsUpdatedAt: stats?.sourceModifiedAt || stats?.updatedAt,
       archetypes: meta.archetypes.map(archetype => {
         const data = stats?.archetypes?.find(a => a.name === archetype.name);
@@ -706,7 +707,9 @@ function showMetaCards(archetype, meta) {
   document.getElementById("metaCardsTitle").textContent = archetype.dialogTitle || archetype.name;
   const description = document.getElementById("metaCardsDescription");
   description.hidden = cards.length > 0;
-  description.textContent = cards.length ? "" : isCube ? "Keine Karten mit mindestens 50 aufgezeichneten Spielen vorhanden." : "Keine Kartendaten verfügbar.";
+  description.textContent = cards.length ? "" : isCube ? "Keine Karten mit mindestens 50 aufgezeichneten Spielen vorhanden."
+    : meta.cardsSource ? "Noch keine Karten mit mindestens 50 auswertbaren Spielen in dieser Farbkombination."
+    : "Kartendaten für dieses Set sind noch nicht eingelesen. Die Spiele der Farbtabelle stammen aus einer separaten Auswertung.";
   const grid = document.getElementById("metaCardsGrid");
   grid.replaceChildren(...cards.map((card, index) => {
     const item = document.createElement("li");
@@ -730,16 +733,21 @@ function showMetaCards(archetype, meta) {
     const rate = document.createElement("span");
     rate.className = "meta-card-count";
     rate.textContent = `${formatPercent(card.winRate)} WR`;
-    rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte im Hauptdeck (${card.wins.toLocaleString("de-DE")} Siege). Quelle: ${isCube ? "CubeCobra-Records" : "17Lands"}, passende Deckfarben.`;
+    rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte ${meta.cardsSource === "Untapped.gg" ? "im Hauptdeck oder Sideboard" : "im Hauptdeck"} (${card.wins.toLocaleString("de-DE")} Siege). Quelle: ${isCube ? "CubeCobra-Records" : meta.cardsSource || "17Lands"}, passende Deckfarben.`;
     link.append(image, rank, name, rate);
     item.append(link);
     return item;
   }));
   const source = document.getElementById("metaCardsSource");
   source.href = meta.cardsSourceUrl || meta.sourceUrl;
+  if (meta.cardsSource === "Untapped.gg") {
+    const url = new URL(source.href);
+    url.searchParams.set("friendlyArchetype", archetype.id);
+    source.href = url.href;
+  }
   source.textContent = isCube ? `CubeCobra-Records · ${archetype.games.toLocaleString("de-DE")} Spieler-Spiele · ${meta.records} Events ↗` : meta.cardsSource
-    ? `17Lands · ${(archetype.analyzedGames || 0).toLocaleString("de-DE")} Spiele · CC BY 4.0${meta.cardsUpdatedAt ? ` · ${new Date(meta.cardsUpdatedAt).toLocaleDateString("de-DE")}` : ""} ↗`
-    : "17Lands · Datensätze ↗";
+    ? `${meta.cardsSource} · ${(archetype.analyzedGames || 0).toLocaleString("de-DE")} Spiele · ${meta.cardsSource === "Untapped.gg" ? "Haupt-/Sideboard" : "CC BY 4.0"}${meta.cardsUpdatedAt ? ` · ${new Date(meta.cardsUpdatedAt).toLocaleDateString("de-DE")}` : ""} ↗`
+    : "Untapped-Kartendaten öffnen ↗";
   document.body.classList.add("dialog-open");
   dialog.showModal();
 }

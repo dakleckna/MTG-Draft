@@ -33,7 +33,7 @@ jobs:
       - name: Check existing database and analysis logic
         run: |
           node scripts/validate-data.mjs
-          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs scripts/cubes.test.mjs scripts/set-catalog.test.mjs
+          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs scripts/cubes.test.mjs scripts/set-catalog.test.mjs scripts/untapped-card-stats.test.mjs
 
       - name: Build current Draftsim review list
         run: node scripts/update-drafts.mjs
@@ -43,6 +43,8 @@ jobs:
 
       - name: Analyze public 17Lands game datasets
         run: node scripts/update-card-stats.mjs
+      - name: Fill missing card statistics from public Untapped data
+        run: node scripts/update-untapped-cards.mjs
 
       - name: Refresh public CubeCobra search index
         run: node scripts/update-cubes.mjs

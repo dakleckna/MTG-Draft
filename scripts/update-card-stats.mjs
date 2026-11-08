@@ -56,7 +56,7 @@ async function build(draftUrl, info) {
   const response = await fetch(sourceUrl, { signal: AbortSignal.timeout(300000) });
   if (!response.ok) throw new Error(`dataset ${response.status}`);
   const old = previous.drafts[draftUrl];
-  if (old?.sourceModifiedAt === response.headers.get("last-modified") &&
+  if (old?.source === "17Lands" && old.sourceModifiedAt === response.headers.get("last-modified") &&
       info.archetypes.every(a => old.archetypes.some(b => a.id === b.id))) {
     await response.body.cancel();
     console.log(`${code}: dataset unchanged`);

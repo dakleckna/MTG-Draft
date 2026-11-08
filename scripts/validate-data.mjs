@@ -59,12 +59,14 @@ for (const [url, data] of Object.entries(meta.drafts)) {
 }
 for (const [url, data] of Object.entries(stats.drafts)) {
   assert(urls.has(url), `Statistics point to unknown draft: ${url}`);
-  assert(data.source === "17Lands" && data.license === "CC BY 4.0", "Missing source/license");
+  const untapped = data.source === "Untapped.gg";
+  assert(untapped ? /^https:\/\/mtga\.untapped\.gg\/limited\/draft\/[a-z0-9-]+\/card-data$/.test(data.sourceUrl) &&
+    data.metric === "included win rate (main deck or sideboard)" : data.source === "17Lands" && data.license === "CC BY 4.0", "Missing source/license or metric");
   assert(Number.isFinite(Date.parse(data.updatedAt)), "Missing update date");
   const ids = new Set();
   for (const a of data.archetypes) {
     assert(!ids.has(a.id), "Duplicate archetype"); ids.add(a.id);
-    assert(Number.isInteger(a.games) && a.games >= 0 && a.wins >= 0 && a.wins <= a.games, "Invalid game totals");
+    assert(Number.isInteger(a.games) && a.games >= 0 && (untapped || a.wins >= 0 && a.wins <= a.games), "Invalid game totals");
     games += a.games;
     assert(a.topCards.length <= 20, "More than 20 cards");
     let last = Infinity; const names = new Set();
