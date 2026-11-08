@@ -13,7 +13,9 @@ Keep changes local; do not push unless the user explicitly approves the push.
   never filter by paper release date. Scryfall metadata must not gate discovery.
   Browser startup and the refresh button read the prepared catalog without cache.
   The lightweight update-sets.yml refreshes it every six hours independently of
-  weekly bulk statistics. Preserve existing entries on sitemap omissions/errors.
+  weekly bulk statistics. It must also refresh and publish untapped-meta.json so
+  new sets get their color meta immediately when Untapped provides it.
+  Preserve existing entries on sitemap omissions/errors.
 - `untapped-meta.json`: archetype popularity, not winrate.
 - `card-stats.json`: precomputed 17Lands mainboard-included winrates and popularity.
 - `cubes.json` and `cubes.json.gz`: public CubeCobra discovery index. Build via

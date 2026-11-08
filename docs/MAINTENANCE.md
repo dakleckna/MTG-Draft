@@ -99,8 +99,11 @@ die Aufnahme, auch vor dem regulären Erscheinungstag und während des Prereleas
 Scryfall liefert Namen und Sortierdaten; fehlt dort ein Set oder ist Scryfall
 nicht erreichbar, kann die Review-Überschrift den Namen liefern. Vorhandene Sets
 bleiben bei Sitemap-Auslassungen erhalten. Bei leeren/fehlerhaften Sitemaps wird
-der Katalog nicht überschrieben. Neue Kataloge werden geprüft, committet und per
-Pages veröffentlicht. Testfälle: `node --test scripts/set-catalog.test.mjs`.
+der Katalog nicht überschrieben. Derselbe Lauf aktualisiert auch
+`untapped-meta.json` für alle veröffentlichten Sets. Setliste und Meta werden
+gemeinsam geprüft, committet und per Pages veröffentlicht; fehlende Untapped-Daten
+werden beim nächsten Lauf erneut versucht. Vorhandene gültige Meta bleibt bei
+Abruffehlern erhalten. Testfälle: `node --test scripts/set-catalog.test.mjs`.
 
 Der Wochenlauf **Update draft reviews** läuft weiterhin montags um 06:17 UTC.
 Er aktualisiert außerdem
@@ -111,7 +114,9 @@ Für neue Sets reicht **Actions → Update set catalog → Run workflow**, ohne
 erneuten Download großer Spieldatensätze. Beide Workflows verwenden dieselbe
 Concurrency-Gruppe, damit sie sich nicht beim Push überschneiden. Geplante
 GitHub-Läufe können verzögert werden; neue Reviews erscheinen nach dem nächsten
-erfolgreichen Kataloglauf und Pages-Build. Meta/Winrates können später nachkommen.
+erfolgreichen Kataloglauf und Pages-Build. Die Untapped-Farbmeta erscheint, sobald
+sie öffentlich verfügbar ist. Die getrennten 17Lands-Karten-Winrates bleiben beim
+Wochenlauf und können abhängig von der Datenverfügbarkeit später nachkommen.
 
 ## Kostenlose Datenbank und Betrieb
 
