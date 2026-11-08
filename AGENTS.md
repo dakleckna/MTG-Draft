@@ -9,6 +9,11 @@ Keep changes local; do not push unless the user explicitly approves the push.
 ## Prepared data
 
 - `drafts.json`: set catalog.
+  Include published Draftsim reviews immediately, including prerelease sets;
+  never filter by paper release date. Scryfall metadata must not gate discovery.
+  Browser startup and the refresh button read the prepared catalog without cache.
+  The lightweight update-sets.yml refreshes it every six hours independently of
+  weekly bulk statistics. Preserve existing entries on sitemap omissions/errors.
 - `untapped-meta.json`: archetype popularity, not winrate.
 - `card-stats.json`: precomputed 17Lands mainboard-included winrates and popularity.
 - `cubes.json` and `cubes.json.gz`: public CubeCobra discovery index. Build via
@@ -23,9 +28,11 @@ Keep changes local; do not push unless the user explicitly approves the push.
   cube-record-stats.json and includes only catalog IDs. Never persist raw player
   data. Browser record reads use this file only; no Records API/proxy fallback.
   Cloudflare Workers are a future idea only, not part of the current architecture.
-  Without records, cube-guide.js may suggest decks from the primer/card list;
-  label them Empfehlungen, never measured popularity or winrates. Use the same
-  table/dialog as MTG Set. Explanations belong only in the lower card reviews.
+  No inferred deck ideas, primer-based recommendations or generated card tips.
+  The lower cube card list shows Elo only, without review text. Without records
+  hide the meta/suggestions. With records retain the five most-played colors;
+  select their top 20 cards by winrate (50+ games; ties: games, then name),
+  ranking all eligible cards before truncation. Use the same dialog as MTG Set.
 - Importers are under `scripts/`. The browser consumes JSON; never move bulk
   dataset downloads or statistical aggregation into browser code.
 - Preserve source URLs, snapshot dates, metric definitions, licenses, and minimum

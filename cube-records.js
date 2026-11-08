@@ -48,10 +48,10 @@
         key: group.key, colors: group.colors, decks: group.decks, games: group.games, wins: group.wins,
         winRate: 100 * group.wins / group.games,
         topCards: [...group.cards.values()].filter(c => c.name && c.games >= 50)
-          .sort((a, b) => b.games - a.games || a.name.localeCompare(b.name)).slice(0, 20)
           .map(c => ({ ...c, image: /^https:\/\//.test(c.image || "") ? c.image : null, winRate: 100 * c.wins / c.games }))
+          .sort((a, b) => b.winRate - a.winRate || b.games - a.games || a.name.localeCompare(b.name)).slice(0, 20)
       }));
-    return { source: "CubeCobra", metric: "recorded game win rate with card in submitted mainboard", records, playerGames,
+    return { source: "CubeCobra", metric: "recorded game win rate with card in submitted mainboard", ranking: "winRate", records, playerGames,
       updatedAt: new Date().toISOString(), archetypes };
   }
   if (typeof module !== "undefined" && module.exports) module.exports = { analyze };

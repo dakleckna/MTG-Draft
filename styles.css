@@ -282,7 +282,7 @@ body.dialog-open { overflow: hidden; }
 
 .back-to-top {
   position: fixed;
-  left: 16px;
+  right: 16px;
   bottom: 16px;
   z-index: 20;
   display: grid;
@@ -292,11 +292,11 @@ body.dialog-open { overflow: hidden; }
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--panel);
-  color: var(--text);
+  background: #151515;
+  color: #fff;
   box-shadow: var(--shadow);
 }
-.back-to-top:hover { background: var(--bg); }
+.back-to-top:hover { background: #303030; }
 .back-to-top:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 body.dialog-open .back-to-top { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -489,7 +489,7 @@ body.dialog-open .back-to-top { visibility: hidden; }
 
 .toc {
   position: fixed;
-  right: 16px;
+  left: 16px;
   bottom: 16px;
   z-index: 20;
   width: min(280px, calc(100vw - 32px));
@@ -742,10 +742,13 @@ body.dialog-open .back-to-top { visibility: hidden; }
 
   .toc {
     left: 10px;
+    bottom: 10px;
+    border-radius: 16px;
+  }
+
+  .back-to-top {
     right: 10px;
     bottom: 10px;
-    width: auto;
-    border-radius: 16px;
   }
 
   .toc-list {

@@ -57,6 +57,29 @@ test("cube cards use only mainboard, keep color overrides and distinguish missin
   assert.equal(result[1].group, "land");
   assert.equal(result[1].rating, null);
   assert.equal(result[1].image, null);
+  assert.equal(result[0].review, "");
+});
+
+test("cube top twenty selects highest winrates across all eligible cards before truncation", () => {
+  const common = Array.from({ length: 25 }, (_, i) => `common${i}`);
+  const event = (id, cards, wins, losses) => ({ id, players: [{ name: "red" }, { name: "white" }],
+    matches: [{ matches: [{ p1: "red", p2: "white", results: [wins, losses, 0] }] }],
+    decks: { red: cards, white: ["white"] } });
+  const definitions = Object.fromEntries([...common, "best", "tie", "belowMinimum"].map(id => [id,
+    { name: id, type: "Creature", colorIdentity: ["R"] }]));
+  definitions.white = { name: "White", type: "Creature", colorIdentity: ["W"] };
+  const result = CubeRecords.analyze({ cards: definitions, records: [
+    event("frequent", common, 500, 500), event("rare", ["best"], 45, 5),
+    event("tie", ["tie"], 90, 10), event("insufficient", ["belowMinimum"], 49, 0)
+  ] });
+  const top = result.archetypes.find(a => a.key === "R").topCards;
+  assert.equal(result.ranking, "winRate");
+  assert.equal(top.length, 20);
+  assert.deepEqual(top.slice(0, 2).map(c => c.id), ["tie", "best"]);
+  assert.equal(top[1].winRate, 90);
+  assert.equal(top[1].games, 50);
+  assert.ok(!top.some(c => c.id === "belowMinimum"));
+  assert.ok(top.every((c, i) => i === 0 || top[i - 1].winRate >= c.winRate));
 });
 
 test("cube record winrates include losses and draws, deduplicate cards and ignore byes", () => {

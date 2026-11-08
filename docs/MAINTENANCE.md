@@ -17,7 +17,7 @@ komprimierte Browserfassung. Ein Web Worker durchsucht den Katalog im Hintergrun
 Die große Exportdatei und Benutzer-Followerlisten werden nicht gespeichert.
 
 Der ausgewählte Cube wird direkt über CubeCobras öffentliche CORS-API geladen.
-Angezeigt werden die Hauptdeckkarten mit Bildern und Kartentexten aus CubeCobra,
+Angezeigt werden die Hauptdeckkarten mit Bildern und Elo aus CubeCobra,
 nach Farben und anschließend CubeCobra-Elo sortiert. Elo ist eine übergreifende
 CubeCobra-Bewertung, keine Winrate des gewählten Cubes. Für Cubes werden keine
 Draftsim-, Untapped- oder 17Lands-Daten herangezogen. Private Cubes benötigen
@@ -26,7 +26,10 @@ weiterhin eine Berechtigung auf CubeCobra und können hier nicht geladen werden.
 Die Statistikübersicht verwendet ausschließlich echte CubeCobra-Records:
 Die fünf häufigsten Deckfarbkombinationen (Anzahl eingetragener Decks mit
 Spielergebnissen) zeigen ihre Spiel-Winrate. Per Klick erscheinen die bis zu
-20 meistgespielten Karten dieser Kombination mit ihrer Spiel-Winrate.
+20 Karten dieser Kombination mit der höchsten Spiel-Winrate. Bei gleicher
+Winrate stehen mehr aufgezeichnete Spiele vorne, danach der Kartenname.
+Die Rangfolge wird aus allen geeigneten Karten berechnet, bevor auf 20 gekürzt
+wird; ein bereits nach Häufigkeit gekürzter Cache reicht dafür nicht aus.
 Standardländer sind ausgeschlossen, mindestens 50 Spieler-Spiele pro Karte sind
 erforderlich. Es zählen auch Niederlagen und Unentschieden, keine Freilose.
 Eine Karte zählt höchstens einmal je Spieler-Spiel. Die eingereichte Deckliste
@@ -41,25 +44,13 @@ Der Browser liest ausschließlich diese vorbereitete JSON-Datei, ohne Live-Recor
 Records-Proxys oder Cloudflare Worker. Die aktuelle Hauptkartenliste samt Primer
 wird weiterhin über die öffentliche CubeCobra-CORS-API geladen.
 Auch große Cubes können null Ergebnis-Records haben. Bei fehlenden Ergebnissen
-oder einer nicht erreichbaren Cache-Datei zeigt dieselbe Tabelle bis zu fünf
-Farbkombinationen mit dem Label „Empfehlung“, ohne Winrate. Die Empfehlungen aus
-`cube-guide.js` sind regelbasierte Deckideen aus Primer und tatsächlicher Kartenliste,
-keine gemessene Beliebtheit. Mono- und Zweifarbdecks werden aus vorhandenen Rollen
-abgeleitet, breitere Kombinationen brauchen einen Primer-Hinweis und ausreichend
-Fixing. Verschiedene unterstützte Spielpläne werden bevorzugt. Im Karten-Dialog
-erscheinen bis zu 20 farblich passende Einzelkarten: Rollenpassung zuerst, dann
-Primer-Nennung, mit allgemeiner CubeCobra-Elo als nachrangigem Faktor. Standardländer
-und doppelte Kartennamen werden ausgeschlossen. Bei verfügbaren Ergebnissen ersetzt
-die echte Records-Auswertung diese Vorschläge. Hintergrundantworten dürfen nach
-einem neuen Ladevorgang oder Formatwechsel keine alte Übersicht wiederherstellen.
-
-Das Layout bleibt identisch zum MTG-Set-Modus, ohne zusätzliche Cube-Infobox.
-Nur die untere vollständige Kartenliste enthält erklärende Texte: vorhandene
-Kartennotizen, gekürzte Primer-Stellen mit Kartennennung sowie regelbasierte
-Hinweise zu erkannten Rollen und passenden Karten im selben Cube. Quellen werden
-als Text ausgegeben, niemals als unbereinigtes HTML. Diese Heuristik ersetzt keine
-vollständige Regelauswertung oder redaktionelle Cube-Analyse und verwendet keinen
-kostenpflichtigen KI-Dienst. Tests: `node --test scripts/cube-guide.test.mjs`.
+oder einer nicht erreichbaren Cache-Datei bleibt die Statistikübersicht verborgen.
+Es gibt keine geschätzten Deckideen, Primer-Empfehlungen oder generierten
+Kartentipps. Die vollständige untere Kartenliste bleibt nach Farben und Elo
+sortiert und zeigt keine Review-Texte. Im Karten-Dialog stehen ausschließlich
+die datenbasierten Top-Karten mit Bildern und Winrates. Das Layout entspricht
+weiterhin MTG Set. Hintergrundantworten dürfen nach einem neuen Ladevorgang
+oder Formatwechsel keine alte Übersicht wiederherstellen.
 
 ### Für später vorgemerkt
 
@@ -68,9 +59,9 @@ Spielstatistiken auf GitHub. Ein eigener kostenloser Cloudflare Worker für
 beliebige weitere Cubes und verlässliche Live-Records bleibt eine mögliche
 spätere Erweiterung. Aktuell keinen Worker einrichten oder Account voraussetzen.
 
-Der schwebende Pfeil links unten erscheint ab 500 px Scrolltiefe und führt zum
+Der schwarze Button mit weißem Pfeil rechts unten erscheint ab 500 px Scrolltiefe und führt zum
 Seitenanfang zurück. Er respektiert reduzierte Bewegung und bleibt vom
-Farben-/Archetypen-Menü rechts getrennt.
+Farben-/Archetypen-Menü links getrennt.
 
 [Website öffnen](https://dakleckna.github.io/MTG-Draft/)
 
@@ -97,12 +88,30 @@ wird der Datensatz verworfen und ein vorhandener letzter Stand behalten.
 
 ## Aktualisierungen
 
-Der Button **Neue Drafts suchen** lädt die aktuelle Liste aus `drafts.json`.
-Ein GitHub-Workflow aktualisiert diese Datei montags um 06:17 UTC aus den
-Draftsim-Reviews und den Setdaten von Scryfall. Er aktualisiert außerdem
+Die Website lädt `drafts.json` bei jedem Öffnen automatisch und übernimmt neue
+Sets auch auf Geräten ohne gespeicherte Auswahl. **Neue Sets suchen** lädt diese
+veröffentlichte Liste erneut ohne Browsercache; der Button führt keinen eigenen
+Draftsim-Scrape aus. Die Meldung bezieht sich daher auf die veröffentlichte Liste.
+
+Der schlanke Workflow **Update set catalog** prüft alle sechs Stunden um :43 UTC
+die öffentlichen Draftsim-Post-Sitemaps. Ein veröffentlichter Review genügt für
+die Aufnahme, auch vor dem regulären Erscheinungstag und während des Prereleases.
+Scryfall liefert Namen und Sortierdaten; fehlt dort ein Set oder ist Scryfall
+nicht erreichbar, kann die Review-Überschrift den Namen liefern. Vorhandene Sets
+bleiben bei Sitemap-Auslassungen erhalten. Bei leeren/fehlerhaften Sitemaps wird
+der Katalog nicht überschrieben. Neue Kataloge werden geprüft, committet und per
+Pages veröffentlicht. Testfälle: `node --test scripts/set-catalog.test.mjs`.
+
+Der Wochenlauf **Update draft reviews** läuft weiterhin montags um 06:17 UTC.
+Er aktualisiert außerdem
 `untapped-meta.json` mit den beliebtesten Farbkombinationen aus den öffentlichen
 Premier-Draft-Tier-List-Daten von Untapped.gg. Er kann auf GitHub auch über
 **Actions → Update draft reviews → Run workflow** sofort gestartet werden.
+Für neue Sets reicht **Actions → Update set catalog → Run workflow**, ohne
+erneuten Download großer Spieldatensätze. Beide Workflows verwenden dieselbe
+Concurrency-Gruppe, damit sie sich nicht beim Push überschneiden. Geplante
+GitHub-Läufe können verzögert werden; neue Reviews erscheinen nach dem nächsten
+erfolgreichen Kataloglauf und Pages-Build. Meta/Winrates können später nachkommen.
 
 ## Kostenlose Datenbank und Betrieb
 

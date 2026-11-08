@@ -22,16 +22,21 @@ const cubeRecords = await read("cube-record-stats.json");
 assert(cubeRecords.cubes && typeof cubeRecords.cubes === "object", "Missing CubeCobra record cache");
 for (const [id, summary] of Object.entries(cubeRecords.cubes)) {
   assert(cubeIds.has(id) && summary.source === "CubeCobra", "Invalid or out-of-catalog cube statistics source");
+  assert(summary.ranking === "winRate", "Cube cards must be selected by winrate");
   assert(summary.archetypes.length <= 5, "More than five cube archetypes");
   for (const a of summary.archetypes) {
     assert(a.decks > 0 && a.games > 0 && a.wins >= 0 && a.wins <= a.games, "Invalid cube outcomes");
     assert(Math.abs(a.winRate - 100 * a.wins / a.games) < 1e-6, "Invalid cube winrate");
-    let previousGames = Infinity;
+    let previousCard = null;
     const cardIds = new Set();
     assert(a.topCards.length <= 20, "More than 20 cube cards");
     for (const c of a.topCards) {
       assert(!cardIds.has(c.id), "Duplicate cube card"); cardIds.add(c.id);
-      assert(c.games >= 50 && c.games <= a.games && c.games <= previousGames, "Invalid cube card frequency"); previousGames = c.games;
+      assert(c.games >= 50 && c.games <= a.games, "Invalid cube card sample");
+      if (previousCard) assert(previousCard.winRate > c.winRate ||
+        (previousCard.winRate === c.winRate && (previousCard.games > c.games ||
+          (previousCard.games === c.games && previousCard.name.localeCompare(c.name) <= 0))), "Invalid cube card winrate order");
+      previousCard = c;
       assert(c.wins >= 0 && c.wins <= c.games && Math.abs(c.winRate - 100 * c.wins / c.games) < 1e-6, "Invalid cube card winrate");
     }
   }

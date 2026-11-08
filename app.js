@@ -160,6 +160,7 @@ let cubeStatsController = null;
 let selectedCube = null;
 let cubeMatches = [];
 let activeCubeOption = -1;
+let hasPickedDraft = false;
 
 function init() {
   const backToTop = document.getElementById("backToTop");
@@ -184,7 +185,7 @@ function init() {
 
   els.loadBtn.addEventListener("click", loadSelectedDraft);
   els.checkLatestBtn.addEventListener("click", checkForLatestDrafts);
-  els.draftSelect.addEventListener("change", resetView);
+  els.draftSelect.addEventListener("change", () => { hasPickedDraft = true; resetView(); });
   els.sourceMode.addEventListener("change", () => {
     const cube = els.sourceMode.value === "cube";
     els.draftPicker.hidden = cube;
@@ -206,10 +207,13 @@ function init() {
   });
 
   resetView();
+  // Load the published catalog on every device, including first visits.
+  void refreshPublishedDrafts().catch(error => console.warn("Set-Liste konnte nicht aktualisiert werden.", error));
 }
 
 async function loadSelectedDraft() {
   if (els.sourceMode.value === "cube") return loadSelectedCube();
+  hasPickedDraft = true;
   const draft = getSelectedDraft();
 
   if (isLoading && activeController) {
@@ -391,8 +395,6 @@ async function loadSelectedCube() {
     const cube = await response.json();
     const cards = CubeData.cards(cube);
     if (!cards.length) throw new Error("Der Cube enthält keine darstellbaren Hauptdeckkarten.");
-    const guide = CubeGuide.guide(cube, cards);
-    for (const card of cards) card.review = guide.reviews.get(card.name) || card.review;
     updateProgress(65, `${cards.length} Karten gefunden`);
     for (const card of cards) card.groupLabel = COLOR_NAMES[card.group] || GUILD_NAMES[card.group] ||
       FALLBACK_GROUPS.find(g => g.key === card.group)?.label || `Mehrfarbig (${card.group})`;
@@ -407,9 +409,9 @@ async function loadSelectedCube() {
     const groups = [...grouped.values()];
     await renderCardsProgressively(groups, cards.length, p => updateProgress(65 + p * .34, "Zeichne Cube"));
     buildToc(groups);
-    // The guide is available immediately; unavailable record services must not
-    // block the card list. A new load/mode change aborts this background lookup.
-    void renderCubeHighlights(cards, cube.id || id, guide, activeController.signal);
+    // Prepared records must not block the card list. New loads/mode changes
+    // abort the lookup so old cube statistics cannot reappear.
+    void renderCubeHighlights(cards, cube.id || id, activeController.signal);
     showProgress(false); setStatus("");
   } catch (error) {
     clearOutput(); hideToc(); showProgress(false);
@@ -441,16 +443,13 @@ async function checkForLatestDrafts() {
 
   try {
     const publishedDrafts = await fetchPublishedDrafts();
-    const knownUrls = new Set(DRAFTS.map(draft => draft.url));
-    const additions = publishedDrafts.filter(draft => !knownUrls.has(draft.url));
+    const additions = applyPublishedDrafts(publishedDrafts);
 
     if (!additions.length) {
-      setStatus("Keine neuen Sets gefunden. Deine Liste ist aktuell.");
+      setStatus("Keine weiteren Sets in der veröffentlichten Set-Liste gefunden.");
       return;
     }
 
-    DRAFTS.unshift(...additions);
-    storeDiscoveredDrafts(additions);
     renderDraftOptions(additions[0].url);
     clearOutput();
     hideToc();
@@ -467,12 +466,24 @@ async function checkForLatestDrafts() {
 }
 
 function isValidDiscoveredDraft(draft) {
-  return Boolean(
-    draft &&
-      typeof draft.title === "string" &&
-      draft.title.trim() &&
-      /^https:\/\/draftsim\.com\/mtg-[a-z0-9-]+-limited-set-review\/$/i.test(draft.url)
-  );
+  return Boolean(SetCatalog.normalize(draft));
+}
+
+function applyPublishedDrafts(published) {
+  const selectedUrl = getSelectedDraft()?.url;
+  const known = new Set(DRAFTS.map(draft => draft.url));
+  const additions = published.filter(draft => !known.has(draft.url));
+  DRAFTS.splice(0, DRAFTS.length, ...SetCatalog.merge(published, DRAFTS));
+  storeDiscoveredDrafts(published);
+  renderDraftOptions(selectedUrl);
+  return additions;
+}
+
+async function refreshPublishedDrafts() {
+  const published = await fetchPublishedDrafts();
+  const additions = applyPublishedDrafts(published);
+  if (!hasPickedDraft && published.length) renderDraftOptions(published[0].url);
+  return additions;
 }
 
 async function fetchPublishedDrafts() {
@@ -560,18 +571,15 @@ function renderUntappedMeta(meta) {
     return;
   }
 
-  const isGuide = meta.kind === "cube-guide";
-  const isCube = isGuide || meta.kind === "cube-records";
+  const isCube = meta.kind === "cube-records";
   const items = (isCube ? meta.archetypes : meta.archetypes.slice(0, 5)).map(archetype => {
     const item = document.createElement("li");
     item.className = "untapped-meta-item";
     const trigger = document.createElement("button");
     trigger.type = "button";
     trigger.className = "untapped-meta-trigger";
-    trigger.setAttribute("aria-label", `${archetype.name}: häufigste Karten anzeigen`);
-    if (isCube) trigger.title = isGuide ? `Deckidee: ${archetype.plan}. Empfehlung aus Primer und Kartenliste; keine gemessene Spielhäufigkeit oder Winrate.`
-      : `${archetype.decks} aufgezeichnete Decks · ${archetype.games} Spieler-Spiele · nach Deckhäufigkeit eingeordnet`;
-    if (isGuide) trigger.setAttribute("aria-label", `${archetype.name}: empfohlene Karten anzeigen`);
+    trigger.setAttribute("aria-label", `${archetype.name}: ${isCube ? "Karten mit höchster Winrate" : "häufigste Karten"} anzeigen`);
+    if (isCube) trigger.title = `${archetype.decks} aufgezeichnete Decks · ${archetype.games} Spieler-Spiele · Farben nach Deckhäufigkeit, Karten nach Winrate`;
     trigger.setAttribute("aria-haspopup", "dialog");
     trigger.addEventListener("click", () => showMetaCards(archetype, meta));
 
@@ -597,7 +605,7 @@ function renderUntappedMeta(meta) {
 
     const share = document.createElement("span");
     share.className = "untapped-meta-share";
-    share.textContent = isGuide ? "Empfehlung" : isCube ? `${formatPercent(archetype.winRate)} WR` : formatPercent(archetype.popularity);
+    share.textContent = isCube ? `${formatPercent(archetype.winRate)} WR` : formatPercent(archetype.popularity);
     share.title = trigger.title;
     const arrow = document.createElement("span");
     arrow.className = "meta-row-arrow";
@@ -638,14 +646,11 @@ function cubeArchetypeName(key, colors) {
   return GUILD_NAMES[key] || (colors.length === 1 ? COLOR_NAMES[key] : key === "C" ? "Farblos" : key);
 }
 
-async function renderCubeHighlights(cards, id, guide, signal) {
+async function renderCubeHighlights(cards, id, signal) {
   const sourceUrl = `https://cubecobra.com/cube/records/${encodeURIComponent(id)}`;
-  const guideUrl = `https://cubecobra.com/cube/overview/${encodeURIComponent(id)}`;
-  renderUntappedMeta({ kind: "cube-guide", sourceUrl: guideUrl,
-    archetypes: guide.archetypes.map(a => ({ ...a, name: cubeArchetypeName(a.key, a.colors) })) });
   try {
     const stats = await fetchCubeRecords(id);
-    if (signal.aborted || !stats?.archetypes.length) return;
+    if (signal.aborted || stats?.ranking !== "winRate" || !stats.archetypes.length) return;
     const imageByName = new Map(cards.map(c => [c.name, c.image]));
     renderUntappedMeta({ ...stats, kind: "cube-records", sourceUrl, cardsSourceUrl: sourceUrl,
       archetypes: stats.archetypes.map(a => ({ ...a,
@@ -653,7 +658,7 @@ async function renderCubeHighlights(cards, id, guide, signal) {
         topCards: a.topCards.map(c => ({ ...c, image: c.image || imageByName.get(c.name), url: sourceUrl }))
       }))
     });
-  } catch { /* Keep the clearly labelled guide when public records are unavailable. */ }
+  } catch { /* Without recorded results there are no card suggestions. */ }
 }
 
 function prioritizeArchetypes(archetypes, meta) {
@@ -697,8 +702,7 @@ function hideUntappedMeta() {
 function showMetaCards(archetype, meta) {
   const dialog = document.getElementById("metaCardsDialog");
   const cards = (archetype.topCards || []).slice(0, 20);
-  const isGuide = meta.kind === "cube-guide";
-  const isCube = isGuide || meta.kind === "cube-records";
+  const isCube = meta.kind === "cube-records";
   document.getElementById("metaCardsTitle").textContent = archetype.dialogTitle || archetype.name;
   const description = document.getElementById("metaCardsDescription");
   description.hidden = cards.length > 0;
@@ -725,19 +729,15 @@ function showMetaCards(archetype, meta) {
     name.textContent = card.name;
     const rate = document.createElement("span");
     rate.className = "meta-card-count";
-    if (!isGuide) {
-      rate.textContent = `${formatPercent(card.winRate)} WR`;
-      rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte im Hauptdeck (${card.wins.toLocaleString("de-DE")} Siege). Quelle: ${isCube ? "CubeCobra-Records" : "17Lands"}, passende Deckfarben.`;
-    }
-    link.append(image, rank, name);
-    if (!isGuide) link.append(rate);
+    rate.textContent = `${formatPercent(card.winRate)} WR`;
+    rate.title = `Siegrate in ${card.games.toLocaleString("de-DE")} Spielen mit dieser Karte im Hauptdeck (${card.wins.toLocaleString("de-DE")} Siege). Quelle: ${isCube ? "CubeCobra-Records" : "17Lands"}, passende Deckfarben.`;
+    link.append(image, rank, name, rate);
     item.append(link);
     return item;
   }));
   const source = document.getElementById("metaCardsSource");
   source.href = meta.cardsSourceUrl || meta.sourceUrl;
-  source.textContent = isGuide ? "CubeCobra · Empfehlungen aus Primer und Kartenliste ↗"
-    : isCube ? `CubeCobra-Records · ${archetype.games.toLocaleString("de-DE")} Spieler-Spiele · ${meta.records} Events ↗` : meta.cardsSource
+  source.textContent = isCube ? `CubeCobra-Records · ${archetype.games.toLocaleString("de-DE")} Spieler-Spiele · ${meta.records} Events ↗` : meta.cardsSource
     ? `17Lands · ${(archetype.analyzedGames || 0).toLocaleString("de-DE")} Spiele · CC BY 4.0${meta.cardsUpdatedAt ? ` · ${new Date(meta.cardsUpdatedAt).toLocaleDateString("de-DE")}` : ""} ↗`
     : "17Lands · Datensätze ↗";
   document.body.classList.add("dialog-open");
@@ -1262,6 +1262,7 @@ function createCardElement(card) {
     ? (Number.isFinite(card.rating) ? `CubeCobra-Elo ${Math.round(card.rating)}` : "Kein Elo-Wert") : `${card.rating}/10`;
   if (card.source === "cubecobra") node.querySelector(".rating").title = "CubeCobra-weite Elo-Bewertung, keine Winrate dieses Cubes.";
   node.querySelector(".review").textContent = card.review;
+  node.querySelector(".review").hidden = card.source === "cubecobra";
 
   const imageWrap = node.querySelector(".image-wrap");
 

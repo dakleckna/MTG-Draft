@@ -17,7 +17,12 @@ for (const id of ids) {
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     previous.cubes[id] = CubeRecords.analyze(await r.json());
     console.log(`${id}: ${previous.cubes[id].records} events, ${previous.cubes[id].playerGames} player-games`);
-  } catch (error) { console.warn(`::warning::Cube records ${id}: ${error.message}; keeping previous data`); }
+  } catch (error) {
+    // Older frequency-selected top twenties cannot be turned into a complete
+    // winrate ranking merely by sorting the already truncated output.
+    if (previous.cubes[id]?.ranking !== "winRate") delete previous.cubes[id];
+    console.warn(`::warning::Cube records ${id}: ${error.message}; keeping compatible previous data if available`);
+  }
   await new Promise(resolve => setTimeout(resolve, 500));
 }
 await writeFile(new URL("cube-record-stats.pending.json", root), JSON.stringify({ ...previous, generatedAt: new Date().toISOString() }) + "\n");

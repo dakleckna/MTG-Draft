@@ -33,7 +33,7 @@ jobs:
       - name: Check existing database and analysis logic
         run: |
           node scripts/validate-data.mjs
-          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs scripts/cubes.test.mjs scripts/cube-guide.test.mjs
+          node --test scripts/game-card-stats.test.mjs scripts/publish-pages.test.mjs scripts/cubes.test.mjs scripts/set-catalog.test.mjs
 
       - name: Build current Draftsim review list
         run: node scripts/update-drafts.mjs
