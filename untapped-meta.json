@@ -1,91 +1,91 @@
 {
-  "generatedAt": "2026-11-12T07:42:07.950Z",
+  "generatedAt": "2026-11-12T20:24:34.128Z",
   "drafts": {
     "https://draftsim.com/mtg-trk-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/star-trek/tier-list",
-      "updatedAt": "2026-11-12T05:25:35.000Z",
+      "updatedAt": "2026-11-12T19:04:13.000Z",
       "archetypes": [
-        {
-          "id": 5,
-          "name": "Orzhov",
-          "popularity": 10.4,
-          "games": 6119,
-          "wins": 3216
-        },
         {
           "id": 12,
           "name": "Rakdos",
-          "popularity": 9.9,
-          "games": 6091,
-          "wins": 3429
+          "popularity": 10.4,
+          "games": 8290,
+          "wins": 4642
+        },
+        {
+          "id": 5,
+          "name": "Orzhov",
+          "popularity": 10.1,
+          "games": 7674,
+          "wins": 4036
         },
         {
           "id": 24,
           "name": "Gruul",
-          "popularity": 8.5,
-          "games": 5188,
-          "wins": 2892
+          "popularity": 9.1,
+          "games": 7090,
+          "wins": 3946
         },
         {
           "id": 6,
           "name": "Dimir",
-          "popularity": 8.2,
-          "games": 4502,
-          "wins": 2159
+          "popularity": 8,
+          "games": 5689,
+          "wins": 2760
         },
         {
           "id": 20,
           "name": "Golgari",
-          "popularity": 7.2,
-          "games": 4247,
-          "wins": 2339
+          "popularity": 7,
+          "games": 5542,
+          "wins": 3072
         }
       ]
     },
     "https://draftsim.com/mtg-fra-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/reality-fracture/tier-list",
-      "updatedAt": "2026-11-12T05:12:34.000Z",
+      "updatedAt": "2026-11-12T19:12:55.000Z",
       "archetypes": [
         {
           "id": 3,
           "name": "Azorius",
           "popularity": 11.8,
-          "games": 144406,
-          "wins": 77938
+          "games": 144593,
+          "wins": 78043
         },
         {
           "id": 6,
           "name": "Dimir",
           "popularity": 10.2,
-          "games": 123672,
-          "wins": 66190
+          "games": 123803,
+          "wins": 66258
         },
         {
           "id": 17,
           "name": "Selesnya",
           "popularity": 10,
-          "games": 120907,
-          "wins": 63401
+          "games": 121051,
+          "wins": 63482
         },
         {
           "id": 24,
           "name": "Gruul",
           "popularity": 9.4,
-          "games": 114235,
-          "wins": 60405
+          "games": 114372,
+          "wins": 60486
         },
         {
           "id": 12,
           "name": "Rakdos",
           "popularity": 7.2,
-          "games": 87342,
-          "wins": 45804
+          "games": 87420,
+          "wins": 45832
         }
       ]
     },
     "https://draftsim.com/mtg-hob-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-hobbit/tier-list",
-      "updatedAt": "2026-11-12T03:49:03.000Z",
+      "updatedAt": "2026-11-12T17:43:38.000Z",
       "archetypes": [
         {
           "id": 12,
@@ -126,7 +126,7 @@
     },
     "https://draftsim.com/mtg-msh-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/marvel-super-heroes/tier-list",
-      "updatedAt": "2026-11-12T03:39:30.000Z",
+      "updatedAt": "2026-11-12T17:57:12.000Z",
       "archetypes": [
         {
           "id": 3,
@@ -167,7 +167,7 @@
     },
     "https://draftsim.com/mtg-sos-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/secrets-of-strixhaven/tier-list",
-      "updatedAt": "2026-11-12T06:34:52.000Z",
+      "updatedAt": "2026-11-12T20:03:07.000Z",
       "archetypes": [
         {
           "id": 9,
@@ -208,7 +208,7 @@
     },
     "https://draftsim.com/mtg-tmt-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/teenage-mutant-ninja-turtles/tier-list",
-      "updatedAt": "2026-11-12T04:05:56.000Z",
+      "updatedAt": "2026-11-12T19:03:22.000Z",
       "archetypes": [
         {
           "id": 5,
@@ -249,7 +249,7 @@
     },
     "https://draftsim.com/mtg-ecl-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/lorwyn-eclipsed/tier-list",
-      "updatedAt": "2026-11-12T06:46:15.000Z",
+      "updatedAt": "2026-11-12T19:24:40.000Z",
       "archetypes": [
         {
           "id": 20,
@@ -290,7 +290,7 @@
     },
     "https://draftsim.com/mtg-tla-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/avatar-the-last-airbender/tier-list",
-      "updatedAt": "2026-11-12T06:33:26.000Z",
+      "updatedAt": "2026-11-12T20:10:35.000Z",
       "archetypes": [
         {
           "id": 3,
@@ -331,7 +331,7 @@
     },
     "https://draftsim.com/mtg-eoe-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/edge-of-eternities/tier-list",
-      "updatedAt": "2026-11-12T00:57:47.000Z",
+      "updatedAt": "2026-11-12T19:05:15.000Z",
       "archetypes": [
         {
           "id": 5,
@@ -372,7 +372,7 @@
     },
     "https://draftsim.com/mtg-fin-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/final-fantasy/tier-list",
-      "updatedAt": "2026-11-12T04:37:35.000Z",
+      "updatedAt": "2026-11-12T19:40:23.000Z",
       "archetypes": [
         {
           "id": 10,
@@ -413,7 +413,7 @@
     },
     "https://draftsim.com/mtg-tdm-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/tarkir-dragonstorm/tier-list",
-      "updatedAt": "2026-11-12T05:19:32.000Z",
+      "updatedAt": "2026-11-12T15:55:06.000Z",
       "archetypes": [
         {
           "id": 26,
@@ -454,7 +454,7 @@
     },
     "https://draftsim.com/mtg-dft-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/aetherdrift/tier-list",
-      "updatedAt": "2026-11-11T19:39:45.000Z",
+      "updatedAt": "2026-11-12T18:10:13.000Z",
       "archetypes": [
         {
           "id": 20,
@@ -495,7 +495,7 @@
     },
     "https://draftsim.com/mtg-fdn-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/foundations/tier-list",
-      "updatedAt": "2026-11-12T06:21:30.000Z",
+      "updatedAt": "2026-11-12T18:57:59.000Z",
       "archetypes": [
         {
           "id": 3,
@@ -536,7 +536,7 @@
     },
     "https://draftsim.com/mtg-dsk-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/duskmourn-house-of-horror/tier-list",
-      "updatedAt": "2026-11-11T18:39:51.000Z",
+      "updatedAt": "2026-11-12T19:16:47.000Z",
       "archetypes": [
         {
           "id": 3,
@@ -577,7 +577,7 @@
     },
     "https://draftsim.com/mtg-blb-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/bloomburrow/tier-list",
-      "updatedAt": "2026-11-12T06:30:43.000Z",
+      "updatedAt": "2026-11-12T19:18:26.000Z",
       "archetypes": [
         {
           "id": 18,
@@ -618,7 +618,7 @@
     },
     "https://draftsim.com/mtg-mh3-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/modern-horizons-3/tier-list",
-      "updatedAt": "2026-11-12T04:55:04.000Z",
+      "updatedAt": "2026-11-12T19:00:01.000Z",
       "archetypes": [
         {
           "id": 9,
@@ -659,7 +659,7 @@
     },
     "https://draftsim.com/mtg-otj-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/outlaws-of-thunder-junction/tier-list",
-      "updatedAt": "2026-11-12T06:49:56.000Z",
+      "updatedAt": "2026-11-12T17:42:47.000Z",
       "archetypes": [
         {
           "id": 17,
@@ -700,7 +700,7 @@
     },
     "https://draftsim.com/mtg-mkm-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/murders-at-karlov-manor/tier-list",
-      "updatedAt": "2026-11-12T06:35:16.000Z",
+      "updatedAt": "2026-11-12T18:51:04.000Z",
       "archetypes": [
         {
           "id": 9,
@@ -741,7 +741,7 @@
     },
     "https://draftsim.com/mtg-lci-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-lost-caverns-of-ixalan/tier-list",
-      "updatedAt": "2026-11-12T04:09:06.000Z",
+      "updatedAt": "2026-11-12T18:28:09.000Z",
       "archetypes": [
         {
           "id": 10,
@@ -782,7 +782,7 @@
     },
     "https://draftsim.com/mtg-woe-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/wilds-of-eldraine/tier-list",
-      "updatedAt": "2026-11-12T06:20:18.000Z",
+      "updatedAt": "2026-11-12T19:20:33.000Z",
       "archetypes": [
         {
           "id": 12,
@@ -823,7 +823,7 @@
     },
     "https://draftsim.com/mtg-ltr-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-lord-of-the-rings-tales-of-middle-earth/tier-list",
-      "updatedAt": "2026-11-12T06:58:45.000Z",
+      "updatedAt": "2026-11-12T19:11:37.000Z",
       "archetypes": [
         {
           "id": 12,
@@ -864,7 +864,7 @@
     },
     "https://draftsim.com/mtg-mom-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/march-of-the-machine/tier-list",
-      "updatedAt": "2026-11-11T18:07:34.000Z",
+      "updatedAt": "2026-11-12T18:06:55.000Z",
       "archetypes": [
         {
           "id": 6,
@@ -905,7 +905,7 @@
     },
     "https://draftsim.com/mtg-one-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/phyrexia-all-will-be-one/tier-list",
-      "updatedAt": "2026-11-12T06:20:36.000Z",
+      "updatedAt": "2026-11-12T19:31:50.000Z",
       "archetypes": [
         {
           "id": 24,
@@ -946,7 +946,7 @@
     },
     "https://draftsim.com/mtg-bro-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/the-brothers-war/tier-list",
-      "updatedAt": "2026-11-12T06:37:25.000Z",
+      "updatedAt": "2026-11-12T20:06:18.000Z",
       "archetypes": [
         {
           "id": 3,
@@ -987,7 +987,7 @@
     },
     "https://draftsim.com/mtg-dmu-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/dominaria-united/tier-list",
-      "updatedAt": "2026-11-11T22:40:39.000Z",
+      "updatedAt": "2026-11-12T18:57:33.000Z",
       "archetypes": [
         {
           "id": 5,
@@ -1028,7 +1028,7 @@
     },
     "https://draftsim.com/mtg-snc-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/streets-of-new-capenna/tier-list",
-      "updatedAt": "2026-11-12T06:56:50.000Z",
+      "updatedAt": "2026-11-12T18:45:40.000Z",
       "archetypes": [
         {
           "id": 19,
@@ -1069,7 +1069,7 @@
     },
     "https://draftsim.com/mtg-neo-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/kamigawa-neon-dynasty/tier-list",
-      "updatedAt": "2026-11-12T02:32:48.000Z",
+      "updatedAt": "2026-11-12T18:50:54.000Z",
       "archetypes": [
         {
           "id": 6,
@@ -1110,7 +1110,7 @@
     },
     "https://draftsim.com/mtg-vow-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/innistrad-crimson-vow/tier-list",
-      "updatedAt": "2026-11-12T07:22:16.000Z",
+      "updatedAt": "2026-11-12T19:10:42.000Z",
       "archetypes": [
         {
           "id": 12,
@@ -1151,7 +1151,7 @@
     },
     "https://draftsim.com/mtg-mid-limited-set-review/": {
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/innistrad-midnight-hunt/tier-list",
-      "updatedAt": "2026-11-12T06:08:56.000Z",
+      "updatedAt": "2026-11-12T18:41:24.000Z",
       "archetypes": [
         {
           "id": 6,
