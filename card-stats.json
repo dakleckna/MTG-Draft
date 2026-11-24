@@ -23808,172 +23808,172 @@
     "https://draftsim.com/mtg-trk-limited-set-review/": {
       "source": "Untapped.gg",
       "sourceUrl": "https://mtga.untapped.gg/limited/draft/star-trek/card-data",
-      "updatedAt": "2026-11-23T18:22:03.586Z",
-      "sourceModifiedAt": "Mon, 23 Nov 2026 15:41:22 GMT",
+      "updatedAt": "2026-11-24T00:19:39.152Z",
+      "sourceModifiedAt": "Mon, 23 Nov 2026 23:15:23 GMT",
       "metric": "included win rate (main deck or sideboard)",
       "archetypes": [
         {
           "id": 12,
           "name": "Rakdos",
-          "games": 36078,
+          "games": 36703,
           "topCards": [
             {
               "name": "Planetary Bombardment",
-              "games": 19794,
-              "wins": 11156,
-              "winRate": 56.360513286854605,
+              "games": 20145,
+              "wins": 11356,
+              "winRate": 56.371308016877634,
               "image": "https://cards.scryfall.io/normal/front/4/d/4d9c39ce-f598-48d1-afa0-22f9513f1483.jpg?1793013596",
               "url": "https://scryfall.com/card/trk/162/planetary-bombardment?utm_source=api"
             },
             {
               "name": "Dahar Master",
-              "games": 19549,
-              "wins": 11052,
-              "winRate": 56.534861118215765,
+              "games": 19872,
+              "wins": 11243,
+              "winRate": 56.57709339774557,
               "image": "https://cards.scryfall.io/normal/front/1/1/1122fe1c-97f7-409d-ad37-0fed46f9f963.jpg?1793361323",
               "url": "https://scryfall.com/card/trk/146/dahar-master?utm_source=api"
             },
             {
               "name": "Boarding Action",
-              "games": 19373,
-              "wins": 10937,
-              "winRate": 56.454859856501315,
+              "games": 19734,
+              "wins": 11140,
+              "winRate": 56.450795581230366,
               "image": "https://cards.scryfall.io/normal/front/3/a/3a0d33cd-f81c-4950-81ed-9536061eca8a.jpg?1793361310",
               "url": "https://scryfall.com/card/trk/139/boarding-action?utm_source=api"
             },
             {
               "name": "Savvy Profiteer",
-              "games": 18933,
-              "wins": 10452,
-              "winRate": 55.205197274599904,
+              "games": 19263,
+              "wins": 10640,
+              "winRate": 55.23542542698437,
               "image": "https://cards.scryfall.io/normal/front/8/2/8256376f-011f-4cc8-9be4-47f5121ca75e.jpg?1793359515",
               "url": "https://scryfall.com/card/trk/171/savvy-profiteer?utm_source=api"
             },
             {
-              "name": "Plasma Cascade",
-              "games": 18770,
-              "wins": 10663,
-              "winRate": 56.80873734683005,
-              "image": "https://cards.scryfall.io/normal/front/3/c/3c786a2f-3de4-4b24-a3a0-15b1f2a07324.jpg?1785981557",
-              "url": "https://scryfall.com/card/trk/164/plasma-cascade?utm_source=api"
-            },
-            {
               "name": "Fugitive Listener",
-              "games": 18735,
-              "wins": 10425,
-              "winRate": 55.64451561248999,
+              "games": 19078,
+              "wins": 10617,
+              "winRate": 55.650487472481394,
               "image": "https://cards.scryfall.io/normal/front/b/d/bd04c738-b4e3-481e-9a68-d257524bf40e.jpg?1793361283",
               "url": "https://scryfall.com/card/trk/107/fugitive-listener?utm_source=api"
             },
             {
+              "name": "Plasma Cascade",
+              "games": 19062,
+              "wins": 10827,
+              "winRate": 56.79886685552408,
+              "image": "https://cards.scryfall.io/normal/front/3/c/3c786a2f-3de4-4b24-a3a0-15b1f2a07324.jpg?1785981557",
+              "url": "https://scryfall.com/card/trk/164/plasma-cascade?utm_source=api"
+            },
+            {
               "name": "Battle-Scarred Survivalist",
-              "games": 18288,
-              "wins": 10285,
-              "winRate": 56.239063867016625,
+              "games": 18604,
+              "wins": 10458,
+              "winRate": 56.213717480111804,
               "image": "https://cards.scryfall.io/normal/front/c/5/c567253e-a2ee-45de-b3c6-3aeafbf8237b.jpg?1785981454",
               "url": "https://scryfall.com/card/trk/95/battle-scarred-survivalist?utm_source=api"
             },
             {
               "name": "Tenacious Drone",
-              "games": 17489,
-              "wins": 9757,
-              "winRate": 55.78935330779347,
+              "games": 17850,
+              "wins": 9972,
+              "winRate": 55.865546218487395,
               "image": "https://cards.scryfall.io/normal/front/2/0/206ae042-09af-4fc1-8441-69cecdd087de.jpg?1793359485",
               "url": "https://scryfall.com/card/trk/133/tenacious-drone?utm_source=api"
             },
             {
               "name": "Eject the Warp Core",
-              "games": 17230,
-              "wins": 9570,
-              "winRate": 55.54265815438189,
+              "games": 17482,
+              "wins": 9711,
+              "winRate": 55.54856423750143,
               "image": "https://cards.scryfall.io/normal/front/0/4/04a479be-8093-4775-a5d9-8b0e1683bf12.jpg?1785981475",
               "url": "https://scryfall.com/card/trk/105/eject-the-warp-core?utm_source=api"
             },
             {
               "name": "Cha'DIch Investigator",
-              "games": 17034,
-              "wins": 9549,
-              "winRate": 56.0584712927087,
+              "games": 17337,
+              "wins": 9727,
+              "winRate": 56.10543923400819,
               "image": "https://cards.scryfall.io/normal/front/1/6/16281200-4660-4871-afd2-d4720e6a3197.jpg?1785981461",
               "url": "https://scryfall.com/card/trk/97/chadich-investigator?utm_source=api"
             },
             {
               "name": "L'Rell, Fierce Visionary",
-              "games": 16776,
-              "wins": 9550,
-              "winRate": 56.926561754887935,
+              "games": 17044,
+              "wins": 9705,
+              "winRate": 56.94085895329735,
               "image": "https://cards.scryfall.io/normal/front/7/b/7b06bbb9-7c6d-4889-b55a-1de77c27fd18.jpg?1792508377",
               "url": "https://scryfall.com/card/trk/247/lrell-fierce-visionary?utm_source=api"
             },
             {
               "name": "He's Dead, Jim",
-              "games": 15853,
-              "wins": 8921,
-              "winRate": 56.27326058159339,
+              "games": 16087,
+              "wins": 9049,
+              "winRate": 56.25038851246348,
               "image": "https://cards.scryfall.io/normal/front/2/c/2c309b0d-94b4-405e-be6c-18b407323e51.jpg?1785981492",
               "url": "https://scryfall.com/card/trk/114/hes-dead-jim?utm_source=api"
             },
             {
               "name": "Qo'noS",
-              "games": 14705,
-              "wins": 8098,
-              "winRate": 55.06970418225094,
+              "games": 14899,
+              "wins": 8207,
+              "winRate": 55.084233841197396,
               "image": "https://cards.scryfall.io/normal/front/f/1/f1558d93-8a8a-45e0-bcdc-e6cd42f716dc.jpg?1792632963",
               "url": "https://scryfall.com/card/trk/291/qonos?utm_source=api"
             },
             {
               "name": "Automated Warfare System",
-              "games": 14432,
-              "wins": 7837,
-              "winRate": 54.302937915742795,
+              "games": 14622,
+              "wins": 7939,
+              "winRate": 54.2948980987553,
               "image": "https://cards.scryfall.io/normal/front/3/d/3deae89b-b207-487b-9e82-1fa7fcd7854b.jpg?1785981442",
               "url": "https://scryfall.com/card/trk/93/automated-warfare-system?utm_source=api"
             },
             {
               "name": "Relentless Drednok",
-              "games": 13938,
-              "wins": 7640,
-              "winRate": 54.8141770698809,
+              "games": 14239,
+              "wins": 7813,
+              "winRate": 54.87042629398132,
               "image": "https://cards.scryfall.io/normal/front/c/e/ce538db8-373d-4554-821e-cd96e795e37a.jpg?1786005690",
               "url": "https://scryfall.com/card/trk/124/relentless-drednok?utm_source=api"
             },
             {
               "name": "Cantankerous Captain",
-              "games": 13652,
-              "wins": 7836,
-              "winRate": 57.398183416349255,
+              "games": 13955,
+              "wins": 8016,
+              "winRate": 57.44177714080975,
               "image": "https://cards.scryfall.io/normal/front/2/c/2c053ec5-d1ea-4526-8a0d-e4dfafb8ecdf.jpg?1786005671",
               "url": "https://scryfall.com/card/trk/141/cantankerous-captain?utm_source=api"
             },
             {
               "name": "Genesis Effect",
-              "games": 13411,
-              "wins": 7284,
-              "winRate": 54.31362314517933,
+              "games": 13677,
+              "wins": 7440,
+              "winRate": 54.39789427506032,
               "image": "https://cards.scryfall.io/normal/front/f/0/f0996bab-c2e4-4483-a76e-1355c81f1577.jpg?1793361330",
               "url": "https://scryfall.com/card/trk/151/genesis-effect?utm_source=api"
             },
             {
               "name": "Pattern Buffer Preservation",
-              "games": 12999,
-              "wins": 7119,
-              "winRate": 54.76575121163167,
+              "games": 13213,
+              "wins": 7235,
+              "winRate": 54.756679028229776,
               "image": "https://cards.scryfall.io/normal/front/2/3/23166580-9676-4025-916b-864568c2e59d.jpg?1793361304",
               "url": "https://scryfall.com/card/trk/123/pattern-buffer-preservation?utm_source=api"
             },
             {
               "name": "The Duras Sisters",
-              "games": 12865,
-              "wins": 7461,
-              "winRate": 57.994558880684025,
+              "games": 13066,
+              "wins": 7588,
+              "winRate": 58.07439155058932,
               "image": "https://cards.scryfall.io/normal/front/7/e/7eb112eb-2abf-4ba3-b9bd-b45ffa80f7eb.jpg?1792508321",
               "url": "https://scryfall.com/card/trk/235/the-duras-sisters?utm_source=api"
             },
             {
               "name": "Tal Shiar Operative",
-              "games": 12571,
-              "wins": 6927,
-              "winRate": 55.10301487550712,
+              "games": 12811,
+              "wins": 7060,
+              "winRate": 55.10889079697135,
               "image": "https://cards.scryfall.io/normal/front/e/b/ebe9c7bd-5528-41fd-9c51-2306086c7887.jpg?1793359459",
               "url": "https://scryfall.com/card/trk/131/tal-shiar-operative?utm_source=api"
             }
@@ -23982,165 +23982,165 @@
         {
           "id": 24,
           "name": "Gruul",
-          "games": 33813,
+          "games": 34326,
           "topCards": [
             {
               "name": "Common Goal",
-              "games": 19800,
-              "wins": 11312,
-              "winRate": 57.13131313131313,
+              "games": 20054,
+              "wins": 11456,
+              "winRate": 57.125760446793656,
               "image": "https://cards.scryfall.io/normal/front/4/f/4fddc950-fbc5-4cf7-b694-dcd54ffccb31.jpg?1785981568",
               "url": "https://scryfall.com/card/trk/190/common-goal?utm_source=api"
             },
             {
               "name": "Savvy Profiteer",
-              "games": 18408,
-              "wins": 10334,
-              "winRate": 56.13863537592351,
+              "games": 18722,
+              "wins": 10508,
+              "winRate": 56.126482213438734,
               "image": "https://cards.scryfall.io/normal/front/8/2/8256376f-011f-4cc8-9be4-47f5121ca75e.jpg?1793359515",
               "url": "https://scryfall.com/card/trk/171/savvy-profiteer?utm_source=api"
             },
             {
               "name": "Saurian Explorer",
-              "games": 18138,
-              "wins": 10047,
-              "winRate": 55.39199470724446,
+              "games": 18393,
+              "wins": 10191,
+              "winRate": 55.40694829554722,
               "image": "https://cards.scryfall.io/normal/front/1/9/197abe5e-cde2-4b29-a10f-d6b789776bfa.jpg?1785981598",
               "url": "https://scryfall.com/card/trk/213/saurian-explorer?utm_source=api"
             },
             {
               "name": "Astute Terraformer",
-              "games": 17460,
-              "wins": 9797,
-              "winRate": 56.111111111111114,
+              "games": 17750,
+              "wins": 9962,
+              "winRate": 56.12394366197183,
               "image": "https://cards.scryfall.io/normal/front/2/e/2ef7c30c-3ee6-413d-bd24-476322f36cb8.jpg?1793361354",
               "url": "https://scryfall.com/card/trk/184/astute-terraformer?utm_source=api"
             },
             {
               "name": "Plasma Cascade",
-              "games": 17395,
-              "wins": 9823,
-              "winRate": 56.47025007185973,
+              "games": 17625,
+              "wins": 9953,
+              "winRate": 56.4709219858156,
               "image": "https://cards.scryfall.io/normal/front/3/c/3c786a2f-3de4-4b24-a3a0-15b1f2a07324.jpg?1785981557",
               "url": "https://scryfall.com/card/trk/164/plasma-cascade?utm_source=api"
             },
             {
               "name": "Xindi Surveyors",
-              "games": 17259,
-              "wins": 9605,
-              "winRate": 55.65212352975259,
+              "games": 17493,
+              "wins": 9738,
+              "winRate": 55.667981478305606,
               "image": "https://cards.scryfall.io/normal/front/8/0/803608aa-ae69-45d2-ae48-f1688d2a6a0d.jpg?1786005515",
               "url": "https://scryfall.com/card/trk/225/xindi-surveyors?utm_source=api"
             },
             {
               "name": "Planetary Bombardment",
-              "games": 16867,
-              "wins": 9519,
-              "winRate": 56.43564356435643,
+              "games": 17177,
+              "wins": 9695,
+              "winRate": 56.44175350759737,
               "image": "https://cards.scryfall.io/normal/front/4/d/4d9c39ce-f598-48d1-afa0-22f9513f1483.jpg?1793013596",
               "url": "https://scryfall.com/card/trk/162/planetary-bombardment?utm_source=api"
             },
             {
               "name": "Temporal Conqueror",
-              "games": 16688,
-              "wins": 9378,
-              "winRate": 56.1960690316395,
+              "games": 16973,
+              "wins": 9542,
+              "winRate": 56.21870028869381,
               "image": "https://cards.scryfall.io/normal/front/b/0/b0bb51a7-1ae2-45d0-8be9-5454a3c8f751.jpg?1793361377",
               "url": "https://scryfall.com/card/trk/219/temporal-conqueror?utm_source=api"
             },
             {
               "name": "Xenobotanist",
-              "games": 16371,
-              "wins": 9270,
-              "winRate": 56.62451896646509,
+              "games": 16618,
+              "wins": 9396,
+              "winRate": 56.541100012035145,
               "image": "https://cards.scryfall.io/normal/front/2/0/20a97cda-42b2-44f1-8e77-f64dd1c98f6f.jpg?1785981613",
               "url": "https://scryfall.com/card/trk/224/xenobotanist?utm_source=api"
             },
             {
               "name": "Moopsy",
-              "games": 15668,
-              "wins": 8751,
-              "winRate": 55.85269338779678,
+              "games": 15951,
+              "wins": 8903,
+              "winRate": 55.814682465049216,
               "image": "https://cards.scryfall.io/normal/front/d/f/dfbaf597-6be2-4aa0-88ae-cc4c94878add.jpg?1785981590",
               "url": "https://scryfall.com/card/trk/207/moopsy?utm_source=api"
             },
             {
               "name": "Genesis Effect",
-              "games": 15610,
-              "wins": 8789,
-              "winRate": 56.30365150544523,
+              "games": 15893,
+              "wins": 8954,
+              "winRate": 56.339268860504625,
               "image": "https://cards.scryfall.io/normal/front/f/0/f0996bab-c2e4-4483-a76e-1355c81f1577.jpg?1793361330",
               "url": "https://scryfall.com/card/trk/151/genesis-effect?utm_source=api"
             },
             {
               "name": "Cold-Blooded Crew",
-              "games": 15193,
-              "wins": 8462,
-              "winRate": 55.69670242875008,
+              "games": 15390,
+              "wins": 8569,
+              "winRate": 55.67901234567901,
               "image": "https://cards.scryfall.io/normal/front/4/f/4f2d1830-baea-4735-b029-cb8c0b538d83.jpg?1785981563",
               "url": "https://scryfall.com/card/trk/189/cold-blooded-crew?utm_source=api"
             },
             {
               "name": "Planetary Patrol",
-              "games": 14792,
-              "wins": 8388,
-              "winRate": 56.70632774472688,
+              "games": 15081,
+              "wins": 8544,
+              "winRate": 56.65406803262383,
               "image": "https://cards.scryfall.io/normal/front/1/6/163f5474-138d-4b47-a6f5-b1a0974e56a4.jpg?1785981552",
               "url": "https://scryfall.com/card/trk/163/planetary-patrol?utm_source=api"
             },
             {
               "name": "Orion",
-              "games": 14397,
-              "wins": 8169,
-              "winRate": 56.740987705772035,
+              "games": 14581,
+              "wins": 8274,
+              "winRate": 56.74507921267403,
               "image": "https://cards.scryfall.io/normal/front/d/e/dec37ff4-d6e9-4b87-865b-125b17162465.jpg?1792632952",
               "url": "https://scryfall.com/card/trk/288/orion?utm_source=api"
             },
             {
               "name": "Dal R'El, Augment Orphan",
-              "games": 13937,
-              "wins": 7986,
-              "winRate": 57.30071033938437,
+              "games": 14128,
+              "wins": 8093,
+              "winRate": 57.28340883352208,
               "image": "https://cards.scryfall.io/normal/front/0/d/0da52d3a-dd83-4662-8e6d-3f4d4d389c3d.jpg?1792508298",
               "url": "https://scryfall.com/card/trk/231/dal-rel-augment-orphan?utm_source=api"
             },
             {
               "name": "Dominion Assault Force",
-              "games": 13648,
-              "wins": 7739,
-              "winRate": 56.70427901524033,
+              "games": 13880,
+              "wins": 7877,
+              "winRate": 56.7507204610951,
               "image": "https://cards.scryfall.io/normal/front/2/8/28a55f63-1cbd-4362-a192-e42a06f44686.jpg?1793363014",
               "url": "https://scryfall.com/card/trk/194/dominion-assault-force?utm_source=api"
             },
             {
               "name": "Cantankerous Captain",
-              "games": 12535,
-              "wins": 7206,
-              "winRate": 57.48703629836458,
+              "games": 12763,
+              "wins": 7327,
+              "winRate": 57.40813288411815,
               "image": "https://cards.scryfall.io/normal/front/2/c/2c053ec5-d1ea-4526-8a0d-e4dfafb8ecdf.jpg?1786005671",
               "url": "https://scryfall.com/card/trk/141/cantankerous-captain?utm_source=api"
             },
             {
               "name": "Boarding Action",
-              "games": 12349,
-              "wins": 6925,
-              "winRate": 56.07741517531784,
+              "games": 12542,
+              "wins": 7033,
+              "winRate": 56.07558603093605,
               "image": "https://cards.scryfall.io/normal/front/3/a/3a0d33cd-f81c-4950-81ed-9536061eca8a.jpg?1793361310",
               "url": "https://scryfall.com/card/trk/139/boarding-action?utm_source=api"
             },
             {
               "name": "Silicate Surveyor",
-              "games": 11697,
-              "wins": 6728,
-              "winRate": 57.51902197144567,
+              "games": 11870,
+              "wins": 6826,
+              "winRate": 57.50631844987363,
               "image": "https://cards.scryfall.io/normal/front/6/3/6359ab5d-4151-4a0c-af13-d59c1b381bb0.jpg?1786005521",
               "url": "https://scryfall.com/card/trk/172/silicate-surveyor?utm_source=api"
             },
             {
               "name": "Horta",
-              "games": 11214,
-              "wins": 6231,
-              "winRate": 55.56447298020332,
+              "games": 11373,
+              "wins": 6313,
+              "winRate": 55.50866086344852,
               "image": "https://cards.scryfall.io/normal/front/a/b/abf44662-62ad-47fb-9cfe-6bed47133de5.jpg?1785981533",
               "url": "https://scryfall.com/card/trk/152/horta?utm_source=api"
             }
@@ -24149,332 +24149,332 @@
         {
           "id": 5,
           "name": "Orzhov",
-          "games": 30194,
+          "games": 30672,
           "topCards": [
             {
               "name": "Assault Drone",
-              "games": 18846,
-              "wins": 9948,
-              "winRate": 52.785737026424705,
+              "games": 19207,
+              "wins": 10150,
+              "winRate": 52.84531681157911,
               "image": "https://cards.scryfall.io/normal/front/5/c/5ca2da7a-afbf-4b32-8ff6-ae899b9f70ad.jpg?1785981435",
               "url": "https://scryfall.com/card/trk/92/assault-drone?utm_source=api"
             },
             {
               "name": "Tenacious Drone",
-              "games": 18431,
-              "wins": 9704,
-              "winRate": 52.65042591286419,
+              "games": 18721,
+              "wins": 9870,
+              "winRate": 52.721542652636074,
               "image": "https://cards.scryfall.io/normal/front/2/0/206ae042-09af-4fc1-8441-69cecdd087de.jpg?1793359485",
               "url": "https://scryfall.com/card/trk/133/tenacious-drone?utm_source=api"
             },
             {
               "name": "Automated Warfare System",
-              "games": 16619,
-              "wins": 8677,
-              "winRate": 52.21132438774896,
+              "games": 16902,
+              "wins": 8838,
+              "winRate": 52.28966986155485,
               "image": "https://cards.scryfall.io/normal/front/3/d/3deae89b-b207-487b-9e82-1fa7fcd7854b.jpg?1785981442",
               "url": "https://scryfall.com/card/trk/93/automated-warfare-system?utm_source=api"
             },
             {
               "name": "Free Borg Revolutionaries",
-              "games": 16303,
-              "wins": 8522,
-              "winRate": 52.272587867263695,
+              "games": 16579,
+              "wins": 8678,
+              "winRate": 52.34332589420351,
               "image": "https://cards.scryfall.io/normal/front/6/7/6711e910-e5a8-4602-9559-de5374bffff2.jpg?1785981345",
               "url": "https://scryfall.com/card/trk/19/free-borg-revolutionaries?utm_source=api"
             },
             {
               "name": "Malfunctioning Holodeck",
-              "games": 16203,
-              "wins": 8604,
-              "winRate": 53.101277541196076,
+              "games": 16500,
+              "wins": 8779,
+              "winRate": 53.2060606060606,
               "image": "https://cards.scryfall.io/normal/front/0/f/0faeffee-bb07-4b9d-8cdd-e9731bbd2396.jpg?1785981349",
               "url": "https://scryfall.com/card/trk/22/malfunctioning-holodeck?utm_source=api"
             },
             {
               "name": "Relentless Drednok",
-              "games": 15835,
-              "wins": 8343,
-              "winRate": 52.68708556994001,
+              "games": 16131,
+              "wins": 8511,
+              "winRate": 52.761763064906084,
               "image": "https://cards.scryfall.io/normal/front/c/e/ce538db8-373d-4554-821e-cd96e795e37a.jpg?1786005690",
               "url": "https://scryfall.com/card/trk/124/relentless-drednok?utm_source=api"
             },
             {
               "name": "Oberth-Class Starship",
-              "games": 15785,
-              "wins": 8461,
-              "winRate": 53.601520430788725,
+              "games": 16070,
+              "wins": 8624,
+              "winRate": 53.665214685749845,
               "image": "https://cards.scryfall.io/normal/front/7/e/7efe3788-ecf7-4b56-8970-bc324092941c.jpg?1793361187",
               "url": "https://scryfall.com/card/trk/26/oberth-class-starship?utm_source=api"
             },
             {
               "name": "Vexing Drone",
-              "games": 14542,
-              "wins": 7598,
-              "winRate": 52.24865905652592,
+              "games": 14772,
+              "wins": 7732,
+              "winRate": 52.342269157866234,
               "image": "https://cards.scryfall.io/normal/front/6/f/6f4b2476-8f93-4d4e-b664-233e82fcf212.jpg?1793361221",
               "url": "https://scryfall.com/card/trk/45/vexing-drone?utm_source=api"
             },
             {
               "name": "Locutus, the One Who Speaks",
-              "games": 14483,
-              "wins": 7740,
-              "winRate": 53.44196644341642,
+              "games": 14742,
+              "wins": 7889,
+              "winRate": 53.51377018043685,
               "image": "https://cards.scryfall.io/normal/front/2/9/296f1127-14a0-42c4-9e4a-c0d929720748.jpg?1792508366",
               "url": "https://scryfall.com/card/trk/245/locutus-the-one-who-speaks?utm_source=api"
             },
             {
               "name": "Eject the Warp Core",
-              "games": 14154,
-              "wins": 7369,
-              "winRate": 52.06302105411898,
+              "games": 14395,
+              "wins": 7497,
+              "winRate": 52.080583535949984,
               "image": "https://cards.scryfall.io/normal/front/0/4/04a479be-8093-4775-a5d9-8b0e1683bf12.jpg?1785981475",
               "url": "https://scryfall.com/card/trk/105/eject-the-warp-core?utm_source=api"
             },
             {
               "name": "Rogue Artificial Intelligence",
-              "games": 13500,
-              "wins": 6982,
-              "winRate": 51.71851851851852,
+              "games": 13720,
+              "wins": 7096,
+              "winRate": 51.7201166180758,
               "image": "https://cards.scryfall.io/normal/front/e/d/edcce061-88c9-40bf-97f8-d0d3018e24dd.jpg?1785981516",
               "url": "https://scryfall.com/card/trk/126/rogue-artificial-intelligence?utm_source=api"
             },
             {
               "name": "Command Decision",
-              "games": 13033,
-              "wins": 6859,
-              "winRate": 52.627944448707126,
+              "games": 13205,
+              "wins": 6954,
+              "winRate": 52.66187050359712,
               "image": "https://cards.scryfall.io/normal/front/9/f/9f1f789b-5c08-4a4d-b3a3-4d51ad9f1a4d.jpg?1785981318",
               "url": "https://scryfall.com/card/trk/8/command-decision?utm_source=api"
             },
             {
               "name": "He's Dead, Jim",
-              "games": 12644,
-              "wins": 6637,
-              "winRate": 52.49130022144891,
+              "games": 12808,
+              "wins": 6723,
+              "winRate": 52.490630855715175,
               "image": "https://cards.scryfall.io/normal/front/2/c/2c309b0d-94b4-405e-be6c-18b407323e51.jpg?1785981492",
               "url": "https://scryfall.com/card/trk/114/hes-dead-jim?utm_source=api"
             },
             {
               "name": "Pattern Buffer Preservation",
-              "games": 11780,
-              "wins": 6119,
-              "winRate": 51.94397283531409,
+              "games": 11957,
+              "wins": 6214,
+              "winRate": 51.96955758133311,
               "image": "https://cards.scryfall.io/normal/front/2/3/23166580-9676-4025-916b-864568c2e59d.jpg?1793361304",
               "url": "https://scryfall.com/card/trk/123/pattern-buffer-preservation?utm_source=api"
             },
             {
               "name": "Cardassia Prime",
-              "games": 11447,
-              "wins": 6021,
-              "winRate": 52.59893421857255,
+              "games": 11626,
+              "wins": 6121,
+              "winRate": 52.64923447445381,
               "image": "https://cards.scryfall.io/normal/front/d/6/d634424f-9148-46a5-95e3-4965a9226bb4.jpg?1792632933",
               "url": "https://scryfall.com/card/trk/280/cardassia-prime?utm_source=api"
             },
             {
               "name": "Shields Up!",
-              "games": 11026,
-              "wins": 5636,
-              "winRate": 51.11554507527662,
+              "games": 11208,
+              "wins": 5726,
+              "winRate": 51.08850820842255,
               "image": "https://cards.scryfall.io/normal/front/0/b/0b60c9af-8ea9-491d-a4a4-226a2143e7f3.jpg?1785981369",
               "url": "https://scryfall.com/card/trk/35/shields-up!?utm_source=api"
             },
             {
               "name": "Emergency Medical Hologram",
-              "games": 10846,
-              "wins": 5672,
-              "winRate": 52.295777245067306,
+              "games": 10990,
+              "wins": 5756,
+              "winRate": 52.37488626023658,
               "image": "https://cards.scryfall.io/normal/front/d/d/dda6f965-cbdf-4dbc-b0b1-00c27e32f5f2.jpg?1786005719",
               "url": "https://scryfall.com/card/trk/15/emergency-medical-hologram?utm_source=api"
             },
             {
               "name": "Fugitive Listener",
-              "games": 10819,
-              "wins": 5620,
-              "winRate": 51.9456511692393,
+              "games": 10964,
+              "wins": 5692,
+              "winRate": 51.91535935789858,
               "image": "https://cards.scryfall.io/normal/front/b/d/bd04c738-b4e3-481e-9a68-d257524bf40e.jpg?1793361283",
               "url": "https://scryfall.com/card/trk/107/fugitive-listener?utm_source=api"
             },
             {
               "name": "Set Phasers to . . .",
-              "games": 10338,
-              "wins": 5339,
-              "winRate": 51.6444186496421,
+              "games": 10479,
+              "wins": 5413,
+              "winRate": 51.655692337055065,
               "image": "https://cards.scryfall.io/normal/front/5/4/54dbf416-973d-46c8-b9be-e863283d328b.jpg?1784036750",
               "url": "https://scryfall.com/card/trk/34/set-phasers-to-?utm_source=api"
             },
             {
-              "name": "Collective Drone",
-              "games": 10106,
-              "wins": 5252,
-              "winRate": 51.96912725113794,
-              "image": "https://cards.scryfall.io/normal/front/6/5/65b74daa-4606-4118-9752-b0dcd7a3f486.jpg?1785981469",
-              "url": "https://scryfall.com/card/trk/99/collective-drone?utm_source=api"
+              "name": "Hive Mind Coprocessor",
+              "games": 10298,
+              "wins": 5325,
+              "winRate": 51.70906972227617,
+              "image": "https://cards.scryfall.io/normal/front/a/4/a4734c59-ff41-47ac-bbb4-c8c3bf052fe6.jpg?1785981497",
+              "url": "https://scryfall.com/card/trk/115/hive-mind-coprocessor?utm_source=api"
             }
           ]
         },
         {
           "id": 20,
           "name": "Golgari",
-          "games": 22013,
+          "games": 22408,
           "topCards": [
             {
               "name": "Temporal Conqueror",
-              "games": 13256,
-              "wins": 7386,
-              "winRate": 55.71816535908268,
+              "games": 13474,
+              "wins": 7504,
+              "winRate": 55.69244470832715,
               "image": "https://cards.scryfall.io/normal/front/b/0/b0bb51a7-1ae2-45d0-8be9-5454a3c8f751.jpg?1793361377",
               "url": "https://scryfall.com/card/trk/219/temporal-conqueror?utm_source=api"
             },
             {
               "name": "Common Goal",
-              "games": 12678,
-              "wins": 7096,
-              "winRate": 55.97097333964348,
+              "games": 12927,
+              "wins": 7242,
+              "winRate": 56.022278951032725,
               "image": "https://cards.scryfall.io/normal/front/4/f/4fddc950-fbc5-4cf7-b694-dcd54ffccb31.jpg?1785981568",
               "url": "https://scryfall.com/card/trk/190/common-goal?utm_source=api"
             },
             {
               "name": "Pattern Buffer Preservation",
-              "games": 11816,
-              "wins": 6520,
-              "winRate": 55.179417738659446,
+              "games": 12016,
+              "wins": 6630,
+              "winRate": 55.176431424766974,
               "image": "https://cards.scryfall.io/normal/front/2/3/23166580-9676-4025-916b-864568c2e59d.jpg?1793361304",
               "url": "https://scryfall.com/card/trk/123/pattern-buffer-preservation?utm_source=api"
             },
             {
               "name": "Eject the Warp Core",
-              "games": 11528,
-              "wins": 6408,
-              "winRate": 55.586398334489935,
+              "games": 11732,
+              "wins": 6527,
+              "winRate": 55.63416297306512,
               "image": "https://cards.scryfall.io/normal/front/0/4/04a479be-8093-4775-a5d9-8b0e1683bf12.jpg?1785981475",
               "url": "https://scryfall.com/card/trk/105/eject-the-warp-core?utm_source=api"
             },
             {
               "name": "Xenobotanist",
-              "games": 11356,
-              "wins": 6350,
-              "winRate": 55.917576611482914,
+              "games": 11567,
+              "wins": 6480,
+              "winRate": 56.021440304314,
               "image": "https://cards.scryfall.io/normal/front/2/0/20a97cda-42b2-44f1-8e77-f64dd1c98f6f.jpg?1785981613",
               "url": "https://scryfall.com/card/trk/224/xenobotanist?utm_source=api"
             },
             {
               "name": "Fugitive Listener",
-              "games": 11144,
-              "wins": 6210,
-              "winRate": 55.72505384063173,
+              "games": 11326,
+              "wins": 6313,
+              "winRate": 55.73900759314851,
               "image": "https://cards.scryfall.io/normal/front/b/d/bd04c738-b4e3-481e-9a68-d257524bf40e.jpg?1793361283",
               "url": "https://scryfall.com/card/trk/107/fugitive-listener?utm_source=api"
             },
             {
               "name": "Moopsy",
-              "games": 10921,
-              "wins": 6080,
-              "winRate": 55.67255745810823,
+              "games": 11116,
+              "wins": 6185,
+              "winRate": 55.64051817200432,
               "image": "https://cards.scryfall.io/normal/front/d/f/dfbaf597-6be2-4aa0-88ae-cc4c94878add.jpg?1785981590",
               "url": "https://scryfall.com/card/trk/207/moopsy?utm_source=api"
             },
             {
               "name": "Cold-Blooded Crew",
-              "games": 10804,
-              "wins": 5968,
-              "winRate": 55.238800444279896,
+              "games": 10982,
+              "wins": 6071,
+              "winRate": 55.28136951374977,
               "image": "https://cards.scryfall.io/normal/front/4/f/4f2d1830-baea-4735-b029-cb8c0b538d83.jpg?1785981563",
               "url": "https://scryfall.com/card/trk/189/cold-blooded-crew?utm_source=api"
             },
             {
               "name": "He's Dead, Jim",
-              "games": 10773,
-              "wins": 6004,
-              "winRate": 55.73192239858906,
+              "games": 10907,
+              "wins": 6074,
+              "winRate": 55.68900705968644,
               "image": "https://cards.scryfall.io/normal/front/2/c/2c309b0d-94b4-405e-be6c-18b407323e51.jpg?1785981492",
               "url": "https://scryfall.com/card/trk/114/hes-dead-jim?utm_source=api"
             },
             {
               "name": "Vash, Freelance Archaeologist",
-              "games": 10587,
-              "wins": 5915,
-              "winRate": 55.87040710305091,
+              "games": 10793,
+              "wins": 6039,
+              "winRate": 55.952932456221625,
               "image": "https://cards.scryfall.io/normal/front/d/1/d1f51765-f336-4ca2-a0f5-e42dc352c0fa.jpg?1792508403",
               "url": "https://scryfall.com/card/trk/255/vash-freelance-archaeologist?utm_source=api"
             },
             {
               "name": "Astute Terraformer",
-              "games": 10417,
-              "wins": 5743,
-              "winRate": 55.13103580685418,
+              "games": 10598,
+              "wins": 5847,
+              "winRate": 55.17078694093225,
               "image": "https://cards.scryfall.io/normal/front/2/e/2ef7c30c-3ee6-413d-bd24-476322f36cb8.jpg?1793361354",
               "url": "https://scryfall.com/card/trk/184/astute-terraformer?utm_source=api"
             },
             {
               "name": "Dominion Assault Force",
-              "games": 10304,
-              "wins": 5754,
-              "winRate": 55.84239130434783,
+              "games": 10510,
+              "wins": 5874,
+              "winRate": 55.889628924833495,
               "image": "https://cards.scryfall.io/normal/front/2/8/28a55f63-1cbd-4362-a192-e42a06f44686.jpg?1793363014",
               "url": "https://scryfall.com/card/trk/194/dominion-assault-force?utm_source=api"
             },
             {
               "name": "Photosynthetic Physician",
-              "games": 10217,
-              "wins": 5632,
-              "winRate": 55.12381325242243,
+              "games": 10390,
+              "wins": 5728,
+              "winRate": 55.129932627526465,
               "image": "https://cards.scryfall.io/normal/front/8/8/88b87ddb-fbf8-4e6e-9895-1b30ae5ad63a.jpg?1793361367",
               "url": "https://scryfall.com/card/trk/210/photosynthetic-physician?utm_source=api"
             },
             {
               "name": "Ferenginar",
-              "games": 9701,
-              "wins": 5401,
-              "winRate": 55.67467271415318,
+              "games": 9851,
+              "wins": 5487,
+              "winRate": 55.69992894122424,
               "image": "https://cards.scryfall.io/normal/front/1/7/17fab75f-7ff9-4c50-a6f7-03a85cd275bf.jpg?1792632949",
               "url": "https://scryfall.com/card/trk/283/ferenginar?utm_source=api"
             },
             {
               "name": "Saurian Explorer",
-              "games": 8985,
-              "wins": 4896,
-              "winRate": 54.490818030050086,
+              "games": 9180,
+              "wins": 4999,
+              "winRate": 54.45533769063181,
               "image": "https://cards.scryfall.io/normal/front/1/9/197abe5e-cde2-4b29-a10f-d6b789776bfa.jpg?1785981598",
               "url": "https://scryfall.com/card/trk/213/saurian-explorer?utm_source=api"
             },
             {
               "name": "Relentless Drednok",
-              "games": 8497,
-              "wins": 4593,
-              "winRate": 54.05437213134047,
+              "games": 8642,
+              "wins": 4672,
+              "winRate": 54.06155982411479,
               "image": "https://cards.scryfall.io/normal/front/c/e/ce538db8-373d-4554-821e-cd96e795e37a.jpg?1786005690",
               "url": "https://scryfall.com/card/trk/124/relentless-drednok?utm_source=api"
             },
             {
               "name": "Rogue Artificial Intelligence",
-              "games": 8412,
-              "wins": 4553,
-              "winRate": 54.12505943889681,
+              "games": 8570,
+              "wins": 4644,
+              "winRate": 54.189031505250874,
               "image": "https://cards.scryfall.io/normal/front/e/d/edcce061-88c9-40bf-97f8-d0d3018e24dd.jpg?1785981516",
               "url": "https://scryfall.com/card/trk/126/rogue-artificial-intelligence?utm_source=api"
             },
             {
               "name": "Tenacious Drone",
-              "games": 7892,
-              "wins": 4254,
-              "winRate": 53.90268626457172,
+              "games": 8027,
+              "wins": 4334,
+              "winRate": 53.992774386445745,
               "image": "https://cards.scryfall.io/normal/front/2/0/206ae042-09af-4fc1-8441-69cecdd087de.jpg?1793359485",
               "url": "https://scryfall.com/card/trk/133/tenacious-drone?utm_source=api"
             },
             {
               "name": "Stray from History",
-              "games": 7767,
-              "wins": 4242,
-              "winRate": 54.61568173039784,
+              "games": 7929,
+              "wins": 4333,
+              "winRate": 54.64749653171901,
               "image": "https://cards.scryfall.io/normal/front/a/a/aac57a7f-a28b-486a-8d85-c620702a9cc0.jpg?1793359454",
               "url": "https://scryfall.com/card/trk/130/stray-from-history?utm_source=api"
             },
             {
               "name": "First Contact",
-              "games": 7147,
-              "wins": 4053,
-              "winRate": 56.70910871694417,
+              "games": 7295,
+              "wins": 4140,
+              "winRate": 56.751199451679234,
               "image": "https://cards.scryfall.io/normal/front/5/4/5407e8f4-0c8e-4e66-9d2f-f22277aa38f4.jpg?1785981580",
               "url": "https://scryfall.com/card/trk/199/first-contact?utm_source=api"
             }
@@ -24483,165 +24483,165 @@
         {
           "id": 6,
           "name": "Dimir",
-          "games": 18383,
+          "games": 18620,
           "topCards": [
             {
               "name": "Consider the Prime Directive",
-              "games": 10945,
-              "wins": 5372,
-              "winRate": 49.08177249885792,
+              "games": 11087,
+              "wins": 5442,
+              "winRate": 49.08451339406512,
               "image": "https://cards.scryfall.io/normal/front/4/e/4e8f75b8-cca7-4ed3-90db-bcac02e74611.jpg?1784036751",
               "url": "https://scryfall.com/card/trk/51/consider-the-prime-directive?utm_source=api"
             },
             {
               "name": "Make It So",
-              "games": 10804,
-              "wins": 5243,
-              "winRate": 48.52832284339134,
+              "games": 10955,
+              "wins": 5318,
+              "winRate": 48.544043815609314,
               "image": "https://cards.scryfall.io/normal/front/7/1/7149df19-4833-47ca-8add-b897f55b930c.jpg?1793013541",
               "url": "https://scryfall.com/card/trk/71/make-it-so?utm_source=api"
             },
             {
               "name": "Marooned",
-              "games": 10357,
-              "wins": 4921,
-              "winRate": 47.51375881046635,
+              "games": 10513,
+              "wins": 4994,
+              "winRate": 47.503091410634454,
               "image": "https://cards.scryfall.io/normal/front/0/8/0820a78e-e392-423c-9d62-ddfda5cb3f03.jpg?1793716333",
               "url": "https://scryfall.com/card/trk/72/marooned?utm_source=api"
             },
             {
               "name": "Federation Probe",
-              "games": 10356,
-              "wins": 5117,
-              "winRate": 49.410969486288145,
+              "games": 10486,
+              "wins": 5176,
+              "winRate": 49.361052832347895,
               "image": "https://cards.scryfall.io/normal/front/f/9/f988ba84-fc78-41a2-b2f2-eebf78cee591.jpg?1785981405",
               "url": "https://scryfall.com/card/trk/59/federation-probe?utm_source=api"
             },
             {
               "name": "Interstellar Effigy",
-              "games": 10333,
-              "wins": 5039,
-              "winRate": 48.7660892286848,
+              "games": 10449,
+              "wins": 5098,
+              "winRate": 48.78935783328548,
               "image": "https://cards.scryfall.io/normal/front/4/b/4b7d505f-2a6b-4525-87c7-19e06d49c9df.jpg?1793361241",
               "url": "https://scryfall.com/card/trk/66/interstellar-effigy?utm_source=api"
             },
             {
               "name": "Melkotian Adjudicator",
-              "games": 9284,
-              "wins": 4500,
-              "winRate": 48.47048685911245,
+              "games": 9398,
+              "wins": 4553,
+              "winRate": 48.44647797403703,
               "image": "https://cards.scryfall.io/normal/front/8/7/873c9933-7939-4376-873c-6a5b3bbc98d4.jpg?1793359395",
               "url": "https://scryfall.com/card/trk/73/melkotian-adjudicator?utm_source=api"
             },
             {
               "name": "Eject the Warp Core",
-              "games": 9166,
-              "wins": 4620,
-              "winRate": 50.403665721143355,
+              "games": 9271,
+              "wins": 4677,
+              "winRate": 50.44763240211412,
               "image": "https://cards.scryfall.io/normal/front/0/4/04a479be-8093-4775-a5d9-8b0e1683bf12.jpg?1785981475",
               "url": "https://scryfall.com/card/trk/105/eject-the-warp-core?utm_source=api"
             },
             {
               "name": "Seven of Nine",
-              "games": 8762,
-              "wins": 4204,
-              "winRate": 47.97991326181237,
+              "games": 8871,
+              "wins": 4257,
+              "winRate": 47.98782549881637,
               "image": "https://cards.scryfall.io/normal/front/6/2/6204cfdb-6fb4-4030-96b6-9306c8266bcf.jpg?1793538768",
               "url": "https://scryfall.com/card/trk/252/seven-of-nine?utm_source=api"
             },
             {
               "name": "Tal Shiar Operative",
-              "games": 8676,
-              "wins": 4320,
-              "winRate": 49.79253112033195,
+              "games": 8769,
+              "wins": 4361,
+              "winRate": 49.73201049150416,
               "image": "https://cards.scryfall.io/normal/front/e/b/ebe9c7bd-5528-41fd-9c51-2306086c7887.jpg?1793359459",
               "url": "https://scryfall.com/card/trk/131/tal-shiar-operative?utm_source=api"
             },
             {
               "name": "He's Dead, Jim",
-              "games": 8296,
-              "wins": 4056,
-              "winRate": 48.89103182256509,
+              "games": 8392,
+              "wins": 4104,
+              "winRate": 48.90371782650143,
               "image": "https://cards.scryfall.io/normal/front/2/c/2c309b0d-94b4-405e-be6c-18b407323e51.jpg?1785981492",
               "url": "https://scryfall.com/card/trk/114/hes-dead-jim?utm_source=api"
             },
             {
               "name": "Guidance Failure",
-              "games": 8249,
-              "wins": 4012,
-              "winRate": 48.63619832706995,
+              "games": 8361,
+              "wins": 4068,
+              "winRate": 48.65446716899892,
               "image": "https://cards.scryfall.io/normal/front/8/6/86b790e6-3c99-4a95-8327-eb90ed9380f2.jpg?1785981409",
               "url": "https://scryfall.com/card/trk/60/guidance-failure?utm_source=api"
             },
             {
               "name": "Rogue Artificial Intelligence",
-              "games": 8059,
-              "wins": 3895,
-              "winRate": 48.33105844397568,
+              "games": 8167,
+              "wins": 3950,
+              "winRate": 48.36537284192482,
               "image": "https://cards.scryfall.io/normal/front/e/d/edcce061-88c9-40bf-97f8-d0d3018e24dd.jpg?1785981516",
               "url": "https://scryfall.com/card/trk/126/rogue-artificial-intelligence?utm_source=api"
             },
             {
               "name": "Humpback Whales",
-              "games": 7720,
-              "wins": 3640,
-              "winRate": 47.15025906735751,
+              "games": 7826,
+              "wins": 3695,
+              "winRate": 47.21441349348326,
               "image": "https://cards.scryfall.io/normal/front/6/0/605263f0-08b6-4cc7-aba7-eb49850f8832.jpg?1785981416",
               "url": "https://scryfall.com/card/trk/65/humpback-whales?utm_source=api"
             },
             {
               "name": "Fugitive Listener",
-              "games": 7547,
-              "wins": 3740,
-              "winRate": 49.55611501258778,
+              "games": 7651,
+              "wins": 3791,
+              "winRate": 49.54907855182329,
               "image": "https://cards.scryfall.io/normal/front/b/d/bd04c738-b4e3-481e-9a68-d257524bf40e.jpg?1793361283",
               "url": "https://scryfall.com/card/trk/107/fugitive-listener?utm_source=api"
             },
             {
               "name": "Open Communications",
-              "games": 7450,
-              "wins": 3615,
-              "winRate": 48.52348993288591,
+              "games": 7573,
+              "wins": 3673,
+              "winRate": 48.50125445662221,
               "image": "https://cards.scryfall.io/normal/front/8/e/8eeec269-13f0-4923-9f13-e995acd73e00.jpg?1786396013",
               "url": "https://scryfall.com/card/trk/76/open-communications?utm_source=api"
             },
             {
               "name": "Romulus",
-              "games": 7387,
-              "wins": 3631,
-              "winRate": 49.153919046974416,
+              "games": 7467,
+              "wins": 3675,
+              "winRate": 49.21655283246284,
               "image": "https://cards.scryfall.io/normal/front/1/b/1bce111b-b07c-4589-9b6d-f0b5f320808c.jpg?1792632971",
               "url": "https://scryfall.com/card/trk/294/romulus?utm_source=api"
             },
             {
               "name": "Pattern Buffer Preservation",
-              "games": 6200,
-              "wins": 3044,
-              "winRate": 49.096774193548384,
+              "games": 6320,
+              "wins": 3102,
+              "winRate": 49.08227848101266,
               "image": "https://cards.scryfall.io/normal/front/2/3/23166580-9676-4025-916b-864568c2e59d.jpg?1793361304",
               "url": "https://scryfall.com/card/trk/123/pattern-buffer-preservation?utm_source=api"
             },
             {
-              "name": "Tenacious Drone",
-              "games": 6096,
-              "wins": 2943,
-              "winRate": 48.27755905511811,
-              "image": "https://cards.scryfall.io/normal/front/2/0/206ae042-09af-4fc1-8441-69cecdd087de.jpg?1793359485",
-              "url": "https://scryfall.com/card/trk/133/tenacious-drone?utm_source=api"
-            },
-            {
               "name": "Stray from History",
-              "games": 6069,
-              "wins": 2872,
-              "winRate": 47.32245839512275,
+              "games": 6159,
+              "wins": 2911,
+              "winRate": 47.26416626075662,
               "image": "https://cards.scryfall.io/normal/front/a/a/aac57a7f-a28b-486a-8d85-c620702a9cc0.jpg?1793359454",
               "url": "https://scryfall.com/card/trk/130/stray-from-history?utm_source=api"
             },
             {
+              "name": "Tenacious Drone",
+              "games": 6154,
+              "wins": 2969,
+              "winRate": 48.24504387390315,
+              "image": "https://cards.scryfall.io/normal/front/2/0/206ae042-09af-4fc1-8441-69cecdd087de.jpg?1793359485",
+              "url": "https://scryfall.com/card/trk/133/tenacious-drone?utm_source=api"
+            },
+            {
               "name": "Suurok-Class Science Vessel",
-              "games": 5942,
-              "wins": 2855,
-              "winRate": 48.047795355099296,
+              "games": 6034,
+              "wins": 2898,
+              "winRate": 48.02784222737819,
               "image": "https://cards.scryfall.io/normal/front/7/6/7608943e-329e-41f9-b098-a0a94b01e6a1.jpg?1793361260",
               "url": "https://scryfall.com/card/trk/83/suurok-class-science-vessel?utm_source=api"
             }
@@ -24650,5 +24650,5 @@
       ]
     }
   },
-  "generatedAt": "2026-11-23T18:22:03.587Z"
+  "generatedAt": "2026-11-24T00:19:39.152Z"
 }
